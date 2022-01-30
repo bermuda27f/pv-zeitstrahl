@@ -99,6 +99,8 @@ export default function Graph (props) {
         setMOUSE
     ])
 
+
+    
     const killSwitch = useCallback(()=>{
         if(highlight_main && props.firstSet && isDrawed){
             props.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
