@@ -48,11 +48,6 @@ export default function Graph (props) {
         _startDate: null,
         _stopDate: null,
     })
-
-    const zoom = d3Zoom.zoom(props, setZoomState, setZOOMINFO)
-    const brush = d3Zoom.brush(props, setBrushState);
-    const linePartei = lines.curve(props, "partei")
-
     const [mouseEvents, setMOUSE] = useReducer(reducer.mutables, {
         mouseEvent : null,
         type : null,
@@ -62,6 +57,10 @@ export default function Graph (props) {
         e : null,
     })
 
+    const zoom = d3Zoom.zoom(props, setZoomState, setZOOMINFO)
+    const brush = d3Zoom.brush(props, setBrushState);
+    const linePartei = lines.curve(props, "partei")
+    
     const { 
         width 
     } = props.state
@@ -237,6 +236,17 @@ export default function Graph (props) {
         props.killSwitch,
     ])
 
+    const brushIt = useCallback(()=>{
+        if(props.firstSet && brushState !== null && isDrawed){
+            props.state.selections.mainGraph.call(
+                zoom.transform, 
+                    d3_zoom.zoomIdentity
+                        .scale(brushState.k)
+                        .translate(brushState.x, 0)
+            );
+        }
+    }, [brushState])
+
     // SET:
 
     useEffect(()=>{ 
@@ -301,20 +311,9 @@ export default function Graph (props) {
     ])
 
     useEffect(()=>{
-        if(props.firstSet && brushState !== null && isDrawed){
-            props.state.selections.mainGraph.call(
-                zoom.transform, 
-                    d3_zoom.zoomIdentity
-                        .scale(brushState.k)
-                        .translate(brushState.x, 0)
-            );
-        }
+        brushIt()
     }, [
         props.firstSet,
-        brushState,
-        isDrawed,
-        props.state.selections,
-        //zoom.transform
     ])
 
     // Toggle Handles:
