@@ -33,8 +33,6 @@ import * as reducer from "../helper/reducer.js"
 
 export default function Graph (props) {
 
-    // commit 3000
-
     const svg_ref = useRef();
     const nav_ref = useRef();
     const keyPress = useKeyPress("Escape");
@@ -100,29 +98,27 @@ export default function Graph (props) {
         setMOUSE
     ])
 
+    const highlightRef = useRef(highlight_main)
+    const isDrawedRef = useRef(isDrawed)
+    const propsRef = useRef(props)
+    const identRef = useRef(ident)
+
+    useEffect(()=>{
+        highlightRef.current = highlight_main
+        isDrawedRef.current = isDrawed
+        propsRef.current = props
+        identRef.current = ident
+        console.log(propsRef)
+    })
+
     const killSwitch = useCallback(()=>{
         console.log("call kill")
-        if(highlight_main && props.firstSet && isDrawed){
-            props.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
-            if(ident === "partei") props.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
-            handleEvents.toggle(props, false, "switch", "click")
+        if(highlightRef.current && propsRef.current.firstSet && isDrawedRef.current){
+            propsRef.current.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
+            if(identRef.current === "partei") propsRef.current.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
+            handleEvents.toggle(propsRef.current, false, "switch", "click")
         }
-    },[
-        highlight_main,
-        isDrawed,
-        props,
-        ident,
-    ])
-
-    // ESCAPE:
-    useEffect(()=>{
-        console.log("useEffect escape")
-        killSwitch()
-    }, [
-        keyPress, 
-        props.killSwitch,
-        //killSwitch
-    ])
+    },[])
 
     const setSelections = useCallback(()=>{
         props.setState({
@@ -424,6 +420,16 @@ export default function Graph (props) {
         isDrawed,
         props,
         props.parteienState
+    ])
+
+    // ESCAPE:
+    useEffect(()=>{
+        console.log("useEffect escape")
+        killSwitch()
+    }, [
+        keyPress, 
+        props.killSwitch,
+        killSwitch
     ])
 
     return (
