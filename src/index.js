@@ -212,7 +212,7 @@ function App (){
                     <MainGraph {...mainProps} />
                     <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}}>
                         {highlight.highlight_main ? "HIGHLIGHT: " + highlight.element.Name : ""}
-                        <button onClick = { () => { setKill(killSwitch ? false : true) }}>cancel
+                        <button onClick = { () => { setKill(() => killSwitch ? false : true) }}>cancel
                         </button>
                     </div>
                     <div style ={{width:"100%", marginLeft: margin.left}}>

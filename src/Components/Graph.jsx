@@ -99,20 +99,17 @@ export default function Graph (props) {
         setMOUSE
     ])
 
-
-    
     const killSwitch = useCallback(()=>{
         if(highlight_main && props.firstSet && isDrawed){
             props.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
             if(ident === "partei") props.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
-            handleEvents.toggle(newProps, false, "switch", "click")
+            handleEvents.toggle(props, false, "switch", "click")
         }
     },[
-        //highlight_main,
+        highlight_main,
         isDrawed,
-        //props,
+        props,
         ident,
-        //newProps
     ])
 
     const setSelections = useCallback(()=>{
@@ -230,6 +227,14 @@ export default function Graph (props) {
         zoom,
         zoomInfo,
         linePartei
+    ])
+
+    // ESCAPE:
+    useEffect(()=>{
+        killSwitch()
+    }, [
+        keyPress, 
+        props.killSwitch,
     ])
 
     // SET:
@@ -411,15 +416,6 @@ export default function Graph (props) {
         isDrawed,
         props,
         props.parteienState
-    ])
-
-    // ESCAPE:
-    useEffect(()=>{
-        killSwitch()
-    }, [
-        keyPress, 
-        props.killSwitch,
-        killSwitch
     ])
 
     return (
