@@ -239,14 +239,6 @@ export default function Graph (props) {
         linePartei
     ])
 
-    // ESCAPE:
-    useEffect(()=>{
-        killSwitch()
-    }, [
-        keyPress, 
-        props.killSwitch,
-    ])
-
     const brushIt = useCallback(()=>{
         if(props.firstSet && brushState !== null && isDrawed){
             props.state.selections.mainGraph.call(
@@ -323,9 +315,7 @@ export default function Graph (props) {
 
     useEffect(()=>{
         brushIt()
-    }, [
-        props.firstSet,
-    ])
+    }, [brushState])
 
     // Toggle Handles:
 
