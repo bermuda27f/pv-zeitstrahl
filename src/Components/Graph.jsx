@@ -33,8 +33,6 @@ import * as reducer from "../helper/reducer.js"
 
 export default function Graph (props) {
 
-    const svg_ref = useRef();
-    const nav_ref = useRef();
     const keyPress = useKeyPress("Escape");
     const [isDrawed, drawed] = useState(false);
     const [zoomState, setZoomState] = useState(null)
@@ -98,6 +96,10 @@ export default function Graph (props) {
         setMOUSE
     ])
 
+    // Refs:
+
+    const svg_ref = useRef();
+    const nav_ref = useRef();
     const highlightRef = useRef(highlight_main)
     const isDrawedRef = useRef(isDrawed)
     const propsRef = useRef(props)
@@ -110,6 +112,8 @@ export default function Graph (props) {
         identRef.current = ident
         console.log(propsRef)
     })
+
+    // Callbacks
 
     const killSwitch = useCallback(()=>{
         console.log("call kill")
@@ -254,6 +258,8 @@ export default function Graph (props) {
         // zoom.transform
     ])
 
+    // Effects:
+
     // SET:
 
     useEffect(()=>{ 
@@ -321,7 +327,7 @@ export default function Graph (props) {
         brushIt()
     }, [brushState, brushIt])
 
-    // Toggle Handles:
+    // TOGGLE HANDLES:
 
     useEffect(()=>{ 
         if(props.firstSet && isDrawed){
@@ -340,6 +346,8 @@ export default function Graph (props) {
             toggle.label(newProps); 
         }
     }, [labelPartei])
+
+    // MOUSE:
 
     useEffect(()=>{
 
