@@ -1,9 +1,7 @@
 import { getElement, setTimeOffset } from './calc_set.js'
 import * as d3_zoom from 'd3-zoom';
 
-export function zoomToElement (props, type, key, element){
-
-    const { state : state } = props;
+export function zoomToElement ({ state }, type, key, element){
 
     const calcEl = () => {
         switch(type){
