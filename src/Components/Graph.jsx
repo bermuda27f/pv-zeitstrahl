@@ -248,7 +248,13 @@ export default function Graph (props) {
                         .translate(brushState.x, 0)
             );
         }
-    }, [brushState])
+    }, [
+        brushState,
+        // isDrawed,
+        // props.firstSet,
+        // props.state.selections,
+        // zoom.transform
+    ])
 
     // SET:
 
@@ -315,7 +321,7 @@ export default function Graph (props) {
 
     useEffect(()=>{
         brushIt()
-    }, [brushState])
+    }, [brushState, brushIt])
 
     // Toggle Handles:
 
