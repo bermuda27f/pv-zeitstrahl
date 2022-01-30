@@ -1,0 +1,47 @@
+import React, {Fragment} from 'react';
+
+import * as d3_ease from 'd3-ease';
+import * as d3_zoom from 'd3-zoom';
+
+export default function ZoomMenu(props) {
+
+    function handleZoom (symbol) {
+
+        switch (symbol){
+            case "Reset Zoom":
+                props.state.selections.mainGraph
+                    .transition().duration(250)                
+                    .call(props.state.zoomObject.transform, d3_zoom.zoomIdentity.scale(1))
+                break;
+            case "+":
+                props.state.selections.mainGraph
+                    .transition().duration(250).ease(d3_ease.easePoly.exponent(4))
+                    .call(props.state.zoomObject.scaleBy, 1.5)
+                break;
+            case "-":
+                props.state.selections.mainGraph
+                    .transition().duration(250).ease(d3_ease.easePoly.exponent(4))
+                    .call(props.state.zoomObject.scaleBy, 1/1.5)
+                break;
+            default:
+                break;
+        }
+    }
+  return (
+      <Fragment>
+        <span>zoom:</span>
+        <button
+            disabled = { props.zoomInfo.zoomState === null ? false : props.zoomInfo.zoomState.k >= props.state.maxScale ? true : false }
+            onClick = {() => { handleZoom("+")}}> +
+        </button>
+        <button
+            disabled = { props.zoomInfo.zoomState === null ? true : props.zoomInfo.zoomState.k === 1 ? true : false }
+            onClick = {() => { handleZoom("-")}}> -
+        </button>
+        <button
+            disabled = { props.zoomInfo.zoomState === null ? true : props.zoomInfo.zoomState.k === 1 ? true : false }
+            onClick = {() => { handleZoom("Reset Zoom")}}> reset
+        </button>
+    </Fragment>
+  );
+}
