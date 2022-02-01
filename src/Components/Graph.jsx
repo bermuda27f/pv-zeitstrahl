@@ -33,6 +33,8 @@ import * as reducer from "../helper/reducer.js"
 
 export default function Graph (props) {
 
+
+
     const keyPress = useKeyPress("Escape");
     const [isDrawed, drawed] = useState(false);
     const [zoomState, setZoomState] = useState(null)
@@ -55,10 +57,6 @@ export default function Graph (props) {
         e : null,
     })
 
-    const zoom = d3Zoom.zoom(props, setZoomState, setZOOMINFO)
-    const brush = d3Zoom.brush(props, setBrushState);
-    const linePartei = lines.curve(props, "partei")
-    
     const { 
         width 
     } = props.state
@@ -83,46 +81,94 @@ export default function Graph (props) {
         e : mouseE,
     } = mouseEvents
 
-    const newProps = useMemo(()=>{ return {
-        ...props, 
-        zoomInfo : zoomInfo,
-        mouseEvents : mouseEvents,
-        setMOUSE : setMOUSE
+    const newProps = useMemo(()=>{
+        return {
+            ...props, 
+            zoomInfo : zoomInfo,
+            mouseEvents : mouseEvents,
+            setMOUSE : setMOUSE
         }
-    },[
-        props,
-        zoomInfo,
-        mouseEvents,
-        setMOUSE
-    ])
+    })
 
     // Refs:
 
-    const svg_ref = useRef();
-    const nav_ref = useRef();
-    const highlightRef = useRef(highlight_main)
-    const isDrawedRef = useRef(isDrawed)
-    const propsRef = useRef(props)
-    const identRef = useRef(ident)
+    const svgRefs = useRef({
+        main : null,
+        nav : null
+    })
+
+    // const svg_ref = useRef()
+    // const nav_ref = useRef()
+    const zoomRefs = useRef({
+        zoom : d3Zoom.zoom(props, setZoomState, setZOOMINFO),
+        brush : d3Zoom.brush(props, setBrushState),
+        linePartei : lines.curve(props, "partei")
+    })
+    const mutableRefs = useRef({
+        highlight : highlight_main,
+        isDrawed : isDrawed,
+        newProps : newProps,
+        ident : ident,
+        zoom : zoom,
+        zoomState : zoomState,
+        brushState : brushState,
+        brush : brush,
+        handle_perioden : handle_perioden,
+        handle_wahlen : handle_wahlen
+    });
 
     useEffect(()=>{
-        highlightRef.current = highlight_main
-        isDrawedRef.current = isDrawed
-        propsRef.current = props
-        identRef.current = ident
-        console.log(propsRef)
+        mutableRefs.current.highlight = highlight_main
+        mutableRefs.current.isDrawed = isDrawed
+        mutableRefs.current.newProps = newProps
+        mutableRefs.current.ident = ident
+        mutableRefs.current.zoom = zoom
+        mutableRefs.current.zoomState = zoomState
+        mutableRefs.current.brushState = brushState
+        mutableRefs.current.brush = brush
+        mutableRefs.current.handle_perioden = handle_perioden
+        mutableRefs.current.handle_wahlen = handle_wahlen
     })
 
     // Callbacks
 
     const killSwitch = useCallback(()=>{
-        console.log("call kill")
-        if(highlightRef.current && propsRef.current.firstSet && isDrawedRef.current){
-            propsRef.current.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
-            if(identRef.current === "partei") propsRef.current.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
-            handleEvents.toggle(propsRef.current, false, "switch", "click")
+        if(mutableRefs.current.highlight && mutableRefs.current.newProps.firstSet && mutableRefs.current.isDrawed){
+            mutableRefs.current.newProps.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
+            if(mutableRefs.current.ident === "partei") mutableRefs.current.newProps.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
+            handleEvents.toggle(mutableRefs.current.newProps, false, "switch", "click")
         }
     },[])
+
+    const zoomIt = useCallback(() => {
+        if(mutableRefs.current.newProps.firstSet && mutableRefs.current.isDrawed) {
+            const newXScale = mutableRefs.current.zoomState.rescaleX(mutableRefs.current.newProps.state.x_scale);
+            const range = newXScale.range().map(mutableRefs.current.zoomState.invertX, mutableRefs.current.zoomState);
+    
+            mutableRefs.current.newProps.state.selections.context.call(mutableRefs.current.brush.move, range);
+            zoomGraph.curves(mutableRefs.current.newProps, newXScale); 
+    
+            if(mutableRefs.current.handle_perioden) zoomGraph.perioden(mutableRefs.current.newProps, newXScale)
+            if(mutableRefs.current.handle_wahlen) zoomGraph.highlightLines(mutableRefs.current.newProps, newXScale, "wahlen")
+            
+            if(mutableRefs.current.ident === "perioden"){ zoomGraph.highlights(mutableRefs.current.newProps, newXScale, "main");}
+    
+            zoomGraph.bg(mutableRefs.current.newProps, newXScale, "mainGraphBG");
+            zoomGraph.jetzt(mutableRefs.current.newProps, newXScale);
+            zoomGraph.xAxis(mutableRefs.current.newProps, newXScale, "main");
+        }
+    },[])
+
+    const brushIt = useCallback(()=>{
+        if(mutableRefs.current.newProps.firstSet && mutableRefs.current.brushState !== null && mutableRefs.current.isDrawed){
+            mutableRefs.current.newProps.state.selections.mainGraph.call(
+                mutableRefs.current.zoom.transform, 
+                    d3_zoom.zoomIdentity
+                        .scale(mutableRefs.current.brushState.k)
+                        .translate(mutableRefs.current.brushState.x, 0)
+            );
+        }
+    }, [])
 
     const setSelections = useCallback(()=>{
         props.setState({
@@ -176,8 +222,8 @@ export default function Graph (props) {
         props,
         zoom,
         linePartei,
-        svg_ref,
-        nav_ref
+        // refs.svg_ref,
+        // refs.nav_ref
     ])
 
     const drawIt = useCallback(()=>{
@@ -241,23 +287,6 @@ export default function Graph (props) {
         linePartei
     ])
 
-    const brushIt = useCallback(()=>{
-        if(props.firstSet && brushState !== null && isDrawed){
-            props.state.selections.mainGraph.call(
-                zoom.transform, 
-                    d3_zoom.zoomIdentity
-                        .scale(brushState.k)
-                        .translate(brushState.x, 0)
-            );
-        }
-    }, [
-        brushState,
-        // isDrawed,
-        // props.firstSet,
-        // props.state.selections,
-        // zoom.transform
-    ])
-
     // Effects:
 
     // SET:
@@ -284,6 +313,7 @@ export default function Graph (props) {
             props.state.selections.navContainer.select("#navGroup").remove()
             drawIt();
             setSelections()
+            console.log("resize")
         }
     }, [
         width,
@@ -296,32 +326,8 @@ export default function Graph (props) {
     // ZOOM AND BRUSH:
 
     useEffect(()=>{ 
-        const zoomIt = ()=> {
-            const newXScale = zoomState.rescaleX(newProps.state.x_scale);
-            const range = newXScale.range().map(zoomState.invertX, zoomState);
-    
-            props.state.selections.context.call(brush.move, range);
-    
-            zoomGraph.curves(newProps, newXScale); 
-    
-            if(props.mutables.handle_perioden) zoomGraph.perioden(newProps, newXScale)
-            if(props.mutables.handle_wahlen) zoomGraph.highlightLines(newProps, newXScale, "wahlen")
-            
-            if(props.highlight.ident === "perioden"){ zoomGraph.highlights(newProps, newXScale, "main");}
-    
-            zoomGraph.bg(newProps, newXScale, "mainGraphBG");
-            zoomGraph.jetzt(newProps, newXScale);
-            zoomGraph.xAxis(newProps, newXScale, "main");
-        }
-        if(props.firstSet && isDrawed) zoomIt() 
-    }, [
-        props.firstSet,
-        brush,
-        newProps,
-        props,
-        isDrawed,
-        zoomState,
-    ])
+        zoomIt() 
+    }, [zoomState, zoomIt])
 
     useEffect(()=>{
         brushIt()
@@ -432,7 +438,6 @@ export default function Graph (props) {
 
     // ESCAPE:
     useEffect(()=>{
-        console.log("useEffect escape")
         killSwitch()
     }, [
         keyPress, 
