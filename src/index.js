@@ -170,8 +170,6 @@ function App (){
     },[state, firstSet]);
 
     useEffect(() => { 
-        console.log("resize")
-
         if(firstSet && state.selectionsSet && (state.mainRefSize !== mainRef.current.clientWidth)){ 
             const sizeData = calc.size(state)
             setState({
@@ -204,29 +202,30 @@ function App (){
 
     if(firstSet){
         return(
-            <div ref = {mainRef}>
-                <div style = {{flexWrap: "wrap", display: "flex", width: "100%" }} >  
-                    <div style = {{ marginLeft: margin.left}}>
-                        { "pv-Zeitstrahl 0.1" } 
-                    </div>
-                    <MainGraph {...mainProps} />
-                    <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}}>
-                        {highlight.highlight_main ? "HIGHLIGHT: " + highlight.element.Name : ""}
-                        <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel
-                        </button>
-                    </div>
-                    <div style ={{width:"100%", marginLeft: margin.left}}>
-                        <div style ={{width:"100%"}}>
-                            <Checkboxes
-                                mutables = { mutables }
-                                highlight = { highlight }
-                                setMUTABLES = { setMUTABLES }
-                            />
-                        </div>
-                        <Filter {...mainProps}/>
-                    </div>
-
+            <div 
+                ref = {mainRef} 
+                style = {{flexWrap: "wrap", display: "flex", width: "100%" }} 
+                >  
+                <div style = {{ marginLeft: margin.left}}>
+                    { "pv-Zeitstrahl 0.1" } 
                 </div>
+                <MainGraph {...mainProps} />
+                <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}}>
+                    {highlight.highlight_main ? "HIGHLIGHT: " + highlight.element.Name : ""}
+                    <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel
+                    </button>
+                </div>
+                <div style ={{width:"100%", marginLeft: margin.left}}>
+                    <div style ={{width:"100%"}}>
+                        <Checkboxes
+                            mutables = { mutables }
+                            highlight = { highlight }
+                            setMUTABLES = { setMUTABLES }
+                        />
+                    </div>
+                    <Filter {...mainProps}/>
+                </div>
+
             </div>
         )
     }
