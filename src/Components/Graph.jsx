@@ -57,18 +57,12 @@ export default function Graph (props) {
         e : null,
     })
 
-    const newProps = useMemo(()=>{
-        return {
-            ...props, 
-            zoomInfo : zoomInfo,
-            mouseEvents : mouseEvents,
-            setMOUSE : setMOUSE
-        }
-    },[
-        props,
-        zoomInfo,
-        mouseEvents
-    ])
+    const newProps = {
+        ...props, 
+        zoomInfo : zoomInfo,
+        mouseEvents : mouseEvents,
+        setMOUSE : setMOUSE
+    }
 
     // Refs:
 
@@ -115,8 +109,8 @@ export default function Graph (props) {
             refs.newProps.state.selections.context.call(zoomObjRefs.current.brush.move, range);
             zoomGraph.curves(mutableRefs.current.newProps, newXScale); 
     
-            if(refs.handle_perioden) zoomGraph.perioden(refs.newProps, newXScale)
-            if(refs.handle_wahlen) zoomGraph.highlightLines(refs.newProps, newXScale, "wahlen")
+            if(refs.newProps.mutables.handle_perioden) zoomGraph.perioden(refs.newProps, newXScale)
+            if(refs.newProps.mutables.handle_wahlen) zoomGraph.highlightLines(refs.newProps, newXScale, "wahlen")
             
             if(refs.ident === "perioden"){ zoomGraph.highlights(refs.newProps, newXScale, "main");}
     
