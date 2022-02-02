@@ -19,6 +19,8 @@ export function frame (container, props){
 
 export function highlightLine(props, container, type){
 
+    console.log(props)
+
     let handleHeight, clip
     const key = getKeyType(type)
 

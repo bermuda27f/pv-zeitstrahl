@@ -222,9 +222,9 @@ export default function Graph (props) {
         navigation.context(mutableRefs.current.newProps, navGroup, zoomObjRefs.current.brush)
 
         const periodenGroup = mainGraph.append("g").attr("class", "periodenGroup")
-            .attr("opacity", mutableRefs.current.handle_perioden ? 1 : 0)
+            .attr("opacity", refs.newProps.mutables.handle_perioden ? 1 : 0)
         const wahlenGroup = mainGraph.append("g").attr("class", "wahlenGroup")
-            .attr("opacity", mutableRefs.current.handle_wahlen ? 1 : 0)
+            .attr("opacity", refs.newProps.mutables.handle_wahlen ? 1 : 0)
 
         linesPatterns.highlightLine(mutableRefs.current.newProps, periodenGroup, "perioden");
         linesPatterns.highlightLine(mutableRefs.current.newProps, wahlenGroup, "wahlen")
