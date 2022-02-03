@@ -3,23 +3,21 @@ import { getKeyType, getPatterns } from  '../../helper/calc_set.js';
 import * as icons from '../icons.js';
 import * as call from  '../../helper/events/call.js';
 
-export function frame (container, props){
+export function frame (container, { state }){
 
     container.append("rect")
         .attr("class", "graphFrame")
         .attr("y", 1)
-        .attr("width", props.state.width)
-        .attr("height", props.state.graph.height)
+        .attr("width", state.width)
+        .attr("height", state.graph.height)
         .attr("fill", "none")
-        .attr("stroke", props.state.standardColor)
+        .attr("stroke", state.standardColor)
         .attr("stroke-width", 0.5)
         .attr("opacity", 0.5)
 
 }
 
 export function highlightLine(props, container, type){
-
-    console.log(props)
 
     let handleHeight, clip
     const key = getKeyType(type)
