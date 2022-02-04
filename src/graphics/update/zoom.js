@@ -1,23 +1,23 @@
-export function curves(props, newXScale) {
+export function curves({ state }, newXScale) {
 
     const newX = date => { return newXScale(new Date(date)) }
-    props.state.lines.partei.x(d => newX(d.Datum));
-    props.state.selections.paths.attr("d", props.state.lines.partei);
-    props.state.selections.pathsClick.attr("d", props.state.lines.partei);
-    props.state.selections.circles.attr("cx", d => newX(d.Datum));
-    props.state.selections.parteiLabel.attr("x", d => (newX(d.Datum) - 5));
-    props.state.selections.fuenfProzentX.attr("x1", newX(props.state.defaultValues.huerdeDate));
-    props.state.selections.fuenfProzentY
-        .attr("x1", newX(props.state.defaultValues.huerdeDate))
-        .attr("x2", newX(props.state.defaultValues.huerdeDate));
+    state.lines.partei.x(d => newX(d.Datum));
+    state.selections.paths.attr("d", state.lines.partei);
+    state.selections.pathsClick.attr("d", state.lines.partei);
+    state.selections.circles.attr("cx", d => newX(d.Datum));
+    state.selections.parteiLabel.attr("x", d => (newX(d.Datum) - 5));
+    state.selections.fuenfProzentX.attr("x1", newX(state.defaultValues.huerdeDate));
+    state.selections.fuenfProzentY
+        .attr("x1", newX(state.defaultValues.huerdeDate))
+        .attr("x2", newX(state.defaultValues.huerdeDate));
 }
 
-export function highlightLines (props, newXScale, type){
+export function highlightLines ({ state }, newXScale, type){
 
     let selection
 
     switch(type){
-        case "wahlen" : selection = props.state.selections.highlightLinesWahlenG; break;
+        case "wahlen" : selection = state.selections.highlightLinesWahlenG; break;
         default: break;
     }
 
@@ -65,23 +65,23 @@ export function xAxis (props, newXScale, type){
 }
 
 
-export function highlights (props, newScale, type){
+export function highlights ({ state, highlight }, newScale, type){
 
-    const endData = props.highlight.ident === "perioden" ? "end" : "stopp";
+    const endData = highlight.ident === "perioden" ? "end" : "stopp";
 
-    const date_start = new Date(props.highlight.element.start)
-    const date_end = new Date(props.highlight.element[endData]);
+    const date_start = new Date(highlight.element.start)
+    const date_end = new Date(highlight.element[endData]);
     const coords = {
         x: newScale(date_start),
         width : newScale(date_end) - newScale(date_start)
     }
-    props.state.selections[type + "HL"].select("#rect")
+    state.selections[type + "HL"].select("#rect")
         .attr("x", coords.x)
         .attr("width", coords.width)
-    props.state.selections[type + "HL"].select("#left")
+    state.selections[type + "HL"].select("#left")
         .attr("x1", coords.x)
         .attr("x2", coords.x)
-    props.state.selections[type + "HL"].select("#right")
+    state.selections[type + "HL"].select("#right")
         .attr("x1", (coords.x + coords.width))
         .attr("x2", (coords.x + coords.width))
 }

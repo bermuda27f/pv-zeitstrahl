@@ -1,7 +1,7 @@
-export function yAxis (props, container, type) {
+export function yAxis (container, type) {
 
     const labelWahlen = (g) => { 
-        g.text("Stimmanteile in % **")
+        g.text("Stimmanteile in % **");
     }
 
     const label = container.append("g")
@@ -12,5 +12,6 @@ export function yAxis (props, container, type) {
             .append("text").attr("text-anchor", "start").style("fill", "grey")
             .style("font-family", "sans-serif")
             .style("font-size", "10pt")
-            label.call(labelWahlen);
+    
+    label.call(labelWahlen);
 }

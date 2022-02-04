@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import * as reducer from "./helper/reducer.js"
 import * as check from './helper/check.js'
 import * as calc from './helper/calc_set.js'
-import * as handleEvents from  './helper/events/events.js';
 
 import { useWindowSize } from "./helper/hooks.js";
 
@@ -29,11 +28,12 @@ const stopDate = "2025-12-31T00:00:00";
 
 const standardColor = "#141452";
 const highlightColor = "magenta";
-const margin = { top: 25, right: 30, bottom: 5, left: 30 }
-const padding = 15
+const margin = { top: 25, right: 30, bottom: 5, left: 30 };
+const padding = 15;
+const transitionDuration = 350;
 
 const getTransition = () => {
-    return d3_transition.transition().duration(350).ease(d3_ease.easeLinear);
+    return d3_transition.transition().duration(transitionDuration).ease(d3_ease.easeLinear);
 }
 
 function App (){
@@ -104,7 +104,6 @@ function App (){
         periodenRect : {
             opacity : 0.23
         },
-        transitionDurationZoom : 500,
 
         lines : null,
         selections : null,
@@ -137,7 +136,7 @@ function App (){
 
     useEffect(() => {
         if(!firstSet){
-            console.log("INIT")
+            
             const sizeData = calc.size({
                 ...state,
                 startDate : startDate,

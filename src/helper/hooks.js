@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 
 export function useWindowSize() {
 
@@ -34,17 +34,17 @@ export function useKeyPress(targetKey) {
 
   const [keyPressed, setKeyPressed] = useState(false);
 
-  function downHandler({ key }) {
+  const downHandler = useCallback(({ key })=>{
     if (key === targetKey) {
       setKeyPressed(true);
     }
-  }
+  },[targetKey])
 
-  const upHandler = ({ key }) => {
+  const upHandler = useCallback(({ key }) => {
     if (key === targetKey) {
       setKeyPressed(false);
     }
-  };
+  },[targetKey]);
 
   useEffect(() => {
     window.addEventListener('keydown', downHandler);
@@ -54,7 +54,7 @@ export function useKeyPress(targetKey) {
       window.removeEventListener('keydown', downHandler);
       window.removeEventListener('keyup', upHandler);
     };
-  }, []);
+  }, [downHandler, upHandler]);
 
   return keyPressed;
 }

@@ -1,12 +1,12 @@
-export function set(defs, props) {
+export function set(defs, { state }) {
 
     defs.append("clipPath")
         .attr("id", "clipPath_main")
             .append("rect")
             .attr("x", 0)
             .attr("y", 0)
-            .attr("width", props.state.width)
-            .attr("height", props.state.graph.height + props.state.handle.offset + props.state.handle.size);
+            .attr("width", state.width)
+            .attr("height", state.graph.height + state.handle.offset + state.handle.size);
 
     defs.append('pattern')
         .attr('width', 4)
@@ -15,7 +15,7 @@ export function set(defs, props) {
         .attr('id', 'hatching')
             .append('path')
             .attr('d', "M-1,1 l2,-2 M0,4 l4,-4  M3,5 l2,-2")
-            .style('stroke', props.state.standardColor)
+            .style('stroke', state.standardColor)
             .style('opacity', 0.5)
             .style('stroke-width', 0.5);
 
@@ -74,7 +74,7 @@ export function set(defs, props) {
         .attr('patternTransform', 'rotate(45)')
         .attr('id', 'circlePattern')
             .append('circle')
-            .style('fill', props.state.standardColor)
+            .style('fill', state.standardColor)
             .style('opacity', 0.5)
             .attr('r', 1)
             .attr('cx', 0)

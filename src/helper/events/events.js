@@ -84,11 +84,6 @@ export function toggle(props, mode, switchMode, eventType) {
 
     let _type, _key, _d
     const t = props.state.transition
-    // const {
-    //     type,
-    //     key,
-    //     d
-    // } = props.mouseEvents
 
     switch(switchMode){
         case "new":

@@ -64,9 +64,10 @@ export function highlightLine(props, container, type){
                     .attr("fill",  d => isHighlight(d) ? props.state.highlightColor : props.state.ereignisHandle.color)
                     .call(behaviour)
                     .call(events)
-                default:
-                    break;
-                }
+                break;
+            default:
+                break;
+        }
         return tmp
     })(type)
 
@@ -86,7 +87,7 @@ export function highlightLine(props, container, type){
         .data(props.state.data[type].filter( (d) => { return d.typ !== "stopp" }))
             .enter()
             .append("g")
-                .attr("class", "highlightLine " + "highlightLine_" + type)
+                .attr("class", "highlightLine highlightLine_" + type)
                 .attr("transform", (d) => { return `translate(${props.state.x_scale(new Date(d[dateKey]))}, 0)`})
                 .attr("opacity", 1)
                 .call(line)
@@ -94,18 +95,18 @@ export function highlightLine(props, container, type){
     hlContainer.call(symbol)
 }
 
-export function graphBackground (container, props) {
+export function graphBackground (container, { state }) {
 
-    let height = props.state.graph.height
+    let height = state.graph.height
 
     container.selectAll("rect")
-        .data(props.state.data.perioden)
+        .data(state.data.perioden)
             .enter()
             .append("rect")
             .attr("class", function (d) {return "periodenBG_" + d.kurz })
             .attr("clip-path", "url(#clipPath_main)")
-            .attr("x", d => { return props.state.x_scale(new Date(d.start)) })
-            .attr("width", d => { return props.state.x_scale(new Date(d.end)) - props.state.x_scale(new Date(d.start)) })
+            .attr("x", d => { return state.x_scale(new Date(d.start)) })
+            .attr("width", d => { return state.x_scale(new Date(d.end)) - state.x_scale(new Date(d.start)) })
             .attr("height", height)
             .attr("fill", d => getPatterns(d.type))
             .attr("stroke", "grey")

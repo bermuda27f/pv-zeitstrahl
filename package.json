@@ -2,6 +2,7 @@
   "name": "pv-zeitstrahl",
   "version": "0.1.0",
   "private": true,
+  "author" : "Stefan Koch <stefan@bermuda27f.de> (https://www.bermuda27f.de)", 
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",

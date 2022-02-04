@@ -1,8 +1,8 @@
 import * as d3_scale from 'd3-scale';
 
-export function calc_xScale (state, width){
-    const start = new Date(state.defaultValues.pos[0]);
-    const stop = new Date(state.defaultValues.pos[1])
+export function calc_xScale ({ defaultValues }, width){
+    const start = new Date(defaultValues.pos[0]);
+    const stop = new Date(defaultValues.pos[1])
     return d3_scale.scaleTime()
         .domain([start, stop])
         .range([0, width])

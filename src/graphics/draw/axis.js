@@ -1,10 +1,10 @@
-export function x (props, graphGroup, type) {
+export function x ({ state }, graphGroup, type) {
 
     let lines, height, className
     switch(type){
         case "main" :
-            lines = props.state.x_axis_lines;
-            height = props.state.graph.height;
+            lines = state.x_axis_lines;
+            height = state.graph.height;
             className = "xAxisLines noselect"
             break;
         default :
@@ -16,7 +16,7 @@ export function x (props, graphGroup, type) {
             .attr("id", "x_axis")
             .attr("class", "xAxis noselect")
             .attr("transform", `translate(${ 0 }, ${ height })`)
-            .call(props.state.x_axis)
+            .call(state.x_axis)
             .call(g => g.select(".domain").attr("stroke-opacity", 1).attr("color", "grey"))
             .call(g => g.selectAll(".tick:not(:first-of-type) line").attr("stroke-opacity", 1).attr("color", "grey"))
             .call(g => g.selectAll(".tick text").attr("color", "grey"))
@@ -32,10 +32,10 @@ export function x (props, graphGroup, type) {
 
 }
 
-export function y (props, graphGroup) {
+export function y ({ state }, graphGroup) {
 
-    let axisNorm = props.state.y_axis
-    let axisLines = props.state.y_axis_lines
+    let axisNorm = state.y_axis
+    let axisLines = state.y_axis_lines
 
     graphGroup.append("g")
         .attr("id", "y_axis")
@@ -49,7 +49,7 @@ export function y (props, graphGroup) {
     graphGroup.append("g")
         .attr("id", "y_axis_lines")
         .attr("class", "yAxisLines noselect")
-        .attr("transform", `translate(${ props.state.width}, ${ 0 })`)
+        .attr("transform", `translate(${ state.width }, ${ 0 })`)
         .call(axisLines)
         .call(g => g.selectAll("line").attr("opacity", 0.1))
         .call(g => g.selectAll("path").attr("opacity", 0))

@@ -4,13 +4,13 @@ import * as d3_axis from 'd3-axis';
 import * as d3_time from 'd3-time';
 import * as d3_timeFormat from 'd3-time-format';
 
-export function setWahlData (state) { 
+export function setWahlData ({ data }) { 
 
   const parteiKurvenData = []
-  state.data.infos.forEach((partei)=>{
+  data.infos.forEach((partei)=>{
     const tmp_array = [];
     const firstPoints = []
-    state.data.wahlen.forEach((wahl, i)=>{
+    data.wahlen.forEach((wahl, i)=>{
       if(wahl[partei.ORG] !== null && wahl[partei.ORG] !== 100){
         if(tmp_array[i-1] === null) firstPoints.push(i)
         const ergebnis = wahl[partei.ORG] ? wahl[partei.ORG] : null
@@ -50,12 +50,12 @@ export function setNewStroemungState (info, richtung, condition){
   return tmp;
 }
 
-export function setStroemungen(state, stroemungen) {
+export function setStroemungen(info, stroemungen) {
   let tmp = [];
   stroemungen.forEach((x) => {
       let parteien = [];
       let color = undefined;
-      state.forEach((y) => {
+      info.forEach((y) => {
           if (y.Richtung === x) {
               if (!color)
                   color = y.Farbcode;
@@ -167,7 +167,7 @@ export function setTimeOffset (state, element, type ){
   
   return { 
     start :_startDate.setDate(_startDate.getDate() - (element.edge.left ? 0 : margin)),
-    end : _endDate.setDate(_endDate.getDate() + (element.edge.right && type == "wahlen" ? state.timeMargin.wahlenEdge : element.edge.right ? 0 : margin))
+    end : _endDate.setDate(_endDate.getDate() + (element.edge.right && type === "wahlen" ? state.timeMargin.wahlenEdge : element.edge.right ? 0 : margin))
   }
 }
 
