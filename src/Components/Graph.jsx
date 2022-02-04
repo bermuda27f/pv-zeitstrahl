@@ -94,6 +94,7 @@ export default function Graph (props) {
     // Callbacks
 
     const killSwitch = useCallback(()=>{
+        
         if(refs.newProps.highlight && refs.newProps.firstSet && refs.isDrawed){
             refs.newProps.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
             if(refs.newProps.highlight.ident === "partei") refs.newProps.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
