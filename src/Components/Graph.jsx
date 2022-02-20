@@ -29,7 +29,6 @@ import * as check from  '../helper/check.js';
 import * as handleEvents from  '../helper/events/events.js';
 
 import ZoomMenu from './ZoomMenu';
-import PeriodeSelect from './SelectPeriode';
 
 import * as reducer from "../helper/reducer.js"
 
@@ -404,8 +403,11 @@ export default function Graph (props) {
                 />
             </div>
             <div style ={{display: "flex", width:"100%", marginLeft: props.state.margin.left}}>
-                <ZoomMenu {...stateRefs.current.newProps}/>
-                <PeriodeSelect {...stateRefs.current.newProps}/>
+                <ZoomMenu
+                    state = { props.state }
+                    zoomState = { zoomState }
+                    zoomInfo = { zoomInfo }
+                />
             </div>
         </div>
     )

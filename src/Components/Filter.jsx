@@ -25,7 +25,7 @@ export default function Filter(props) {
                 highlight : props.highlight,
                 partei : org,
             });
-            zoomToElement (props, "partei", org, element)
+            zoomToElement (props.state, "partei", org, element)
         }
         else{
             // CANCEL ISOLATION :

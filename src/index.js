@@ -10,6 +10,8 @@ import { useWindowSize } from "./helper/hooks.js";
 import Checkboxes from './Components/Checkboxes';
 import MainGraph from './Components/Graph';
 import Filter from './Components/Filter';
+import PeriodeSelect from './Components/SelectPeriode';
+
 
 import * as d3_transition from 'd3-transition';
 import * as d3_ease from 'd3-ease';
@@ -214,6 +216,7 @@ function App (){
                     <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel
                     </button>
                 </div>
+                <PeriodeSelect state = { state }/>
                 <div style ={{width:"100%", marginLeft: margin.left}}>
                     <div style ={{width:"100%"}}>
                         <Checkboxes

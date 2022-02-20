@@ -7,7 +7,7 @@ export default function PeriodeSelect(props) {
 
   const handleChange = (event) => {    
     const element = getElement(props.state.data.infos, "kurz", event.target.value)
-    zoomToElement (props, "perioden", event.target.value, element)
+    zoomToElement (props.state, "perioden", event.target.value, element)
   };
 
   return (
