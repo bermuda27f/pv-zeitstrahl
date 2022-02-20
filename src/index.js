@@ -216,8 +216,8 @@ function App (){
                     <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel
                     </button>
                 </div>
-                <PeriodeSelect state = { state }/>
                 <div style ={{width:"100%", marginLeft: margin.left}}>
+                    <PeriodeSelect state = { state }/>
                     <div style ={{width:"100%"}}>
                         <Checkboxes
                             mutables = { mutables }
