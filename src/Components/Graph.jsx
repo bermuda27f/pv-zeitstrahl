@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, useReducer} from 'react';
+import React, { useState, useEffect, useRef, useReducer} from 'react';
 
 import { useKeyPress } from "../helper/hooks.js";
 
@@ -91,16 +91,16 @@ export default function Graph (props) {
 
     // Callbacks
 
-    const killSwitch = useCallback(()=>{
+    const killSwitch = ()=>{
         
         if(stateRefs.current.newProps.highlight && stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
             stateRefs.current.newProps.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
             if(stateRefs.current.newProps.highlight.ident === "partei") stateRefs.current.newProps.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
             handleEvents.toggle(stateRefs.current.newProps, false, "switch", "click")
         }
-    },[])
+    };
 
-    const zoomIt = useCallback(() => {
+    const zoomIt = () => {
         if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed) {
             const newXScale = stateRefs.current.zoomState.rescaleX(stateRefs.current.newProps.state.x_scale);
             const range = newXScale.range().map(stateRefs.current.zoomState.invertX, stateRefs.current.zoomState);
@@ -117,9 +117,9 @@ export default function Graph (props) {
             zoomGraph.jetzt(stateRefs.current.newProps, newXScale);
             zoomGraph.xAxis(stateRefs.current.newProps, newXScale, "main");
         }
-    },[])
+    };
 
-    const brushIt = useCallback(()=>{
+    const brushIt = ()=>{
         if(stateRefs.current.newProps.firstSet && stateRefs.current.brushState !== null && stateRefs.current.isDrawed){
             stateRefs.current.newProps.state.selections.mainGraph.call(
                 zoomObjRefs.current.zoom.transform, 
@@ -128,9 +128,9 @@ export default function Graph (props) {
                         .translate(stateRefs.current.brushState.x, 0)
             );
         }
-    },[])
+    };
 
-    const setSelections = useCallback(()=>{
+    const setSelections = ()=>{
         stateRefs.current.newProps.setState({
             ...stateRefs.current.newProps.state,
             zoomObject : zoomObjRefs.current.zoom,
@@ -178,9 +178,9 @@ export default function Graph (props) {
             },
             selectionsSet : true
         })
-    },[])
+    };
 
-    const drawIt = useCallback(()=>{
+    const drawIt = () =>{
 
         const svg = d3_select.select(svg_ref.current)
         const nav = d3_select.select(nav_ref.current)
@@ -230,18 +230,18 @@ export default function Graph (props) {
 
         zoomHelper.initZoom(mainGraph, zoomObjRefs.current.zoom, stateRefs.current.newProps.zoomInfo, stateRefs.current.newProps)
 
-    },[])
+    };
 
-    const removeElAndNewZoom = useCallback(()=>{
+    const removeElAndNewZoom = ()=>{
         zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current.newProps, setZoomState, setZOOMINFO)
         zoomObjRefs.current.brush = d3Zoom.brush(stateRefs.current.newProps, setBrushState)
         d3Refs.current.linePartei = lines.curve(stateRefs.current.newProps, "partei")
         stateRefs.current.newProps.state.selections.container.select("defs").remove()
         stateRefs.current.newProps.state.selections.container.select("#mainGraph").remove()
         stateRefs.current.newProps.state.selections.navContainer.select("#navGroup").remove()
-    },[])
+    };
 
-    const handleMouse = useCallback(()=>{
+    const handleMouse = () => {
 
         if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
 
@@ -314,7 +314,7 @@ export default function Graph (props) {
                 }
             }
         }   
-    },[])
+    };
 
     // Effects:
 
@@ -326,7 +326,7 @@ export default function Graph (props) {
             setSelections()
             drawed(true)
         }; 
-    }, [drawIt, setSelections])
+    }, [])
 
     // RESIZE:
 
@@ -336,17 +336,17 @@ export default function Graph (props) {
             drawIt()
             setSelections()
         }
-    }, [props.state.width, removeElAndNewZoom, drawIt, setSelections])
+    }, [props.state.width])
 
     // ZOOM AND BRUSH:
 
     useEffect(()=>{ 
         zoomIt() 
-    }, [zoomState, zoomIt])
+    }, [zoomState])
 
     useEffect(()=>{
         brushIt()
-    }, [brushState, brushIt])
+    }, [brushState])
 
     // TOGGLE HANDLES:
 
@@ -370,7 +370,7 @@ export default function Graph (props) {
 
     useEffect(()=>{
         handleMouse()
-    }, [mouseEvents.e, handleMouse])
+    }, [mouseEvents.e])
 
     useEffect(()=>{ 
         if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed) {
@@ -381,7 +381,7 @@ export default function Graph (props) {
     // ESCAPE:
     useEffect(()=>{
         killSwitch()
-    }, [keyPress, props.killSwitch, killSwitch])
+    }, [keyPress, props.killSwitch])
 
     return (
         <div>

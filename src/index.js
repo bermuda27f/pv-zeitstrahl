@@ -206,7 +206,7 @@ function App (){
                 style = {{flexWrap: "wrap", display: "flex", width: "100%" }} 
                 >  
                 <div style = {{ marginLeft: margin.left}}>
-                    { "pv-Zeitstrahl 0.1" } 
+                    { "elections in germany since 1871" } 
                 </div>
                 <MainGraph {...mainProps} />
                 <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}}>
