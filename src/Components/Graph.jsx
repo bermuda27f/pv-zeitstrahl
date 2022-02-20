@@ -88,9 +88,9 @@ export default function Graph (props) {
         stateRefs.current.brushState = brushState
     })
 
-    // Callbacks
+    // helper
 
-    const killSwitch = ()=>{
+    const killSwitch = () => {
         
         if(stateRefs.current.newProps.highlight && stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
             stateRefs.current.newProps.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
@@ -118,7 +118,7 @@ export default function Graph (props) {
         }
     };
 
-    const brushIt = ()=>{
+    const brushIt = () => {
         if(stateRefs.current.newProps.firstSet && stateRefs.current.brushState !== null && stateRefs.current.isDrawed){
             stateRefs.current.newProps.state.selections.mainGraph.call(
                 zoomObjRefs.current.zoom.transform, 
@@ -129,7 +129,7 @@ export default function Graph (props) {
         }
     };
 
-    const setSelections = ()=>{
+    const setSelections = () => {
         stateRefs.current.newProps.setState({
             ...stateRefs.current.newProps.state,
             zoomObject : zoomObjRefs.current.zoom,
@@ -179,7 +179,7 @@ export default function Graph (props) {
         })
     };
 
-    const drawIt = () =>{
+    const drawIt = () => {
 
         const svg = d3_select.select(svg_ref.current)
         const nav = d3_select.select(nav_ref.current)
@@ -231,7 +231,7 @@ export default function Graph (props) {
 
     };
 
-    const removeElAndNewZoom = ()=>{
+    const removeElAndNewZoom = () => {
         zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current.newProps, setZoomState, setZOOMINFO)
         zoomObjRefs.current.brush = d3Zoom.brush(stateRefs.current.newProps, setBrushState)
         d3Refs.current.linePartei = lines.curve(stateRefs.current.newProps, "partei")
