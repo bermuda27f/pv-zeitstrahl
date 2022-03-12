@@ -136,39 +136,37 @@ function App (){
 
     // FIRST DRAW:
 
-    useEffect(() => {
-        if(!firstSet){
-            
-            const sizeData = calc.size({
-                ...state,
-                startDate : startDate,
-                stopDate : stopDate,
-                })
+    if(!firstSet && state.mainRef.current){
+        
+        const sizeData = calc.size({
+            ...state,
+            startDate : startDate,
+            stopDate : stopDate,
+            })
 
-            const data = {
-                wahlen : data_wahlen,
-                infos : data_infos,
-                perioden : data_perioden,
-            }
-
-            const newState = {
-                ...state,
-                ...sizeData,
-                data : {
-                    ...data,
-                    stroemungen : calc.setStroemungen(data_infos, stroemungen),
-                    pathWahlen : calc.setWahlData({...state, data : data}),
-                }
-            }
-            setState(newState);
-            setPARTEI({ 
-                type : "INIT",
-                value : calc.setInitParteiState(data.infos, stroemungen), 
-                data : data.infos,
-            });     
-            setFirstSet(true)
+        const data = {
+            wahlen : data_wahlen,
+            infos : data_infos,
+            perioden : data_perioden,
         }
-    },[state, firstSet]);
+
+        const newState = {
+            ...state,
+            ...sizeData,
+            data : {
+                ...data,
+                stroemungen : calc.setStroemungen(data_infos, stroemungen),
+                pathWahlen : calc.setWahlData({...state, data : data}),
+            }
+        }
+        setState(newState);
+        setPARTEI({ 
+            type : "INIT",
+            value : calc.setInitParteiState(data.infos, stroemungen), 
+            data : data.infos,
+        });     
+        setFirstSet(true)
+    }
 
     useEffect(() => { 
         if(firstSet && state.selectionsSet && (state.mainRefSize !== mainRef.current.clientWidth)){ 
