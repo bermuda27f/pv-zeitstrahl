@@ -66,7 +66,7 @@ export function setStroemungen(info, stroemungen) {
   return tmp;
 }
 
-export function setInitParteiState (info, _stroemungen) {
+export function setInitParteiState (info, stroemungen) {
 
     let tmp = { 
       hide_all : true,
@@ -75,7 +75,7 @@ export function setInitParteiState (info, _stroemungen) {
     };
 
     info.forEach((x) => { tmp["checked_" + x.ORG] = true });
-    _stroemungen.forEach((x) => { tmp[x] = true });
+    stroemungen.forEach((x) => { tmp[x] = true });
 
     return {
       ...tmp,
