@@ -57,8 +57,7 @@ export function setStroemungen(info, stroemungen) {
       let color = undefined;
       info.forEach((y) => {
           if (y.Richtung === x) {
-              if (!color)
-                  color = y.Farbcode;
+              color = y.Farbcode;
               parteien.push(y.ORG);
           }
       });
