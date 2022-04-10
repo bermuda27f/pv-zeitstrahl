@@ -6,3 +6,12 @@
 - made with [d3](https://github.com/d3/d3) and [create-react-app](https://github.com/facebook/create-react-app)  
 - [live demo](https://codesandbox.io/s/pv-zeitstrahl-xhrr83)
 
+## installation
+
+- install git and node.js on your machine
+- open your terminal, select desired location, type: 
+- git clone https://github.com/bermuda27f/pv-zeitstrahl-02.git
+- npm install
+- cd pv-zeitstrahl-02
+- npm start
+
