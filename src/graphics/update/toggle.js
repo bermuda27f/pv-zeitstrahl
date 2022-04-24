@@ -110,8 +110,8 @@ export function highlighter({ state, zoomInfo }, d, mode, type) {
     const date_start = new Date(d.start);
     const date_end = new Date(d.end);
     const coords = {
-        x: zoomInfo.zoomScale(date_start),
-        width : zoomInfo.zoomScale(date_end) - zoomInfo.zoomScale(date_start)
+        x: zoomInfo.scale(date_start),
+        width : zoomInfo.scale(date_end) - zoomInfo.scale(date_start)
     }
 
     state.selections[type + "HL"].select("#rect")

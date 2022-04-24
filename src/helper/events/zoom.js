@@ -20,8 +20,8 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
         setZOOMINFO({
             type: "MULTIPLE",
             value: {
-                zoomScale : newXScale,
-                zoomState : t,
+                scale : newXScale,
+                transform : t,
                 range : range,
                 // string format
                 _startDate: newXScale.invert(start).toLocaleDateString("en-EN", state.dateOptions),

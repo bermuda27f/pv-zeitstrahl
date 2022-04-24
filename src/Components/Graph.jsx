@@ -19,8 +19,8 @@ export default function Graph (props) {
     const [zoomState, setZoomState] = useState(null)
     const [brushState, setBrushState] = useState(null)
     const [zoomInfo, setZOOMINFO] = useReducer(reducer.mutables, {
-        zoomScale : null,
-        zoomState : null,
+        scale : null,
+        transform : null,
         range : null,
         _start_: null,
         _stop_: null,
@@ -113,13 +113,13 @@ export default function Graph (props) {
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            zoomGraph.perioden(stateRefs.current, stateRefs.current.zoomInfo.zoomScale)
+            zoomGraph.perioden(stateRefs.current, stateRefs.current.zoomInfo.scale)
             toggle.handles(stateRefs.current, "perioden", props.mutables.handle_perioden)
         }
     }, [props.mutables.handle_perioden])
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.zoomScale, "wahlen")
+            zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.scale, "wahlen")
             toggle.handles(stateRefs.current, "wahlen", props.mutables.handle_wahlen)
         }
     }, [props.mutables.handle_wahlen])

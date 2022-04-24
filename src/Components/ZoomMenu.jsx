@@ -31,15 +31,15 @@ export default function ZoomMenu(props) {
       <Fragment>
         <span>zoom:</span>
         <button
-            disabled = { props.zoomInfo.zoomState === null ? false : props.zoomInfo.zoomState.k >= props.state.maxScale ? true : false }
+            disabled = { props.zoomInfo.transform === null ? false : props.zoomInfo.transform.k >= props.state.maxScale ? true : false }
             onClick = {() => { handleZoom("+")}}> +
         </button>
         <button
-            disabled = { props.zoomInfo.zoomState === null ? true : props.zoomInfo.zoomState.k === 1 ? true : false }
+            disabled = { props.zoomInfo.transform === null ? true : props.zoomInfo.transform.k === 1 ? true : false }
             onClick = {() => { handleZoom("-")}}> -
         </button>
         <button
-            disabled = { props.zoomInfo.zoomState === null ? true : props.zoomInfo.zoomState.k === 1 ? true : false }
+            disabled = { props.zoomInfo.transform === null ? true : props.zoomInfo.transform.k === 1 ? true : false }
             onClick = {() => { handleZoom("Reset Zoom")}}> reset
         </button>
     </Fragment>
