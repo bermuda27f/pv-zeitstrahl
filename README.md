@@ -13,6 +13,6 @@
 - open your terminal, select desired location, type: 
 
 git clone https://github.com/bermuda27f/pv-zeitstrahl-02.git  
-npm install  
 cd pv-zeitstrahl-02  
+npm install  
 npm start  
