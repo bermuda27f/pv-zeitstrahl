@@ -18,46 +18,46 @@ import { deleteTooltip } from '../../graphics/draw/toolTips.js';
 
 export function killSwitch(stateRefs){
         
-    if(stateRefs.current.newProps.highlight && stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
-        stateRefs.current.newProps.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
-        if(stateRefs.current.newProps.highlight.ident === "partei") stateRefs.current.newProps.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
-        handleEvents.toggle(stateRefs.current.newProps, false, "switch", "click")
+    if(stateRefs.highlight && stateRefs.firstSet && stateRefs.isDrawed){
+        stateRefs.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
+        if(stateRefs.highlight.ident === "partei") stateRefs.setPARTEI({ type: "KILL_HIGHLIGHT_PARTEI"})
+        handleEvents.toggle(stateRefs, false, "switch", "click")
     }
 };
 
 export function zoomIt(stateRefs, zoomObjRefs){
-    if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed) {
-        const newXScale = stateRefs.current.zoomState.rescaleX(stateRefs.current.newProps.state.x_scale);
-        const range = newXScale.range().map(stateRefs.current.zoomState.invertX, stateRefs.current.zoomState);
+    if(stateRefs.firstSet && stateRefs.isDrawed) {
+        const newXScale = stateRefs.zoomState.rescaleX(stateRefs.state.x_scale);
+        const range = newXScale.range().map(stateRefs.zoomState.invertX, stateRefs.zoomState);
 
-        stateRefs.current.newProps.state.selections.context.call(zoomObjRefs.current.brush.move, range);
-        zoomGraph.curves(stateRefs.current.newProps, newXScale); 
+        stateRefs.state.selections.context.call(zoomObjRefs.current.brush.move, range);
+        zoomGraph.curves(stateRefs, newXScale); 
 
-        if(stateRefs.current.newProps.mutables.handle_perioden) zoomGraph.perioden(stateRefs.current.newProps, newXScale)
-        if(stateRefs.current.newProps.mutables.handle_wahlen) zoomGraph.highlightLines(stateRefs.current.newProps, newXScale, "wahlen")
+        if(stateRefs.mutables.handle_perioden) zoomGraph.perioden(stateRefs, newXScale)
+        if(stateRefs.mutables.handle_wahlen) zoomGraph.highlightLines(stateRefs, newXScale, "wahlen")
         
-        if(stateRefs.current.newProps.highlight.ident === "perioden"){ zoomGraph.highlights(stateRefs.current.newProps, newXScale, "main");}
+        if(stateRefs.highlight.ident === "perioden"){ zoomGraph.highlights(stateRefs, newXScale, "main");}
 
-        zoomGraph.bg(stateRefs.current.newProps, newXScale, "mainGraphBG");
-        zoomGraph.jetzt(stateRefs.current.newProps, newXScale);
-        zoomGraph.xAxis(stateRefs.current.newProps, newXScale, "main");
+        zoomGraph.bg(stateRefs, newXScale, "mainGraphBG");
+        zoomGraph.jetzt(stateRefs, newXScale);
+        zoomGraph.xAxis(stateRefs, newXScale, "main");
     }
 };
 
 export function brushIt(stateRefs, zoomObjRefs){
-    if(stateRefs.current.newProps.firstSet && stateRefs.current.brushState !== null && stateRefs.current.isDrawed){
-        stateRefs.current.newProps.state.selections.mainGraph.call(
+    if(stateRefs.firstSet && stateRefs.brushState !== null && stateRefs.isDrawed){
+        stateRefs.state.selections.mainGraph.call(
             zoomObjRefs.current.zoom.transform, 
                 d3_zoom.zoomIdentity
-                    .scale(stateRefs.current.brushState.k)
-                    .translate(stateRefs.current.brushState.x, 0)
+                    .scale(stateRefs.brushState.k)
+                    .translate(stateRefs.brushState.x, 0)
         );
     }
 };
 
 export function setSelections(stateRefs, zoomObjRefs, d3Refs, svg_ref, nav_ref){
-    stateRefs.current.newProps.setState({
-        ...stateRefs.current.newProps.state,
+    stateRefs.setState({
+        ...stateRefs.state,
         zoomObject : zoomObjRefs.current.zoom,
         lines : {
             partei : d3Refs.current.linePartei,
@@ -112,73 +112,72 @@ export function drawIt(svg_ref, nav_ref, stateRefs, d3Refs, zoomObjRefs){
 
     const defs = svg.append("defs").attr("id", "graphDefs");
 
-    svgDef.set(defs, stateRefs.current.newProps);
+    svgDef.set(defs, stateRefs);
 
     const mainGraph = svg.append("g").attr("id", "mainGraph")
-        .attr('transform', `translate(${ stateRefs.current.newProps.state.graph.x},${ stateRefs.current.newProps.state.graph.y})`)
+        .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", 1)
 
     const mainGraphBG = mainGraph.append("g").attr("id", "mainGraphBG")
 
     const navGroup = nav.append("g").attr("id", "navGroup")
-        .attr('transform', `translate(${ stateRefs.current.newProps.state.navigation.x},${0})`)
+        .attr('transform', `translate(${ stateRefs.state.navigation.x},${0})`)
 
-    linesPatterns.graphBackground(mainGraphBG, stateRefs.current.newProps, "graph", false)
-    linesPatterns.frame(mainGraph, stateRefs.current.newProps)
-    misc.jetzt(stateRefs.current.newProps, mainGraph, "main")
+    linesPatterns.graphBackground(mainGraphBG, stateRefs, "graph", false)
+    linesPatterns.frame(mainGraph, stateRefs)
+    misc.jetzt(stateRefs, mainGraph, "main")
 
     // wahlen
-    misc.huerde(stateRefs.current.newProps, mainGraph)
-    curves.parteien(mainGraph, stateRefs.current.newProps, d3Refs.linePartei)
+    misc.huerde(stateRefs, mainGraph)
+    curves.parteien(mainGraph, stateRefs, d3Refs.linePartei)
 
     // achsen
-    axis.x(stateRefs.current.newProps, mainGraph, "main")
-    axis.y(stateRefs.current.newProps, mainGraph)
+    axis.x(stateRefs, mainGraph, "main")
+    axis.y(stateRefs, mainGraph)
     // label
     label.yAxis(mainGraph, "wahlen")
     // context
-    navigation.context(stateRefs.current.newProps, navGroup, zoomObjRefs.current.brush)
+    navigation.context(stateRefs, navGroup, zoomObjRefs.current.brush)
 
     const periodenGroup = mainGraph.append("g").attr("class", "periodenGroup")
-        .attr("opacity", stateRefs.current.newProps.mutables.handle_perioden ? 1 : 0)
+        .attr("opacity", stateRefs.mutables.handle_perioden ? 1 : 0)
     const wahlenGroup = mainGraph.append("g").attr("class", "wahlenGroup")
-        .attr("opacity", stateRefs.current.newProps.mutables.handle_wahlen ? 1 : 0)
+        .attr("opacity", stateRefs.mutables.handle_wahlen ? 1 : 0)
 
-    linesPatterns.highlightLine(stateRefs.current.newProps, periodenGroup, "perioden");
-    linesPatterns.highlightLine(stateRefs.current.newProps, wahlenGroup, "wahlen")
+    linesPatterns.highlightLine(stateRefs, periodenGroup, "perioden");
+    linesPatterns.highlightLine(stateRefs, wahlenGroup, "wahlen")
 
-    highlighter.recGraph(stateRefs.current.newProps, mainGraph, "main")
+    highlighter.recGraph(stateRefs, mainGraph, "main")
 
     mainGraph.call(zoomObjRefs.current.zoom)
         .on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
-    zoomHelper.initZoom(mainGraph, zoomObjRefs.current.zoom, stateRefs.current.newProps.zoomInfo, stateRefs.current.newProps)
+    zoomHelper.initZoom(mainGraph, zoomObjRefs.current.zoom, stateRefs)
 
 };
 
 export function handleMouse(stateRefs){
 
-    if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
+    if(stateRefs.firstSet && stateRefs.isDrawed){
 
-        const { mouseEvents : mouse } = stateRefs.current.newProps
-        const { highlight } = stateRefs.current.newProps
+        const { mouseEvents : mouse, highlight } = stateRefs
 
-        const same = check.sameHighlight (stateRefs.current.newProps, mouse.type, mouse.key)
+        const same = check.sameHighlight (stateRefs, mouse.type, mouse.key)
         const isPeriod = mouse.type === "perioden"
         const wasPeriod = highlight.ident === "perioden"
 
         if(mouse.mouseEvent === "enter") {
-            handleEvents.toggle(stateRefs.current.newProps, true, "new", mouse.mouseEvent); 
-            handleEvents.showTooltip(stateRefs.current.newProps)}
+            handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent); 
+            handleEvents.showTooltip(stateRefs)}
         else if(mouse.mouseEvent === "leave") { 
             if((!highlight.highlight_main && !same) || (!highlight.highlight_main && same)){
                 deleteTooltip(); 
-                handleEvents.toggle(stateRefs.current.newProps, false, "new", mouse.mouseEvent); 
+                handleEvents.toggle(stateRefs, false, "new", mouse.mouseEvent); 
             }
             else if(highlight.highlight_main && !same){
                 deleteTooltip(); 
-                handleEvents.toggle(stateRefs.current.newProps, false, "new", mouse.mouseEvent); 
+                handleEvents.toggle(stateRefs, false, "new", mouse.mouseEvent); 
             }
         }
 
@@ -187,36 +186,36 @@ export function handleMouse(stateRefs){
             // highlight switch
             if (highlight.highlight_main && !same){
                 if((isPeriod && wasPeriod)){
-                    handleEvents.toggle(stateRefs.current.newProps, true, "new", mouse.mouseEvent)
+                    handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
                 }
                 else {
-                    handleEvents.toggle(stateRefs.current.newProps, false, "switch", mouse.mouseEvent)
-                    handleEvents.toggle(stateRefs.current.newProps, true, "new", mouse.mouseEvent)
+                    handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
+                    handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
                 }
             }
             // highlight off
             else if(highlight.highlight_main && same){
-                handleEvents.toggle(stateRefs.current.newProps, false, "switch", mouse.mouseEvent)
+                handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
             }
             // highlight new
             else if(!highlight.highlight_main){
-                handleEvents.toggle(stateRefs.current.newProps, true, "new", mouse.mouseEvent)
+                handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
             }
 
             const setType = (highlight.highlight_main && same) ? 
                 "KILL_HIGHLIGHT_MAIN" : "HIGHLIGHT_MAIN";
 
-            stateRefs.current.newProps.setHIGHLIGHT({
+            stateRefs.setHIGHLIGHT({
                 type : setType,
-                infos :  stateRefs.current.newProps.state.data[mouse.dataSet],
+                infos :  stateRefs.state.data[mouse.dataSet],
                 key : mouse.key,
                 ident : mouse.type,
-                element : calc.getElement(stateRefs.current.newProps.state.data[mouse.dataSet], mouse.keyName, mouse.key)
+                element : calc.getElement(stateRefs.state.data[mouse.dataSet], mouse.keyName, mouse.key)
             })
 
             switch(mouse.type){
                 case "partei":
-                    stateRefs.current.newProps.setPARTEI({
+                    stateRefs.setPARTEI({
                         type : "PARTEI_HIGHLIGHT",
                         highlight : highlight,
                         partei : mouse.key,
@@ -226,7 +225,7 @@ export function handleMouse(stateRefs){
                     break;
             }
             if(highlight.ident === "partei" && mouse.type !== "partei" ){
-                stateRefs.current.newProps.setPARTEI({ type : "KILL_HIGHLIGHT_PARTEI" });
+                stateRefs.setPARTEI({ type : "KILL_HIGHLIGHT_PARTEI" });
             }
         }
     }   

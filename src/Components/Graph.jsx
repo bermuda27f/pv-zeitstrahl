@@ -36,14 +36,7 @@ export default function Graph (props) {
         e : null,
     })
 
-    const newProps = {
-        ...props, 
-        zoomInfo : zoomInfo,
-        mouseEvents : mouseEvents,
-        setMOUSE : setMOUSE
-    }
-
-    // Refs:
+    // Refs handling:
 
     const svg_ref = useRef()
     const nav_ref = useRef()
@@ -55,32 +48,43 @@ export default function Graph (props) {
         linePartei : lines.curve(props, "partei")
     })
     const stateRefs = useRef({
+        ...props, 
+        zoomInfo : zoomInfo,
+        mouseEvents : mouseEvents,
         isDrawed : isDrawed,
-        newProps : newProps,
         zoomState : zoomState,
         brushState : brushState,
+        setMOUSE : setMOUSE
     });
 
     useEffect(()=>{
-        if(isDrawed) stateRefs.current.isDrawed = isDrawed
-        stateRefs.current.newProps = newProps
-        stateRefs.current.zoomState = zoomState
-        stateRefs.current.brushState = brushState
+        stateRefs.current.firstSet = props.firstSet;
+        stateRefs.current.state = props.state;
+        stateRefs.current.mutables = props.mutables;
+        stateRefs.current.highlight = props.highlight;
+        stateRefs.current.parteienState = props.parteienState;
+        stateRefs.current.zoomInfo = zoomInfo;
+        stateRefs.current.mouseEvents = mouseEvents;
+        stateRefs.current.isDrawed = isDrawed;
+        stateRefs.current.zoomState = zoomState;
+        stateRefs.current.brushState = brushState;
     })
 
     const removeElAndNewZoom = () => {
-        zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current.newProps, setZoomState, setZOOMINFO)
-        zoomObjRefs.current.brush = d3Zoom.brush(stateRefs.current.newProps, setBrushState)
-        d3Refs.current.linePartei = lines.curve(stateRefs.current.newProps, "partei")
-        stateRefs.current.newProps.state.selections.container.select("defs").remove()
-        stateRefs.current.newProps.state.selections.container.select("#mainGraph").remove()
-        stateRefs.current.newProps.state.selections.navContainer.select("#navGroup").remove()
+        zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current, setZoomState, setZOOMINFO)
+        zoomObjRefs.current.brush = d3Zoom.brush(stateRefs.current, setBrushState)
+        d3Refs.current.linePartei = lines.curve(stateRefs.current, "partei")
+        stateRefs.current.state.selections.container.select("defs").remove()
+        stateRefs.current.state.selections.container.select("#mainGraph").remove()
+        stateRefs.current.state.selections.navContainer.select("#navGroup").remove()
     };
 
+    //
+
     useEffect(()=>{ 
-        if(stateRefs.current.newProps.firstSet && !stateRefs.current.isDrawed) {
-            helper.drawIt(svg_ref, nav_ref, stateRefs, d3Refs, zoomObjRefs)
-            helper.setSelections(stateRefs, zoomObjRefs, d3Refs, svg_ref, nav_ref)
+        if(stateRefs.current.firstSet && !stateRefs.current.isDrawed) {
+            helper.drawIt(svg_ref, nav_ref, stateRefs.current, d3Refs, zoomObjRefs)
+            helper.setSelections(stateRefs.current, zoomObjRefs, d3Refs, svg_ref, nav_ref)
             drawed(true)
         }; 
     }, [])
@@ -88,56 +92,56 @@ export default function Graph (props) {
     // RESIZE:
 
     useEffect(()=>{ 
-        if(stateRefs.current.newProps.firstSet && stateRefs.current.newProps.state.selectionsSet && stateRefs.current.isDrawed) {
+        if(stateRefs.current.firstSet && stateRefs.current.state.selectionsSet && stateRefs.current.isDrawed) {
             removeElAndNewZoom()
-            helper.drawIt(svg_ref, nav_ref, stateRefs, d3Refs, zoomObjRefs)
-            helper.setSelections(stateRefs, zoomObjRefs, d3Refs, svg_ref, nav_ref)
+            helper.drawIt(svg_ref, nav_ref, stateRefs.current, d3Refs, zoomObjRefs)
+            helper.setSelections(stateRefs.current, zoomObjRefs, d3Refs, svg_ref, nav_ref)
         }
     }, [props.state.width])
 
     // ZOOM AND BRUSH:
 
     useEffect(()=>{ 
-        helper.zoomIt(stateRefs, zoomObjRefs) 
+        helper.zoomIt(stateRefs.current, zoomObjRefs) 
     }, [zoomState])
 
     useEffect(()=>{
-        helper.brushIt(stateRefs, zoomObjRefs)
+        helper.brushIt(stateRefs.current, zoomObjRefs)
     }, [brushState])
 
     // TOGGLE HANDLES:
 
     useEffect(()=>{ 
-        if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
-            zoomGraph.perioden(stateRefs.current.newProps, stateRefs.current.newProps.zoomInfo.zoomScale)
-            toggle.handles(stateRefs.current.newProps, "perioden", props.mutables.handle_perioden)
+        if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
+            zoomGraph.perioden(stateRefs.current, stateRefs.current.zoomInfo.zoomScale)
+            toggle.handles(stateRefs.current, "perioden", props.mutables.handle_perioden)
         }
     }, [props.mutables.handle_perioden])
     useEffect(()=>{ 
-        if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
-            zoomGraph.highlightLines(stateRefs.current.newProps, stateRefs.current.newProps.zoomInfo.zoomScale, "wahlen")
-            toggle.handles(stateRefs.current.newProps, "wahlen", props.mutables.handle_wahlen)
+        if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
+            zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.zoomScale, "wahlen")
+            toggle.handles(stateRefs.current, "wahlen", props.mutables.handle_wahlen)
         }
     }, [props.mutables.handle_wahlen])
     useEffect(()=>{ 
-        if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed){
-            toggle.label(stateRefs.current.newProps); 
+        if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
+            toggle.label(stateRefs.current); 
         }
     }, [props.mutables.labelPartei])
 
     useEffect(()=>{
-        helper.handleMouse(stateRefs)
+        helper.handleMouse(stateRefs.current)
     }, [mouseEvents.e])
 
     useEffect(()=>{ 
-        if(stateRefs.current.newProps.firstSet && stateRefs.current.isDrawed) {
-            toggle.curves(stateRefs.current.newProps); 
+        if(stateRefs.current.firstSet && stateRefs.current.isDrawed) {
+            toggle.curves(stateRefs.current); 
         }
     }, [props.parteienState])
 
     // ESCAPE:
     useEffect(()=>{
-        helper.killSwitch(stateRefs)
+        helper.killSwitch(stateRefs.current)
     }, [keyPress, props.killSwitch])
 
     return (

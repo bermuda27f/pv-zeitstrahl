@@ -71,7 +71,7 @@ export function zoomToElement (state, type, key, element){
                 .translate(-state.x_scale(new Date(time.start)), 0));
 }
 
-export function initZoom(zoomGroup, zoom, zoomInfo, { state }){
+export function initZoom(zoomGroup, zoom, { state, zoomInfo }){
 
     if(state.zoomObject){
         const start = new Date(zoomInfo._start_)
