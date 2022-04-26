@@ -5,7 +5,7 @@
 
 - made with [d3](https://github.com/d3/d3) and [create-react-app](https://github.com/facebook/create-react-app)  
 - [demo](https://bermuda27f.github.io/pv-zeitstrahl-02/)
-- [codesandbox](https://codesandbox.io/s/pv-zeitstrahl-sandbox-gcycx1)
+- [codesandbox](https://codesandbox.io/s/pv-zeitstrahl-1rt5p8)
 
 ## installation
 
