@@ -1,10 +1,10 @@
 export function curves({ state }, newXScale) {
 
     const newX = date => { return newXScale(new Date(date)) }
+    state.selections.circles.attr("cx", d => newX(d.Datum));
     state.lines.partei.x(d => newX(d.Datum));
     state.selections.paths.attr("d", state.lines.partei);
     state.selections.pathsClick.attr("d", state.lines.partei);
-    state.selections.circles.attr("cx", d => newX(d.Datum));
     state.selections.parteiLabel.attr("x", d => (newX(d.Datum) - 5));
     state.selections.fuenfProzentX.attr("x1", newX(state.defaultValues.huerdeDate));
     state.selections.fuenfProzentY

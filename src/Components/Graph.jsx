@@ -57,18 +57,16 @@ export default function Graph (props) {
         setMOUSE : setMOUSE
     });
 
-    useEffect(()=>{
-        stateRefs.current.firstSet = props.firstSet;
-        stateRefs.current.state = props.state;
-        stateRefs.current.mutables = props.mutables;
-        stateRefs.current.highlight = props.highlight;
-        stateRefs.current.parteienState = props.parteienState;
-        stateRefs.current.zoomInfo = zoomInfo;
-        stateRefs.current.mouseEvents = mouseEvents;
-        stateRefs.current.isDrawed = isDrawed;
-        stateRefs.current.zoomState = zoomState;
-        stateRefs.current.brushState = brushState;
-    })
+    useEffect(()=>{ stateRefs.current.state = props.state; }, [props.state])
+    useEffect(()=>{ stateRefs.current.firstSet = props.firstSet; }, [props.firstSet])
+    useEffect(()=>{ stateRefs.current.highlight = props.highlight; }, [props.highlight])
+    useEffect(()=>{ stateRefs.current.mutables = props.mutables; }, [props.mutables])
+    useEffect(()=>{ stateRefs.current.parteienState = props.parteienState; }, [props.parteienState])
+    useEffect(()=>{ stateRefs.current.zoomInfo = zoomInfo; }, [zoomInfo])
+    useEffect(()=>{ stateRefs.current.mouseEvents = mouseEvents; }, [mouseEvents])
+    useEffect(()=>{ stateRefs.current.isDrawed = isDrawed; }, [isDrawed])
+    useEffect(()=>{ stateRefs.current.zoomState = zoomState; }, [zoomState])
+    useEffect(()=>{ stateRefs.current.brushState = brushState; }, [brushState])
 
     const removeElAndNewZoom = () => {
         zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current, setZoomState, setZOOMINFO)
