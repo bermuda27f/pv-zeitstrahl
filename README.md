@@ -16,3 +16,5 @@ git clone https://github.com/bermuda27f/pv-zeitstrahl-02.git
 cd pv-zeitstrahl-02  
 npm install  
 npm start  
+
+thanks to [muratkemaldars](https://github.com/muratkemaldar) awesome [react-hooks with d3 repo](https://github.com/muratkemaldar/using-react-hooks-with-d3)!
