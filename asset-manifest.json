@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/pv-zeitstrahl/static/css/main.8df84c13.css",
+    "main.js": "/pv-zeitstrahl/static/js/main.7dbcefa8.js",
+    "index.html": "/pv-zeitstrahl/index.html",
+    "main.8df84c13.css.map": "/pv-zeitstrahl/static/css/main.8df84c13.css.map",
+    "main.7dbcefa8.js.map": "/pv-zeitstrahl/static/js/main.7dbcefa8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8df84c13.css",
+    "static/js/main.7dbcefa8.js"
+  ]
+}
