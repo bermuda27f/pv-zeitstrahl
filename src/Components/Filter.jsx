@@ -6,6 +6,19 @@ import { zoomToElement } from '../helper/zoom.js';
 
 export default function Filter(props) {
 
+    const translation = (name) => {
+        switch(name){
+            case "sozialistisch": return "socialist";
+            case "konservativ" : return "conservative";
+            case "sozialdemokratisch" : return "social democratic";
+            case "grün" : return "green";
+            case "national-konservativ" : return "national conservative";
+            case "ns / antisemitisch" : return "ns / antisemitic";
+            case "klientel" : return "other";
+            default : return name;
+        }
+    }
+
     const isolate = (org) => {
 
         if(!props.highlight.highlight_main){
@@ -97,7 +110,7 @@ export default function Filter(props) {
                                 style = {{ color: "white", backgroundColor : props.parteienState[x.richtung] === true ? x.color : "lightgrey" }}
                                 onClick = { () => toggleSpectrum(x.parteien, x.richtung) }
                             >
-                            {"..." + x.richtung }
+                            {"... " + translation(x.richtung) }
                             </button>
                         </div>
                     )
