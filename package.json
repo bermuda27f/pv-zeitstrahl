@@ -1,6 +1,6 @@
 {
   "name": "pv-zeitstrahl",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "author": "Stefan Koch <stefan@bermuda27f.de> (https://www.bermuda27f.de)",
   "dependencies": {

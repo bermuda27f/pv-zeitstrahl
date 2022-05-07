@@ -1,4 +1,5 @@
 import React, {Fragment } from 'react';
+import "../styles.css"
 
 export default function HandleCheckboxes(props) {
   
@@ -8,7 +9,7 @@ export default function HandleCheckboxes(props) {
 
   return (
     <Fragment>
-      <div style = {{ display: "flex" }}>
+      <div style = {{ display: "flex" }} className = "Text">
         <div>show elements: </div>
         <div >
           <input 

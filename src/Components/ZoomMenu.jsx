@@ -1,5 +1,7 @@
 import React, {Fragment} from 'react';
 
+import "../styles.css"
+
 import * as d3_ease from 'd3-ease';
 import * as d3_zoom from 'd3-zoom';
 
@@ -29,19 +31,30 @@ export default function ZoomMenu(props) {
     }
   return (
       <Fragment>
-        <span>zoom:</span>
-        <button
-            disabled = { props.zoomInfo.transform === null ? false : props.zoomInfo.transform.k >= props.state.maxScale ? true : false }
-            onClick = {() => { handleZoom("+")}}> +
-        </button>
-        <button
-            disabled = { props.zoomInfo.transform === null ? true : props.zoomInfo.transform.k === 1 ? true : false }
-            onClick = {() => { handleZoom("-")}}> -
-        </button>
-        <button
-            disabled = { props.zoomInfo.transform === null ? true : props.zoomInfo.transform.k === 1 ? true : false }
-            onClick = {() => { handleZoom("Reset Zoom")}}> reset
-        </button>
+        <div className = "Text ButtonContainer">
+            <span className = "Text menuText">zoom: </span>
+            <div className = "Buttons">
+                <button
+                    className = "ButtonText"
+                    disabled = { props.zoomInfo.transform === null ? false : props.zoomInfo.transform.k >= props.state.maxScale ? true : false }
+                    onClick = {() => { handleZoom("+")}}> +
+                </button>
+            </div>
+            <div className = "Buttons">
+                <button
+                    className = "ButtonText"
+                    disabled = { props.zoomInfo.transform === null ? true : props.zoomInfo.transform.k === 1 ? true : false }
+                    onClick = {() => { handleZoom("-")}}> -
+                </button>
+            </div>
+            <div className = "Buttons">
+                <button
+                    className = "ButtonText"
+                    disabled = { props.zoomInfo.transform === null ? true : props.zoomInfo.transform.k === 1 ? true : false }
+                    onClick = {() => { handleZoom("Reset Zoom")}}> reset
+                </button>
+            </div>
+        </div>
     </Fragment>
   );
 }

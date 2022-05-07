@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 
+import './styles.css'
+
 import * as reducer from "./helper/reducer.js"
 import * as check from './helper/check.js'
 import * as calc from './helper/calc_set.js'
@@ -11,7 +13,6 @@ import Checkboxes from './Components/Checkboxes';
 import MainGraph from './Components/Graph';
 import Filter from './Components/Filter';
 import PeriodeSelect from './Components/SelectPeriode';
-
 
 import * as d3_transition from 'd3-transition';
 import * as d3_ease from 'd3-ease';
@@ -205,11 +206,11 @@ function App (){
                 ref = {mainRef} 
                 style = {{flexWrap: "wrap", display: "flex", width: "100%" }} 
                 >  
-                <div style = {{ marginLeft: margin.left}}>
+                <div style = {{ marginLeft: margin.left, textDecoration : "underline wavy lightgrey"}} className = "Text" >
                     { "elections in germany since 1871" } 
                 </div>
                 <MainGraph {...mainProps} />
-                <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}}>
+                <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}} className = "Text" >
                     {highlight.highlight_main ? "HIGHLIGHT: " + highlight.element.Name : ""}
                     <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel
                     </button>
@@ -223,6 +224,7 @@ function App (){
                             setMUTABLES = { setMUTABLES }
                         />
                     </div>
+                    <hr style = {{ marginTop: "10px", marginBottom : "10px"}}></hr>
                     <Filter {...mainProps}/>
                 </div>
 

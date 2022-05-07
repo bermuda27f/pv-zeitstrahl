@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useReducer} from 'react';
 import ZoomMenu from './ZoomMenu';
 
+import '../styles.css'
+
 import { useKeyPress } from "../helper/hooks.js";
 
 import * as lines from  '../graphics/draw/lines.js';
@@ -145,7 +147,7 @@ export default function Graph (props) {
     return (
         <div>
             <div>
-                <div style = {{ textAlign: "right", marginRight: props.state.margin.right + props.state.padding}} >
+                <div style = {{ textAlign: "right", marginRight: props.state.margin.right + props.state.padding}} className = "Text">
                     <div> { "period: " + calc.zeit(props, zoomInfo) } </div>
                     <div> { "~ " + calc.dauer(zoomInfo)  }</div>
                 </div>

@@ -76,19 +76,23 @@ export default function Filter(props) {
     }
 
     return (
-        <div>
-            <div>toggle all:
+        <div className = "Text">
+            <div>{"toggle all: "}
                 <button 
+                    className = "Buttons ButtonsText"
+                    style = {{marginBottom: "10px"}}
                     disabled = { props.highlight.highlight_main }
                     onClick = { toggleAll }>
                     { props.parteienState["hide_all"] ? "hide all" : "show all" }
                 </button>
             </div>
-            <div style ={{display: "flex", flexWrap: "wrap", }}>toggle spectrum:
+            <div>{"toggle spectrum: "} </div>
+            <div style ={{marginBottom: "10px"}} className = "Text menuText">
                 {props.state.data.stroemungen.map((x)=>{
                     return (
-                        <div key={x.richtung} >
+                        <div key={x.richtung} style = {{padding: "1px"}}>
                             <button 
+                                className = "Buttons ButtonsText"
                                 disabled = { props.highlight.highlight_main }
                                 style = {{ color: "white", backgroundColor : props.parteienState[x.richtung] === true ? x.color : "lightgrey" }}
                                 onClick = { () => toggleSpectrum(x.parteien, x.richtung) }
@@ -99,7 +103,8 @@ export default function Filter(props) {
                     )
                 })}
             </div>
-            <div style ={{display: "flex", flexWrap: "wrap" }} >toggle parties:
+            <div className = "Text">{"toggle parties: "} </div>
+            <div style ={{display: "flex", flexWrap: "wrap" }} >
                 {props.state.data.infos.map((x)=>{
                     const isHighlight = props.highlight.ident === "partei" && props.highlight.key === x.ORG
                     if(excludeParteien(x.ORG)){
@@ -113,6 +118,7 @@ export default function Filter(props) {
                                     onChange = { () => toggleSingleElement(x.ORG) }
                                 />
                                 <button 
+                                    className = "Buttons ButtonsText"
                                     disabled = { props.highlight.highlight_main && !isHighlight } 
                                     onClick={()=>{ isolate(x.ORG) }}>
                                         {props.highlight.highlight_main && isHighlight ? "cancel" : "isolate"}
