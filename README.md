@@ -12,7 +12,7 @@
 - if you haven't already: install git and node.js on your machine
 - open your terminal, select desired location, type: 
 
-git clone https://github.com/bermuda27f/pv-zeitstrahl-02.git  
+git clone https://github.com/bermuda27f/pv-zeitstrahl.git  
 cd pv-zeitstrahl-02  
 npm install  
 npm start  
