@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "author": "Stefan Koch <stefan@bermuda27f.de> (https://www.bermuda27f.de)",
-  "homepage": "https://bermuda27f.github.io/pv-zeitstrahl-02",
+  "homepage": "https://bermuda27f.github.io/pv-zeitstrahl",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
