@@ -61,7 +61,7 @@ export function setStroemungen(info, stroemungen) {
               parteien.push(y.ORG);
           }
       });
-      tmp.push({ "richtung": x, "color": color, "parteien": parteien });
+      tmp.push({ richtung : x, color : color, parteien: parteien });
   });
   return tmp;
 }
@@ -114,18 +114,18 @@ export function getElement (y, key_type, key) {
   })
 }
 
-const locale = d3_timeFormat.timeFormatLocale({
-  "dateTime": "%A, %e %B %Y г. %X",
-  "date": "%d.%m.%Y",
-  "time": "%H:%M:%S",
-  "periods": ["AM", "PM"],
-  "days": ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
-  "shortDays": ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
-  "months": ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-  "shortMonths": ["Jan.", "Feb.", "Mrz.", "Apr.", "Mai", "Jun.", "Jul.", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."]
-});
-
 export function setTime (date){
+
+  const locale = d3_timeFormat.timeFormatLocale({
+    dateTime : "%A, %e %B %Y г. %X",
+    date : "%d.%m.%Y",
+    time : "%H:%M:%S",
+    periods : ["AM", "PM"],
+    days : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+    shortDays : ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+    months : ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+    shortMonths : ["Jan.", "Feb.", "Mrz.", "Apr.", "Mai", "Jun.", "Jul.", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."]
+  });
 
   const formatMillisecond = locale.format(".%L"),
   formatSecond = locale.format(":%S"),

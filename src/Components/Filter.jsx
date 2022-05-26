@@ -49,9 +49,9 @@ export default function Filter(props) {
 
     const toggleSingleElement = (org) => {
         props.setPARTEI({ 
-            "type" : "PARTEIEN",
-            "partei" : org , 
-            "value" : props.parteienState["checked_" + org] ? false : true,
+            type : "PARTEIEN",
+            partei : org , 
+            value : props.parteienState["checked_" + org] ? false : true,
         });
     };
     
@@ -63,10 +63,10 @@ export default function Filter(props) {
         let newStroemungState = setNewStroemungState(props.state.data.stroemungen, undefined, newCondition)
 
         props.setPARTEI({
-                "type" : "STROEMUNGEN_ALL",
-                "condition" : newCondition,
-                "value_partei" : newParteiState, 
-                "value_stroemung" : newStroemungState, 
+            type : "STROEMUNGEN_ALL",
+            condition : newCondition,
+            value_partei : newParteiState, 
+            value_stroemung : newStroemungState, 
         })        
     }
 
@@ -83,8 +83,8 @@ export default function Filter(props) {
         })
 
         props.setPARTEI({
-            "type" : "NEW_SET",
-            "value" : newSet 
+            type : "NEW_SET",
+            value : newSet 
         });
     }
 
