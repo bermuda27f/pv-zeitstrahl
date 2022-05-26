@@ -147,7 +147,7 @@ export default function Graph (props) {
     return (
         <div>
             <div>
-                <div style = {{ textAlign: "right", marginRight: props.state.margin.right + props.state.padding}} className = "Text">
+                <div style = {{ textAlign: "right", marginRight: props.state.margin.right }} className = "Text">
                     <div> { "period: " + calc.zeit(props, zoomInfo) } </div>
                     <div> { "~ " + calc.dauer(zoomInfo)  }</div>
                 </div>

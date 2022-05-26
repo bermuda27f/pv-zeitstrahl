@@ -182,7 +182,7 @@ export function size(state){
   const navPart = navHeight / 5;
   const marginNav = {top : 5, right : state.margin.right, bottom : 5, left : state.margin.left}
 
-  const width = state.mainRef.current.clientWidth - state.margin.left - state.margin.right - state.padding
+  const width = state.mainRef.current.clientWidth - state.margin.left - state.margin.right
   const clientWidth = state.mainRef.current.clientWidth
 
   const graph_ratio = state.mainRef.current.clientWidth > state.breakpoint ? 0.4 : 0.45;
