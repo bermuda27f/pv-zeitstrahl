@@ -10,7 +10,7 @@
 ## installation
 
 - if you haven't already: install git, node.js and yarn on your machine
-- open your terminal, select desired location, type: 
+- open your terminal, select the desired location, type: 
 
 git clone https://github.com/bermuda27f/pv-zeitstrahl.git  
 cd pv-zeitstrahl  
