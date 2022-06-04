@@ -1,6 +1,6 @@
-## pv-zeitstrahl
+## pv-zeitstrahl-curves
 
-- zoomable & interactive graphs with a highlight system  
+- zoomable & interactive curves with a highlight system  
 - extract from [politischevektoren.de/Arbeiten/Datenvisualisierung/Wahlen-in-Deutschland-seit-1871](https://politischevektoren.de/Arbeiten/Datenvisualisierung/Wahlen-in-Deutschland-seit-1871)
 
 - made with [d3](https://github.com/d3/d3) and [create-react-app](https://github.com/facebook/create-react-app)  
@@ -14,6 +14,7 @@
 
 git clone https://github.com/bermuda27f/pv-zeitstrahl.git  
 cd pv-zeitstrahl  
+git checkout curves
 npm install  
 npm start  
 
