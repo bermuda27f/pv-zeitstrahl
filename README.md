@@ -4,8 +4,8 @@
 - extract from [politischevektoren.de/Arbeiten/Datenvisualisierung/Wahlen-in-Deutschland-seit-1871](https://politischevektoren.de/Arbeiten/Datenvisualisierung/Wahlen-in-Deutschland-seit-1871)
 
 - made with [d3](https://github.com/d3/d3) and [create-react-app](https://github.com/facebook/create-react-app)  
-- [demo](https://bermuda27f.github.io/pv-zeitstrahl/)
-- [codesandbox](https://codesandbox.io/s/condescending-stonebraker-rnz7p2)
+- [demo (curves)](https://bermuda27f.github.io/pv-zeitstrahl/)
+- [codesandbox (curves)](https://codesandbox.io/s/condescending-stonebraker-rnz7p2)
 
 ## installation
 
@@ -13,7 +13,8 @@
 - open your terminal, select desired location, type: 
 
 git clone https://github.com/bermuda27f/pv-zeitstrahl.git  
-cd pv-zeitstrahl  
+cd pv-zeitstrahl
+git checkout curves
 npm install  
 npm start  
 
