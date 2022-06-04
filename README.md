@@ -1,11 +1,11 @@
-## pv-zeitstrahl-curves
+## pv-zeitstrahl
 
 - zoomable & interactive graph with a highlight system  
 - extract from [politischevektoren.de/Arbeiten/Datenvisualisierung/Wahlen-in-Deutschland-seit-1871](https://politischevektoren.de/Arbeiten/Datenvisualisierung/Wahlen-in-Deutschland-seit-1871)
 
 - made with [d3](https://github.com/d3/d3) and [create-react-app](https://github.com/facebook/create-react-app)  
-- [demo (with -curves)](https://bermuda27f.github.io/pv-zeitstrahl/)
-- [codesandbox (with -curves)](https://codesandbox.io/s/pv-zeitstrahl-ikqxkw)
+- [demo (curves)](https://bermuda27f.github.io/pv-zeitstrahl/)
+- [codesandbox (curves)](https://codesandbox.io/s/pv-zeitstrahl-ikqxkw)
 
 ## installation
 
@@ -14,7 +14,7 @@
 
 git clone https://github.com/bermuda27f/pv-zeitstrahl.git  
 cd pv-zeitstrahl  
-... choose your disered branch with git checkout branchname (e.g. curves) 
+git checkout branchname (e.g. curves)   
 yarn install  
 yarn run start  
 
