@@ -133,6 +133,7 @@ function App (){
     })
 
     // parteien
+    
     const [parteienState, setPARTEI] = useReducer(reducer.partei, {})
 
     // FIRST DRAW:
@@ -165,7 +166,8 @@ function App (){
             type : "INIT",
             value : calc.setInitParteiState(data.infos, stroemungen), 
             data : data.infos,
-        });     
+        });
+
         setFirstSet(true)
     }
 
@@ -206,7 +208,7 @@ function App (){
                 ref = {mainRef} 
                 style = {{flexWrap: "wrap", display: "flex", width: "100%" }} 
                 >  
-                <div style = {{ marginLeft: margin.left, textDecoration : "underline wavy lightgrey"}} className = "Text" >
+                <div style = {{ marginLeft: margin.left, textDecoration : "underline lightgrey"}} className = "Text" >
                     { "elections in germany since 1871" } 
                 </div>
                 <MainGraph {...mainProps} />
