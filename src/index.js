@@ -10,7 +10,6 @@ import * as calc from './helper/calc_set.js'
 import { useWindowSize } from "./helper/hooks.js";
 
 import MainGraph from './Components/Graph';
-import Filter from './Components/Filter';
 import PeriodeSelect from './Components/SelectKaiser';
 
 import * as d3_transition from 'd3-transition';
