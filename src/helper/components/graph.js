@@ -5,7 +5,7 @@ import * as d3_select from 'd3-selection';
 import * as linesPatterns from '../../graphics/draw/patternsLines.js';
 import * as svgDef from '../../graphics/draw/defs.js';
 import * as misc from  '../../graphics/draw/misc.js';
-import * as curves from  '../../graphics/draw/curves.js';
+import * as curves from  '../../graphics/draw/bars.js';
 import * as highlighter from  '../../graphics/draw/highlighter.js';
 import * as axis from  '../../graphics/draw/axis.js';
 import * as label from  '../../graphics/draw/label.js';
@@ -41,17 +41,6 @@ export function zoomIt(stateRefs, zoomObjRefs){
         zoomGraph.bg(stateRefs, newXScale, "mainGraphBG");
         zoomGraph.jetzt(stateRefs, newXScale);
         zoomGraph.xAxis(stateRefs, newXScale, "main");
-    }
-};
-
-export function brushIt(stateRefs, zoomObjRefs){
-    if(stateRefs.firstSet && stateRefs.brushState !== null && stateRefs.isDrawed){
-        stateRefs.state.selections.mainGraph.call(
-            zoomObjRefs.current.zoom.transform, 
-                d3_zoom.zoomIdentity
-                    .scale(stateRefs.brushState.k)
-                    .translate(stateRefs.brushState.x, 0)
-        );
     }
 };
 

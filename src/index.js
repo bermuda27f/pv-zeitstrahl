@@ -11,22 +11,15 @@ import { useWindowSize } from "./helper/hooks.js";
 
 import MainGraph from './Components/Graph';
 import Filter from './Components/Filter';
-import PeriodeSelect from './Components/SelectPeriode';
+import PeriodeSelect from './Components/SelectKaiser';
 
 import * as d3_transition from 'd3-transition';
 import * as d3_ease from 'd3-ease';
 
-import data_wahlen from "./data/wahlen.json";
-import data_infos from "./data/infos.json";
-import data_perioden from "./data/perioden.json";
+import data_kaiser from "./data/kaiser.json";
+import data_ereignisse from "./data/ereignisse.json";
 
-const stroemungen = [
-    "konservativ", "sozialdemokratisch", "liberal", "sozialistisch", "grün",
-    "national-konservativ", "ns / antisemitisch", "klientel", 
-]
-
-const startDate = "1864-01-01T00:00:00";
-const stopDate = "2025-12-31T00:00:00";
+const startDate = -125;
 
 const standardColor = "#141452";
 const highlightColor = "magenta";
@@ -62,54 +55,27 @@ function App (){
 
         data : null,
 
-        defaultValues : {
-            huerdeDate : "1953-07-08T00:00:00",
-            startDate : startDate,
-            stopDate : stopDate,
-            pos : [new Date(startDate).getTime(), stopDate],
-        },
         timeMargin : {
             normal : 100,
-            wahlen : 3400,
-            wahlenEdge : 300
         },
 
         margin : margin,
         padding : padding,
 
-        stroemungen : stroemungen,
         highlightColor : highlightColor,
         standardColor : standardColor,
 
-        huerde : {
-            opacity : 0.2,
-            stroke : "3, 3"
-        },
-        
-        pathOpacity : {
-            active : 0.7, disabled : 0.1
-        },
         textOpacity : {
             active : 0.7, disabled: 0
         },
-        circleOpacity : {
-            highlight : 1, active : 0.7, disabled : 0.1
-        },
-        circleRadius : 3.5,
-        graphHighlight : {
-            pathActive : 3, pathIdle : 2, clickPathWidth : 11,
-            circleActive : 2, circleIdle : 1
-        },
+
         ereignisHandle : {
             opacity : 0.33, color : standardColor
         },
-        periodenRect : {
-            opacity : 0.23
-        },
 
-        lines : null,
         selections : null,
         zoomObject : null
+
     });
 
     // highlight
@@ -120,12 +86,7 @@ function App (){
         key : null,
         infos : null,
         element : null,
-        staat : null
     })
-
-    // parteien
-    
-    const [parteienState, setPARTEI] = useReducer(reducer.partei, {})
 
     // FIRST DRAW:
 
@@ -133,14 +94,13 @@ function App (){
         
         const sizeData = calc.size({
             ...state,
-            startDate : startDate,
-            stopDate : stopDate,
+            startDate : new Date(startDate),
+            stopDate : new Date(data_kaiser[data_kaiser.length - 1].end),
             })
 
         const data = {
-            wahlen : data_wahlen,
-            infos : data_infos,
-            perioden : data_perioden,
+            kaiser : data_kaiser,
+            ereignisse : data_ereignisse
         }
 
         const newState = {
@@ -148,17 +108,10 @@ function App (){
             ...sizeData,
             data : {
                 ...data,
-                stroemungen : calc.setStroemungen(data_infos, stroemungen),
-                pathWahlen : calc.setWahlData({...state, data : data}),
             }
         }
-        setState(newState);
-        setPARTEI({ 
-            type : "INIT",
-            value : calc.setInitParteiState(data.infos, stroemungen), 
-            data : data.infos,
-        });
 
+        setState(newState);
         setFirstSet(true)
     }
 
@@ -186,8 +139,6 @@ function App (){
         setState : setState,
         highlight : highlight,
         setHIGHLIGHT : setHIGHLIGHT,
-        parteienState : parteienState,
-        setPARTEI : setPARTEI,
         killSwitch : killSwitch
     }
 
@@ -207,9 +158,7 @@ function App (){
                     </button>
                 </div>
                 <div style ={{width:"100%", marginLeft: margin.left, marginRight : margin.right}}>
-                    <PeriodeSelect state = { state }/>
-                    <hr style = {{ marginTop: "10px", marginBottom : "10px"}}></hr>
-                    <Filter {...mainProps}/>
+                    {/* <PeriodeSelect state = { state }/> */}
                 </div>
 
             </div>

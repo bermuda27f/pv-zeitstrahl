@@ -40,18 +40,3 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
         .on("zoom", zoomed)
         .on("end", zoomEnd)
 }
-
-export function brush ({ state }, setBrush) {
-
-    const brushed = (e) => {
-        if (e === undefined || e.sourceEvent === undefined || (e.sourceEvent && e.sourceEvent.type === "zoom")) return;
-        const k = state.width / (e.selection[1] - e.selection[0]);
-        const x = -e.selection[0];
-        setBrush({k : k, x : x, y : 0});
-    }
-
-    return d3_brush.brushX()
-        .extent([[0, 0], [state.width, state.navigation.height]])
-        .on("brush", brushed);
-}
-

@@ -1,0 +1,194 @@
+[
+    {
+      "id": -2,
+      "name": "1. Triumvirat",
+      "start": -60,
+      "end": -49,
+      "dauer": 11,
+      "wiki": null
+    },
+    {
+      "id": -1,
+      "name": "CAESAR",
+      "start": -48,
+      "end": -44,
+      "dauer": 4,
+      "wiki": null
+    },
+    {
+      "id": 0,
+      "name": "2. Triumvirat",
+      "start": -43,
+      "end": -32,
+      "dauer": 11,
+      "wiki": null
+    },
+    {
+      "id": 1,
+      "name": "AUGUSTUS",
+      "start": -27,
+      "end": 14,
+      "dauer": 13,
+      "wiki": null
+    },
+    {
+      "id": 2,
+      "name": "TIBERIUS",
+      "start": 14,
+      "end": 37,
+      "dauer": 23,
+      "wiki": null
+    },
+    {
+      "id": 3,
+      "name": "CALIGULA",
+      "start": 37,
+      "end": 41,
+      "dauer": 4,
+      "wiki": null
+    },
+    {
+      "id": 4,
+      "name": "CLAUDIUS",
+      "start": 41,
+      "end": 54,
+      "dauer": 13,
+      "wiki": null
+    },
+    {
+      "id": 5,
+      "name": "NERO",
+      "start": 54,
+      "end": 68,
+      "dauer": 14,
+      "wiki": null
+    },
+    {
+      "id": 6,
+      "name": "VESPASIAN",
+      "start": 69,
+      "end": 79,
+      "dauer": 10,
+      "wiki": null
+    },
+    {
+      "id": 7,
+      "name": "TITUS",
+      "start": 79,
+      "end": 81,
+      "dauer": 2,
+      "wiki": null
+    },
+    {
+      "id": 8,
+      "name": "DOMITIAN",
+      "start": 81,
+      "end": 96,
+      "dauer": 15,
+      "wiki": null
+    },
+    {
+      "id": 9,
+      "name": "NERVA",
+      "start": 96,
+      "end": 98,
+      "dauer": 2,
+      "wiki": null
+    },
+    {
+      "id": 10,
+      "name": "TRAJAN",
+      "start": 98,
+      "end": 117,
+      "dauer": 19,
+      "wiki": null
+    },
+    {
+      "id": 11,
+      "name": "HADRIAN",
+      "start": 117,
+      "end": 138,
+      "dauer": 21,
+      "wiki": null
+    },
+    {
+      "id": 12,
+      "name": "ANTONINUS PIUS",
+      "start": 138,
+      "end": 161,
+      "dauer": 23,
+      "wiki": null
+    },
+    {
+      "id": 13,
+      "name": "VERUS",
+      "start": 161,
+      "end": 169,
+      "dauer": 8,
+      "wiki": null
+    },
+    {
+      "id": 14,
+      "name": "MARK AUREL",
+      "start": 161,
+      "end": 180,
+      "dauer": 19,
+      "wiki": null
+    },
+    {
+      "id": 15,
+      "name": "COMMODUS",
+      "start": 180,
+      "end": 192,
+      "dauer": 12,
+      "wiki": null
+    },
+    {
+      "id": 16,
+      "name": "CLODIUS ALBINUS",
+      "start": 193,
+      "end": 197,
+      "dauer": 4,
+      "wiki": null
+    },
+    {
+      "id": 17,
+      "name": "SEPTIMIUS SEVERUS",
+      "start": 193,
+      "end": 211,
+      "dauer": 18,
+      "wiki": null
+    },
+    {
+      "id": 18,
+      "name": "CARACALLA",
+      "start": 211,
+      "end": 217,
+      "dauer": 6,
+      "wiki": null
+    },
+    {
+      "id": 19,
+      "name": "MACRINUS",
+      "start": 217,
+      "end": 218,
+      "dauer": 1,
+      "wiki": null
+    },
+    {
+      "id": 20,
+      "name": "ELAGABAL",
+      "start": 218,
+      "end": 222,
+      "dauer": 4,
+      "wiki": null
+    },
+    {
+      "id": 21,
+      "name": "SEVERUS ALEXANDER",
+      "start": 222,
+      "end": 235,
+      "dauer": 13,
+      "wiki": null
+    }
+  ]

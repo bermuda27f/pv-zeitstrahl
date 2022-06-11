@@ -4,100 +4,6 @@ import * as d3_axis from 'd3-axis';
 import * as d3_time from 'd3-time';
 import * as d3_timeFormat from 'd3-time-format';
 
-export function setWahlData ({ data }) { 
-
-  const parteiKurvenData = []
-  data.infos.forEach((partei)=>{
-    const tmp_array = [];
-    const firstPoints = []
-    data.wahlen.forEach((wahl, i)=>{
-      if(wahl[partei.ORG] !== null && wahl[partei.ORG] !== 100){
-        if(tmp_array[i-1] === null) firstPoints.push(i)
-        const ergebnis = wahl[partei.ORG] ? wahl[partei.ORG] : null
-        tmp_array.push({Datum : wahl.Datum, Ergebnis : ergebnis})
-      }
-      else {
-        tmp_array.push(null);
-      }
-    });
-    parteiKurvenData.push({
-      partei: partei.ORG, 
-      Abkuerzung : partei.Abkuerzung,
-      color: partei.Farbcode, 
-      ergebnisse: tmp_array ? tmp_array : null, 
-      firstPoints : firstPoints });
-  })
-  return parteiKurvenData;
-}
-
-export function setNewParteiState (state, info, org, condition){
-  // condtion !== undefined -> all button
-  let newState = {}
-  info.map(x=>x.ORG).forEach((y)=>{
-    newState["checked_" + y] = condition ? condition : y !== org ? false : true
-  });
-  return {
-    ...state,
-    ...newState,
-  };
-}
-
-export function setNewStroemungState (info, richtung, condition){
-  let tmp = {}
-  info.map(x=>x.richtung).forEach((y)=>{
-      tmp[y] = condition ? condition : tmp[richtung] ? true : false
-  });
-  return tmp;
-}
-
-export function setStroemungen(info, stroemungen) {
-  let tmp = [];
-  stroemungen.forEach((x) => {
-      let parteien = [];
-      let color = undefined;
-      info.forEach((y) => {
-          if (y.Richtung === x) {
-              color = y.Farbcode;
-              parteien.push(y.ORG);
-          }
-      });
-      tmp.push({ richtung : x, color : color, parteien: parteien });
-  });
-  return tmp;
-}
-
-export function setInitParteiState (info, stroemungen) {
-
-    let tmp = { 
-      hide_all : true,
-      highlight_partei : null,
-      highlight : false
-    };
-
-    info.forEach((x) => { tmp["checked_" + x.ORG] = true });
-    stroemungen.forEach((x) => { tmp[x] = true });
-
-    return {
-      ...tmp,
-      save : tmp,
-      data : info
-    };
-}
-
-export function getKeyType(type){
-  switch(type){
-    case "partei":
-    case "circles":
-      return { key : "ORG", dataSet : "infos"}
-    case "perioden": 
-      return { key : "kurz", dataSet : "perioden" };
-    case "wahlen": 
-      return { key : "ID", dataSet : "wahlen" };
-    default:
-        return null;
-  }
-}
-
 export function getPatterns(type){
 
     switch(type){
@@ -176,11 +82,8 @@ export function size(state){
   const handleOffset = 27;
   const handleBottom = 7;
 
-  const jetztOffset = 5;
-
-  const navHeight = 35;
-  const navPart = navHeight / 5;
-  const marginNav = {top : 5, right : state.margin.right, bottom : 5, left : state.margin.left}
+  const navScale = 0.25;
+  const marginNav = 5
 
   const width = state.mainRef.current.clientWidth - state.margin.left - state.margin.right
   const clientWidth = state.mainRef.current.clientWidth
@@ -234,7 +137,6 @@ export function size(state){
     navigation : {
       x : state.margin.left,
       y : marginNav.top,
-      part : navPart,
       height: navHeight
     },
 

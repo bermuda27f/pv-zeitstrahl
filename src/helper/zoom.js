@@ -28,20 +28,6 @@ export function zoomToElement (state, type, key, element){
                             end : el_2.end,
                             edge : { left : true, right: true }
                         }
-                    case "BRD_2" :
-                        el_1 = getElement(state.data.perioden, "kurz", "BRD_2")
-                        return { 
-                            start : el_1.start, 
-                            end : state.defaultValues.pos[1],
-                            edge : { left : false, right: true }
-                        }
-                    case "BRD" :
-                        el_1 = getElement(state.data.perioden, "kurz", "BRD_1")
-                        return { 
-                            start : el_1.start, 
-                            end : state.defaultValues.pos[1],
-                            edge : { left : false, right: true }
-                        }
                     default :
                         const _element = getElement(state.data.perioden, "kurz", key)
                         return { 

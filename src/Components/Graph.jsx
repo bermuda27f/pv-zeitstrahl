@@ -18,15 +18,14 @@ import * as helper from "../helper/components/graph.js"
 export default function Graph (props) {
 
     const [infoElements, setINFOELEMENTS] = useReducer(reducer.mutables, {
-        handle_perioden : true,
-        handle_wahlen : false,
-        labelPartei : true,       
+        handle_ereignisse : true,
+        label : true,       
     });
 
     const keyPress = useKeyPress("Escape");
     const [isDrawed, drawed] = useState(false);
     const [zoomState, setZoomState] = useState(null)
-    const [brushState, setBrushState] = useState(null)
+
     const [zoomInfo, setZOOMINFO] = useReducer(reducer.mutables, {
         scale : null,
         transform : null,
@@ -48,13 +47,8 @@ export default function Graph (props) {
     // Refs handling:
 
     const svg_ref = useRef()
-    const nav_ref = useRef()
     const zoomObjRefs = useRef({
         zoom : d3Zoom.zoom(props, setZoomState, setZOOMINFO),
-        brush : d3Zoom.brush(props, setBrushState),
-    })
-    const d3Refs = useRef({
-        linePartei : lines.curve(props, "partei")
     })
     const stateRefs = useRef({
         ...props, 
@@ -63,14 +57,12 @@ export default function Graph (props) {
         mouseEvents : mouseEvents,
         isDrawed : isDrawed,
         zoomState : zoomState,
-        brushState : brushState,
         setMOUSE : setMOUSE
     });
 
     useEffect(()=>{ stateRefs.current.state = props.state; }, [props.state])
     useEffect(()=>{ stateRefs.current.firstSet = props.firstSet; }, [props.firstSet])
     useEffect(()=>{ stateRefs.current.highlight = props.highlight; }, [props.highlight])
-    useEffect(()=>{ stateRefs.current.parteienState = props.parteienState; }, [props.parteienState])
     useEffect(()=>{ stateRefs.current.infoElements = infoElements; }, [infoElements])
     useEffect(()=>{ stateRefs.current.zoomInfo = zoomInfo; }, [zoomInfo])
     useEffect(()=>{ stateRefs.current.mouseEvents = mouseEvents; }, [mouseEvents])
@@ -113,24 +105,15 @@ export default function Graph (props) {
         helper.zoomIt(stateRefs.current, zoomObjRefs) 
     }, [zoomState])
 
-    useEffect(()=>{
-        helper.brushIt(stateRefs.current, zoomObjRefs)
-    }, [brushState])
-
     // TOGGLE HANDLES:
 
-    useEffect(()=>{ 
-        if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            zoomGraph.perioden(stateRefs.current, stateRefs.current.zoomInfo.scale)
-            toggle.handles(stateRefs.current, "perioden", infoElements.handle_perioden)
-        }
-    }, [infoElements.handle_perioden])
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.scale, "wahlen")
             toggle.handles(stateRefs.current, "wahlen", infoElements.handle_wahlen)
         }
     }, [infoElements.handle_wahlen])
+
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             toggle.label(stateRefs.current); 
@@ -140,12 +123,6 @@ export default function Graph (props) {
     useEffect(()=>{
         helper.handleMouse(stateRefs.current)
     }, [mouseEvents.e])
-
-    useEffect(()=>{ 
-        if(stateRefs.current.firstSet && stateRefs.current.isDrawed) {
-            toggle.curves(stateRefs.current); 
-        }
-    }, [props.parteienState])
 
     // ESCAPE:
     useEffect(()=>{
@@ -164,12 +141,6 @@ export default function Graph (props) {
                     ref = { svg_ref }
                     width = { props.state.mainRefSize - props.state.padding }
                     height = { props.state.mainGraphHeight }
-                />
-                <svg
-                    id = "NAV_CONTAINER"
-                    ref = { nav_ref }
-                    width = { props.state.mainRefSize - props.state.padding }
-                    height = { props.state.navigation.height + props.state.navigation.y }
                 />
             </div>
             <div style = {{display : "block", marginLeft: props.state.margin.left}}>
