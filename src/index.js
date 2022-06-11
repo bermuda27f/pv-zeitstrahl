@@ -209,7 +209,7 @@ function App (){
                 style = {{flexWrap: "wrap", display: "flex", width: "100%" }} 
                 >  
                 <div style = {{ marginLeft: margin.left, textDecoration : "underline lightgrey"}} className = "Text" >
-                    { "elections in germany since 1871" } 
+                    elections in germany since 1871
                 </div>
                 <MainGraph {...mainProps} />
                 <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}} className = "Text" >
