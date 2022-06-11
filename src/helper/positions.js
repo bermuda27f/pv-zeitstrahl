@@ -10,8 +10,8 @@ export function setCoords(state, x, y_pos, type, id) {
         // highlights :
         case "init":
             return {
-                x: state.x_scale(new Date(state.defaultValues.startDate)),
-                width : state.x_scale(new Date(state.defaultValues.stopDate)) - state.x_scale(new Date(state.defaultValues.startDate))
+                x: state.x_scale(new Date(state.startDate)),
+                width : state.x_scale(new Date(state.stopDate)) - state.x_scale(new Date(state.startDate))
             }
         case "resize" :
             return {

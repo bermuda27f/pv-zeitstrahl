@@ -18,16 +18,7 @@ export default function HandleCheckboxes(props) {
             name = "handle_wahlen" 
             checked = {props.infoElements.handle_wahlen} 
             onChange = { handleChange }/>
-          <label htmlFor="handle_wahlen">elections</label>
-        </div>
-        <div>
-          <input 
-            disabled ={props.highlight.highlight_main && props.highlight.ident === "perioden"}
-            type="checkbox" 
-            name = "handle_perioden" 
-            checked = {props.infoElements.handle_perioden} 
-            onChange = { handleChange }/>
-          <label htmlFor="handle_perioden">periods</label>
+          <label htmlFor="handle_wahlen">events</label>
         </div>
         <div>
           <input 

@@ -3,6 +3,7 @@ import { calc_xScale, calc_yScale } from './scale.js';
 import * as d3_axis from 'd3-axis';
 import * as d3_time from 'd3-time';
 import * as d3_timeFormat from 'd3-time-format';
+import * as d3_format from 'd3-format'
 
 export function getPatterns(type){
 
@@ -105,10 +106,10 @@ export function size(state){
 
     x_axis : d3_axis.axisBottom(x_scale)
       .ticks(tickNumber)
-      .tickFormat(setTime),
+      .tickFormat(d3_format.format(3)),
     x_axis_lines : d3_axis.axisBottom(x_scale)
       .ticks(tickNumber)
-      .tickFormat(setTime)
+      .tickFormat(d3_format.format(3))
       .tickSize(height),
 
     y_axis : d3_axis.axisLeft(y_scale).ticks(5),
@@ -137,12 +138,11 @@ export function size(state){
     navigation : {
       x : state.margin.left,
       y : marginNav.top,
-      height: navHeight
+      scale : navScale
     },
 
-    jetzt : {
-      y : state.margin.top + jetztOffset
-    }
+    startDate : state.startDate,
+    stopDate : state.endDate
   }
 }
 
@@ -155,7 +155,7 @@ export function dauer (zoomInfo) {
 
 export function zeit (props, zoomInfo) { 
   const noZoom = props.state.zoomObject === null || (zoomInfo.zoomState ? zoomInfo.zoomState.k === 1 : true)
-  const start = noZoom ? new Date(props.state.defaultValues.startDate).toLocaleDateString("en-EN", props.state.dateOptions) + " - " : zoomInfo._startDate + " - "
-  const bis = noZoom ? new Date(props.state.defaultValues.stopDate).toLocaleDateString("en-EN", props.state.dateOptions) : zoomInfo._stopDate
+  const start = noZoom ? new Date(props.state.startDate).toLocaleDateString("en-EN", props.state.dateOptions) + " - " : zoomInfo._startDate + " - "
+  const bis = noZoom ? new Date(props.state.stopDate).toLocaleDateString("en-EN", props.state.dateOptions) : zoomInfo._stopDate
   return (start + bis)
 }

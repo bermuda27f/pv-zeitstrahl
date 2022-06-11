@@ -12,17 +12,21 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
 
         const t = e.transform;
         const newXScale = t.rescaleX(state.x_scale);
-        const range = newXScale.range().map(t.invertX, t);
-        const rangeWidth = (range[1] - range[0]) * t.k;
-        const start = t.x === 0 ? range[0] : t.k + (t.x / range[0]);
-        const stop = t.x === 0 ? rangeWidth : t.k + (t.x / range[0]) + rangeWidth;
+        const newYScale = t.rescaleY(state.x_scale);
+        const rangeX = newXScale.range().map(t.invertX, t);
+        const rangeY = newYScale.range().map(t.invertY, t);
+
+        const rangeWidth = (rangeX[1] - rangeX[0]) * t.k;
+        const start = t.x === 0 ? rangeX[0] : t.k + (t.x / rangeX[0]);
+        const stop = t.x === 0 ? rangeWidth : t.k + (t.x / rangeX[0]) + rangeWidth;
 
         setZOOMINFO({
             type: "MULTIPLE",
             value: {
                 scale : newXScale,
+                focus : d3_zoom.zoomIdentity.scale(1/t.k).translate(-t.x, -t.y),
                 transform : t,
-                range : range,
+                range : rangeX,
                 // string format
                 _startDate: newXScale.invert(start).toLocaleDateString("en-EN", state.dateOptions),
                 _stopDate: newXScale.invert(stop).toLocaleDateString("en-EN", state.dateOptions),

@@ -68,23 +68,20 @@ export default function Graph (props) {
     useEffect(()=>{ stateRefs.current.mouseEvents = mouseEvents; }, [mouseEvents])
     useEffect(()=>{ stateRefs.current.isDrawed = isDrawed; }, [isDrawed])
     useEffect(()=>{ stateRefs.current.zoomState = zoomState; }, [zoomState])
-    useEffect(()=>{ stateRefs.current.brushState = brushState; }, [brushState])
 
     const removeElAndNewZoom = () => {
         zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current, setZoomState, setZOOMINFO)
-        zoomObjRefs.current.brush = d3Zoom.brush(stateRefs.current, setBrushState)
-        d3Refs.current.linePartei = lines.curve(stateRefs.current, "partei")
+
         stateRefs.current.state.selections.container.select("defs").remove()
         stateRefs.current.state.selections.container.select("#mainGraph").remove()
-        stateRefs.current.state.selections.navContainer.select("#navGroup").remove()
     };
 
     //
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && !stateRefs.current.isDrawed) {
-            helper.drawIt(svg_ref, nav_ref, stateRefs.current, d3Refs, zoomObjRefs)
-            helper.setSelections(stateRefs.current, zoomObjRefs, d3Refs, svg_ref, nav_ref)
+            helper.drawIt(svg_ref, stateRefs.current, zoomObjRefs)
+            helper.setSelections(stateRefs.current, zoomObjRefs, svg_ref)
             drawed(true)
         }; 
     }, [])

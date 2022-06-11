@@ -45,14 +45,12 @@ function App (){
         sizeDifference : 0,
         mainRef : mainRef,
         breakpoint : 600,
-        maxScale : 1000,
+        maxScale : 70,
         dateOptions : { year: 'numeric', month: 'long' },
         dateOptionsStory : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
         transition : getTransition,
 
         isTouch : check.touchDevice(),
-
-        data : null,
 
         timeMargin : {
             normal : 100,
