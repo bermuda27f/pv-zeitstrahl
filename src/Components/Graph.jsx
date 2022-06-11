@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useReducer} from 'react';
 import ZoomMenu from './ZoomMenu';
+import Checkboxes from './Checkboxes';
 
 import '../styles.css'
 
@@ -15,6 +16,12 @@ import * as reducer from "../helper/reducer.js"
 import * as helper from "../helper/components/graph.js"
 
 export default function Graph (props) {
+
+    const [infoElements, setINFOELEMENTS] = useReducer(reducer.mutables, {
+        handle_perioden : true,
+        handle_wahlen : false,
+        labelPartei : true,       
+    });
 
     const keyPress = useKeyPress("Escape");
     const [isDrawed, drawed] = useState(false);
@@ -51,6 +58,7 @@ export default function Graph (props) {
     })
     const stateRefs = useRef({
         ...props, 
+        infoElements : infoElements,
         zoomInfo : zoomInfo,
         mouseEvents : mouseEvents,
         isDrawed : isDrawed,
@@ -62,8 +70,8 @@ export default function Graph (props) {
     useEffect(()=>{ stateRefs.current.state = props.state; }, [props.state])
     useEffect(()=>{ stateRefs.current.firstSet = props.firstSet; }, [props.firstSet])
     useEffect(()=>{ stateRefs.current.highlight = props.highlight; }, [props.highlight])
-    useEffect(()=>{ stateRefs.current.mutables = props.mutables; }, [props.mutables])
     useEffect(()=>{ stateRefs.current.parteienState = props.parteienState; }, [props.parteienState])
+    useEffect(()=>{ stateRefs.current.infoElements = infoElements; }, [infoElements])
     useEffect(()=>{ stateRefs.current.zoomInfo = zoomInfo; }, [zoomInfo])
     useEffect(()=>{ stateRefs.current.mouseEvents = mouseEvents; }, [mouseEvents])
     useEffect(()=>{ stateRefs.current.isDrawed = isDrawed; }, [isDrawed])
@@ -114,20 +122,20 @@ export default function Graph (props) {
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             zoomGraph.perioden(stateRefs.current, stateRefs.current.zoomInfo.scale)
-            toggle.handles(stateRefs.current, "perioden", props.mutables.handle_perioden)
+            toggle.handles(stateRefs.current, "perioden", infoElements.handle_perioden)
         }
-    }, [props.mutables.handle_perioden])
+    }, [infoElements.handle_perioden])
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.scale, "wahlen")
-            toggle.handles(stateRefs.current, "wahlen", props.mutables.handle_wahlen)
+            toggle.handles(stateRefs.current, "wahlen", infoElements.handle_wahlen)
         }
-    }, [props.mutables.handle_wahlen])
+    }, [infoElements.handle_wahlen])
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             toggle.label(stateRefs.current); 
         }
-    }, [props.mutables.labelPartei])
+    }, [infoElements.labelPartei])
 
     useEffect(()=>{
         helper.handleMouse(stateRefs.current)
@@ -164,12 +172,21 @@ export default function Graph (props) {
                     height = { props.state.navigation.height + props.state.navigation.y }
                 />
             </div>
-            <div style ={{display: "flex", width:"100%", marginLeft: props.state.margin.left}}>
-                <ZoomMenu
-                    state = { props.state }
-                    zoomState = { zoomState }
-                    zoomInfo = { zoomInfo }
-                />
+            <div style = {{display : "block", marginLeft: props.state.margin.left}}>
+                <div style ={{display: "flex", width:"100%"}}>
+                    <ZoomMenu
+                        state = { props.state }
+                        zoomState = { zoomState }
+                        zoomInfo = { zoomInfo }
+                    />
+                </div>
+                <div style ={{ width:"100%" }}>
+                    <Checkboxes
+                        infoElements = { infoElements }
+                        highlight = { props.highlight }
+                        setINFOELEMENTS = { setINFOELEMENTS }
+                    />
+                </div>
             </div>
         </div>
     )

@@ -48,7 +48,7 @@ export function parteien (graph, props, line){
                         .append("text")
                         .attr("class", "label_" + org.partei + " parteiLabel")
                         .attr("clip-path", "url(#clipPath_main)")
-                        .attr("opacity", props.mutables.labelPartei ? props.parteienState["checked_" + org.partei] ? props.state.textOpacity.active : 0.1 : 0)
+                        .attr("opacity", props.infoElements.labelPartei ? props.parteienState["checked_" + org.partei] ? props.state.textOpacity.active : 0.1 : 0)
                         .attr("x", d => props.state.x_scale(new Date(d.Datum)) - 5)
                         .attr("y", d => props.state.y_scale(d.Ergebnis))
                         .style("fill", org.color)

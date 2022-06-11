@@ -33,8 +33,8 @@ export function zoomIt(stateRefs, zoomObjRefs){
         stateRefs.state.selections.context.call(zoomObjRefs.current.brush.move, range);
         zoomGraph.curves(stateRefs, newXScale); 
 
-        if(stateRefs.mutables.handle_perioden) zoomGraph.perioden(stateRefs, newXScale)
-        if(stateRefs.mutables.handle_wahlen) zoomGraph.highlightLines(stateRefs, newXScale, "wahlen")
+        if(stateRefs.infoElements.handle_perioden) zoomGraph.perioden(stateRefs, newXScale)
+        if(stateRefs.infoElements.handle_wahlen) zoomGraph.highlightLines(stateRefs, newXScale, "wahlen")
         
         if(stateRefs.highlight.ident === "perioden"){ zoomGraph.highlights(stateRefs, newXScale, "main");}
 
@@ -140,9 +140,9 @@ export function drawIt(svg_ref, nav_ref, stateRefs, d3Refs, zoomObjRefs){
     navigation.context(stateRefs, navGroup, zoomObjRefs.current.brush)
 
     const periodenGroup = mainGraph.append("g").attr("class", "periodenGroup")
-        .attr("opacity", stateRefs.mutables.handle_perioden ? 1 : 0)
+        .attr("opacity", stateRefs.infoElements.handle_perioden ? 1 : 0)
     const wahlenGroup = mainGraph.append("g").attr("class", "wahlenGroup")
-        .attr("opacity", stateRefs.mutables.handle_wahlen ? 1 : 0)
+        .attr("opacity", stateRefs.infoElements.handle_wahlen ? 1 : 0)
 
     linesPatterns.highlightLine(stateRefs, periodenGroup, "perioden");
     linesPatterns.highlightLine(stateRefs, wahlenGroup, "wahlen")

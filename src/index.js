@@ -9,7 +9,6 @@ import * as calc from './helper/calc_set.js'
 
 import { useWindowSize } from "./helper/hooks.js";
 
-import Checkboxes from './Components/Checkboxes';
 import MainGraph from './Components/Graph';
 import Filter from './Components/Filter';
 import PeriodeSelect from './Components/SelectPeriode';
@@ -113,14 +112,6 @@ function App (){
         zoomObject : null
     });
 
-    // mutables
-
-    const [mutables, setMUTABLES] = useReducer(reducer.mutables, {
-        handle_perioden : true,
-        handle_wahlen : false,
-        labelPartei : true,       
-    });
-
     // highlight
 
     const [highlight, setHIGHLIGHT] = useReducer(reducer.highlight, {
@@ -193,8 +184,6 @@ function App (){
         firstSet : firstSet,
         state : state,
         setState : setState,
-        mutables : mutables,
-        setMUTABLES : setMUTABLES,
         highlight : highlight,
         setHIGHLIGHT : setHIGHLIGHT,
         parteienState : parteienState,
@@ -219,13 +208,6 @@ function App (){
                 </div>
                 <div style ={{width:"100%", marginLeft: margin.left, marginRight : margin.right}}>
                     <PeriodeSelect state = { state }/>
-                    <div style ={{width:"100%"}}>
-                        <Checkboxes
-                            mutables = { mutables }
-                            highlight = { highlight }
-                            setMUTABLES = { setMUTABLES }
-                        />
-                    </div>
                     <hr style = {{ marginTop: "10px", marginBottom : "10px"}}></hr>
                     <Filter {...mainProps}/>
                 </div>

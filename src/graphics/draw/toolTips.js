@@ -1,6 +1,6 @@
 import * as d3_select from 'd3-selection';
 
-export function buildToolTip ({ state, mutables }, event, d, type) {  
+export function buildToolTip ({ state }, event, d, type) {  
 
     const padding = 9
     let _text; 
@@ -12,7 +12,7 @@ export function buildToolTip ({ state, mutables }, event, d, type) {
             _text = date.toLocaleDateString('de-DE', dateOptions) + " — " + d.Name;
             break;
         case "name":
-            _text = (mutables.graphType === "regierungen" && d.Partei) ? 
+            _text = d.Partei ? 
                 d.PersName + (d.Partei === "Sonstige" ? "" : ", " + d.Partei) + (d.koalition ? ", Kabinett " + d.Kabinett : "") : d.Name;
             break;
         case "partei" :

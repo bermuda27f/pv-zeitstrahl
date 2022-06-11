@@ -2,7 +2,7 @@ import * as d3_select from 'd3-selection';
 
 import * as check from  '../../helper/check.js';
 
-export function curves({ state, mutables, parteienState}) {
+export function curves({ state, infoElements, parteienState}) {
 
     const t = state.transition;
 
@@ -21,8 +21,8 @@ export function curves({ state, mutables, parteienState}) {
             .data(org.ergebnisse.filter((d, i) => { return d !== null && org.firstPoints.includes(i) }))
             .transition(t)
                 .attr("y", function (d) { return state.y_scale(d.Ergebnis)})
-                .attr("opacity",  mutables.labelPartei ? parteienState["checked_" + org.partei] ? 1 : state.pathOpacity.disabled : 0)
-                .style("pointer-events", mutables.labelPartei ? parteienState["checked_" + org.partei] ? "auto" : "none" : "none");
+                .attr("opacity",  infoElements.labelPartei ? parteienState["checked_" + org.partei] ? 1 : state.pathOpacity.disabled : 0)
+                .style("pointer-events", infoElements.labelPartei ? parteienState["checked_" + org.partei] ? "auto" : "none" : "none");
         d3_select.select("#" + org.partei + "_circleGroup").selectAll("circle")
             .data(org.ergebnisse.filter(function(d) { return check.nullHundret(d) }))
             .transition(t)
@@ -61,11 +61,11 @@ export function handles({ state }, type, active){
     }
 }
 
-export function label({ state, mutables}){
+export function label({ state, infoElements}){
     const t = state.transition;
     state.selections.parteiLabel
         .transition(t)
-        .attr("opacity", mutables.labelPartei ? state.textOpacity.active : 0)
+        .attr("opacity", infoElements.labelPartei ? state.textOpacity.active : 0)
 }
 
 export function highlighterNAV({ state }, d, mode, type) {

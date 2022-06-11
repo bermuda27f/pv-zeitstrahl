@@ -23,7 +23,7 @@ export function highlightLine(props, container, type){
     const key = getKeyType(type)
 
     const events = call.events(type, key, props)
-    const behaviour = call.behaviour(props.mutables["handle_" + type])
+    const behaviour = call.behaviour(props.infoElements["handle_" + type])
     const isHighlight = (d) => {
         return props.highlight.highlight_main && props.highlight.key === d[key.key] ? true : false
     }
