@@ -5,7 +5,7 @@ import * as d3_select from 'd3-selection';
 import * as linesPatterns from '../../graphics/draw/patternsLines.js';
 import * as svgDef from '../../graphics/draw/defs.js';
 import * as misc from  '../../graphics/draw/misc.js';
-import * as curves from  '../../graphics/draw/bars.js';
+import * as bars from  '../../graphics/draw/bars.js';
 import * as highlighter from  '../../graphics/draw/highlighter.js';
 import * as axis from  '../../graphics/draw/axis.js';
 import * as label from  '../../graphics/draw/label.js';
@@ -26,13 +26,14 @@ export function killSwitch(stateRefs){
 
 export function zoomIt(stateRefs, zoomObjRefs){
     if(stateRefs.firstSet && stateRefs.isDrawed) {
+
         const newXScale = stateRefs.zoomState.rescaleX(stateRefs.state.x_scale);
         const range = newXScale.range().map(stateRefs.zoomState.invertX, stateRefs.zoomState);
 
         // stateRefs.state.selections.context.call(zoomObjRefs.current.brush.move, range);
-        // zoomGraph.curves(stateRefs, newXScale); 
+        //zoomGraph.bars(stateRefs, newXScale, new); 
 
-        if(stateRefs.infoElements.handle_wahlen) zoomGraph.highlightLines(stateRefs, newXScale, "wahlen")
+        //if(stateRefs.infoElements.handle_wahlen) zoomGraph.highlightLines(stateRefs, newXScale, "wahlen")
         
         zoomGraph.xAxis(stateRefs, newXScale, "main");
     }
@@ -47,6 +48,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             container : d3_select.select(svg_ref.current),
             // main
             mainGraph : d3_select.select("#mainGraph"),
+            bars : d3_select.select("#kaiserBars"),
             // zoom / context
             focus : d3_select.select(".focus"),
             // ereignisse
@@ -57,9 +59,8 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             // X-Achsen:
             xAxis : d3_select.selectAll(".xAxis"),
             xAxisLines : d3_select.selectAll(".xAxisLines"),
-            // Y-Achsen
-            yAxis : d3_select.select("#y_axis"),
-            yAxisLines : d3_select.selectAll("#y_axis_lines"),
+            // Y-Lines
+            y_lines : d3_select.selectAll("#y_lines"),
             // Highlighter
             mainHL : d3_select.select("#BarHighLight_main"),
         },
@@ -79,23 +80,23 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", 1)
 
-    linesPatterns.frame(mainGraph, stateRefs)
+    misc.lines(stateRefs, mainGraph)
+    misc.zero(stateRefs, mainGraph)
+
+    bars.draw(stateRefs, mainGraph)
 
     // achsen
     axis.x(stateRefs, mainGraph, "main")
-    axis.y(stateRefs, mainGraph)
     // label
     // context
     navigation.context(stateRefs)
+    linesPatterns.frame(mainGraph, stateRefs)
 
-    const wahlenGroup = mainGraph.append("g").attr("class", "wahlenGroup")
-        .attr("opacity", stateRefs.infoElements.handle_wahlen ? 1 : 0)
-
-    linesPatterns.highlightLine(stateRefs, wahlenGroup, "wahlen")
-    highlighter.recGraph(stateRefs, mainGraph, "main")
+    //linesPatterns.highlightLine(stateRefs, wahlenGroup, "wahlen")
+    //highlighter.recGraph(stateRefs, mainGraph, "main")
 
     mainGraph.call(zoomObjRefs.current.zoom)
-        .on("wheel.zoom", null)
+        //.on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
     zoomHelper.initZoom(mainGraph, zoomObjRefs.current.zoom, stateRefs)

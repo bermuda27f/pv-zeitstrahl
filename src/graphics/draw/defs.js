@@ -5,7 +5,7 @@ export function set(defs, { state }) {
             .append("rect")
             .attr("x", 0)
             .attr("y", 0)
-            .attr("width", state.width)
+            .attr("width", state.width + state.margin.left + state.margin.right)
             .attr("height", state.graph.height + state.handle.offset + state.handle.size);
 
     defs.append('pattern')

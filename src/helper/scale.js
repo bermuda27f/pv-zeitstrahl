@@ -1,24 +1,13 @@
 import * as d3_scale from 'd3-scale';
 
-export function calc_xScale ({ startDate, stopDate }, width){
+export function calc_xScale (state, width){
 
-    return d3_scale.scaleTime()
-        .domain([startDate, stopDate])
-        .range([0, width])
+    return d3_scale.scaleTime([state.startDate, new Date(state.data.kaiser[state.data.kaiser.length - 1].end)], [0, width])
+
 }
 
-export function calc_yScale (type, data, height, max){
+export function calc_yScale (state, height){
 
-    switch (type){
-        case "linear":
-            return d3_scale.scaleLinear()
-                .domain([max, 0])
-                .range([0, height]);
-        case "band":
-            return d3_scale.scaleBand()
-                .domain(data.map(x=>x.order_system).reverse())
-                .range([0, height]);
-        default:
-            break;
-    }
+    return d3_scale.scaleLinear([state.data.kaiser.length, 0],[0, (height)]);
+
 }

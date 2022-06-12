@@ -42,9 +42,7 @@ function App (){
     const [state, setState] = useState({ 
 
         width : null,
-        sizeDifference : 0,
         mainRef : mainRef,
-        breakpoint : 600,
         maxScale : 70,
         dateOptions : { year: 'numeric', month: 'long' },
         dateOptionsStory : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
@@ -88,17 +86,18 @@ function App (){
     // FIRST DRAW:
 
     if(!firstSet && state.mainRef.current){
-        
-        const sizeData = calc.size({
-            ...state,
-            startDate : new Date(startDate),
-            stopDate : new Date(data_kaiser[data_kaiser.length - 1].end),
-            })
 
         const data = {
             kaiser : data_kaiser,
             ereignisse : data_ereignisse
         }
+        
+        const sizeData = calc.size({
+            ...state,
+            data,
+            startDate : new Date(startDate),
+            stopDate : new Date(data_kaiser[data_kaiser.length - 1].end),
+            })
 
         const newState = {
             ...state,
@@ -146,7 +145,7 @@ function App (){
                 style = {{flexWrap: "wrap", display: "flex", width: "100%" }} 
                 >  
                 <div style = {{ marginLeft: margin.left, textDecoration : "underline lightgrey"}} className = "Text" >
-                    elections in germany since 1871
+                    early roman emperors
                 </div>
                 <MainGraph {...mainProps} />
                 <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}} className = "Text" >

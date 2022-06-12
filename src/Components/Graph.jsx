@@ -91,8 +91,8 @@ export default function Graph (props) {
     useEffect(()=>{ 
         if(stateRefs.current.isDrawed) {
             removeElAndNewZoom()
-            helper.drawIt(svg_ref, nav_ref, stateRefs.current, d3Refs, zoomObjRefs)
-            helper.setSelections(stateRefs.current, zoomObjRefs, d3Refs, svg_ref, nav_ref)
+            // helper.drawIt(svg_ref, nav_ref, stateRefs.current, d3Refs, zoomObjRefs)
+            // helper.setSelections(stateRefs.current, zoomObjRefs, d3Refs, svg_ref, nav_ref)
         }
     }, [props.state.width])
 

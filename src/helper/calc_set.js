@@ -54,13 +54,13 @@ export function size(state){
   const width = state.mainRef.current.clientWidth - state.margin.left - state.margin.right
   const clientWidth = state.mainRef.current.clientWidth
 
-  const graph_ratio = state.mainRef.current.clientWidth > state.breakpoint ? 0.4 : 0.45;
-  const tickNumber = state.mainRef.current.clientWidth > state.breakpoint ? 10 : 5
+  const graph_ratio = 0.45;
+  const tickNumber = 6
 
   const height = width * graph_ratio;
 
-  const y_scale = calc_yScale("linear", null, height, 52);
   const x_scale = calc_xScale(state, width);
+  const y_scale = calc_yScale(state, height);
 
   return {
 
@@ -81,8 +81,11 @@ export function size(state){
     y_axis_lines : d3_axis.axisLeft(y_scale).ticks(5).tickSize(width),
 
     width : width,
+    height : height,
 
     mainGraphHeight : height + state.margin.top + state.margin.bottom + handleOffset + handleSize + handleBottom,
+
+    barHeight : (height - state.margin.bottom) / state.data.kaiser.map(x=>x.id).length,
 
     graph : { 
       x : state.margin.left,

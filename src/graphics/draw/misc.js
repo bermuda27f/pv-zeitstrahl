@@ -1,58 +1,36 @@
-export function huerde({ state }, container) {
+export function lines({ state }, container) {
 
     const lineContainer = container.append("g")
-        .attr("id", "fuenfProzent")
+        .attr("id", "lineContainer")
         .attr("clip-path", "url(#clipPath_main)");
-
-    const xP = state.x_scale(new Date(state.defaultValues.huerdeDate));
-
-    lineContainer.append("line")
-        .attr("id", "fuenfProzent_x")
-        .attr("x1", xP)
-        .attr("x2", state.x_scale(new Date(state.defaultValues.stopDate)))
-        .attr("y1", state.y_scale(5))
-        .attr("y2", state.y_scale(5))
-        .attr("opacity", state.huerde.opacity)
-        .attr("stroke-width", 1)
-        .attr("stroke", "black")
-        .style("stroke-dasharray", state.huerde.stroke);
         
-    lineContainer.append("line")
-        .attr("id", "fuenfProzent_y")
-        .attr("x1", xP)
-        .attr("x2", xP)
-        .attr("y1", 0)
-        .attr("y2", state.graph.height)
-        .attr("opacity", state.huerde.opacity)
-        .attr("stroke-width", 1)
-        .attr("stroke", "black")
-        .style("stroke-dasharray", state.huerde.stroke);
+    lineContainer.append("g").attr("id", "lines_t")
+        .selectAll("line")
+            .data(state.data.kaiser, d => d.id)
+            .join("line")
+            .attr("id", d => "line" + d.name)
+            .attr("x1", 0)
+            .attr("y1", (d,i) => state.y_scale(d.id + 3))
+            .attr("x2", state.width)
+            .attr("y2", (d,i) => state.y_scale(d.id + 3))
+            .attr("stroke-width", 0.25)
+            .attr("stroke", "grey");
 }
 
-export function jetzt({ state }, container, type) {
+export function zero({ state }, container) {
 
-    const jetztContainer = container.append("g")
-        .attr("class", "jetzt")
+    const zero = container.append("g")
+        .attr("id", "zero")
         .attr("clip-path", "url(#clipPath_main)")
 
-    const x = state.x_scale(Date.now());
-    const r = 3
-    const height = type === "main" ? state.graph.height : state.extraGraph.height
+    const x = state.x_scale(new Date(0)) - 1;
 
-    jetztContainer.append("line")
+    zero.append("line")
         .attr("x1", x)
         .attr("x2", x)
         .attr("y1", 0)
-        .attr("y2", height)
-        .attr("opacity", 1)
-        .attr("stroke-width", 0.25)
-        .attr("stroke", state.standardColor)
-    if(type === "main"){
-        jetztContainer.append("circle")
-            .attr("cx", x)
-            .attr("cy", height + (r))
-            .attr("r", r)
-            .attr("opacity", 0.25)
-            .attr("fill", state.standardColor)
-    }
+        .attr("y2", state.height)
+        .attr("opacity", 0.5)
+        .attr("stroke-width", 0.77)
+        .attr("stroke", "red")
 }

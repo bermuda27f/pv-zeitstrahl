@@ -1,10 +1,10 @@
 import * as d3_zoom from 'd3-zoom';
-import * as d3_brush from 'd3-brush';
 
 export function zoom ({ state }, setZoom, setZOOMINFO) {
 
     const zoomed = (e) => {
         if(e === undefined || e.sourceEvent === undefined || (e.sourceEvent && e.sourceEvent.type === "brush")) return;
+        console.log("zoom!!")
         setZoom(e.transform)
     }
 
@@ -24,6 +24,7 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
             type: "MULTIPLE",
             value: {
                 scale : newXScale,
+                scaleY : newYScale,
                 focus : d3_zoom.zoomIdentity.scale(1/t.k).translate(-t.x, -t.y),
                 transform : t,
                 range : rangeX,
