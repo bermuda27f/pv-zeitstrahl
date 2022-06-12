@@ -28,14 +28,17 @@ export function zoomIt(stateRefs, zoomObjRefs){
     if(stateRefs.firstSet && stateRefs.isDrawed) {
 
         const newXScale = stateRefs.zoomState.rescaleX(stateRefs.state.x_scale);
+        const newYScale = stateRefs.zoomState.rescaleY(stateRefs.state.y_scale);
+
         const range = newXScale.range().map(stateRefs.zoomState.invertX, stateRefs.zoomState);
 
         // stateRefs.state.selections.context.call(zoomObjRefs.current.brush.move, range);
-        //zoomGraph.bars(stateRefs, newXScale, new); 
-
-        //if(stateRefs.infoElements.handle_wahlen) zoomGraph.highlightLines(stateRefs, newXScale, "wahlen")
-        
         zoomGraph.xAxis(stateRefs, newXScale, "main");
+
+        zoomGraph.bars(stateRefs, newXScale, newYScale); 
+
+        //if(stateRefs.infoElements.handle_wahlen) (stateRefs, newXScale, "wahlen")
+        
     }
 };
 
@@ -49,6 +52,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             // main
             mainGraph : d3_select.select("#mainGraph"),
             bars : d3_select.select("#kaiserBars"),
+            zero : d3_select.select("#zero").select("line"),
             // zoom / context
             focus : d3_select.select(".focus"),
             // ereignisse
@@ -60,7 +64,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             xAxis : d3_select.selectAll(".xAxis"),
             xAxisLines : d3_select.selectAll(".xAxisLines"),
             // Y-Lines
-            y_lines : d3_select.selectAll("#y_lines"),
+            y_lines : d3_select.selectAll("#lines_t"),
             // Highlighter
             mainHL : d3_select.select("#BarHighLight_main"),
         },
@@ -80,17 +84,17 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", 1)
 
+    linesPatterns.frame(mainGraph, stateRefs)
     misc.lines(stateRefs, mainGraph)
     misc.zero(stateRefs, mainGraph)
 
-    bars.draw(stateRefs, mainGraph)
-
+    const barSelection = bars.draw(stateRefs, mainGraph)
+    misc.map(stateRefs, barSelection, mainGraph)
     // achsen
     axis.x(stateRefs, mainGraph, "main")
     // label
     // context
     //navigation.context(stateRefs)
-    linesPatterns.frame(mainGraph, stateRefs)
 
     //linesPatterns.highlightLine(stateRefs, wahlenGroup, "wahlen")
     //highlighter.recGraph(stateRefs, mainGraph, "main")

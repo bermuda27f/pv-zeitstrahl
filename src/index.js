@@ -95,8 +95,8 @@ function App (){
         const sizeData = calc.size({
             ...state,
             data,
-            startDate : new Date(startDate),
-            stopDate : new Date(data_kaiser[data_kaiser.length - 1].end),
+            startDate : startDate,
+            stopDate : data_kaiser[data_kaiser.length - 1].end,
             })
 
         const newState = {

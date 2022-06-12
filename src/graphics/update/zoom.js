@@ -1,24 +1,10 @@
-export function bars({ state, zoomInfo }, newXScale) {
+export function bars({ state, zoomInfo, zoomState }, newX, newY) {
 
     //const newX = date => { return newXScale(new Date(date)) }
 
-    console.log("bar zoom")
-    state.selections.bars
-        .transition(state.transitions)
-        .attr("transform", zoomInfo.transform);
-    // state.selections.y_lines
-    //     .transition(state.transitions)
-    //     .attr('y1', d => newY(d.id + 3))
-    //     .attr('y2', d => newY(d.id + 3))
-
-    // state.lines.partei.x(d => newX(d.Datum));
-    // state.selections.paths.attr("d", state.lines.partei);
-    // state.selections.pathsClick.attr("d", state.lines.partei);
-    // state.selections.parteiLabel.attr("x", d => (newX(d.Datum) - 5));
-    // state.selections.fuenfProzentX.attr("x1", newX(state.defaultValues.huerdeDate));
-    // state.selections.fuenfProzentY
-    //     .attr("x1", newX(state.defaultValues.huerdeDate))
-    //     .attr("x2", newX(state.defaultValues.huerdeDate));
+    state.selections.bars.attr("transform", zoomState);
+    state.selections.y_lines.attr("transform", zoomState);
+    state.selections.zero.attr("x1", newX(new Date(0))).attr("x2", newX(new Date(0)))
 }
 
 export function highlightLines ({ state }, newXScale, type){

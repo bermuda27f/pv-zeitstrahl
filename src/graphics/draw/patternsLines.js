@@ -10,7 +10,7 @@ export function frame (container, { state }){
         .attr("y", 1)
         .attr("width", state.width)
         .attr("height", state.graph.height)
-        .attr("fill", "none")
+        .attr("fill", "white")
         .attr("stroke", state.standardColor)
         .attr("stroke-width", 0.5)
         .attr("opacity", 0.5)

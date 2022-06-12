@@ -4,7 +4,6 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
 
     const zoomed = (e) => {
         if(e === undefined || e.sourceEvent === undefined) return;
-        console.log("zoom!!")
         setZoom(e.transform)
     }
 
@@ -14,7 +13,6 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
         const newXScale = t.rescaleX(state.x_scale);
         const newYScale = t.rescaleY(state.x_scale);
         const rangeX = newXScale.range().map(t.invertX, t);
-        const rangeY = newYScale.range().map(t.invertY, t);
 
         const rangeWidth = (rangeX[1] - rangeX[0]) * t.k;
         const start = t.x === 0 ? rangeX[0] : t.k + (t.x / rangeX[0]);
@@ -29,8 +27,8 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
                 transform : t,
                 range : rangeX,
                 // string format
-                _startDate: newXScale.invert(start).toLocaleDateString("en-EN", state.dateOptions),
-                _stopDate: newXScale.invert(stop).toLocaleDateString("en-EN", state.dateOptions),
+                // _startDate: newXScale.invert(start).toLocaleDateString("en-EN", state.dateOptions),
+                // _stopDate: newXScale.invert(stop).toLocaleDateString("en-EN", state.dateOptions),
                 // string normal
                 _start_: newXScale.invert(start),
                 _stop_: newXScale.invert(stop),

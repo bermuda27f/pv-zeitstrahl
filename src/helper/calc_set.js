@@ -104,9 +104,10 @@ export function size(state){
     tickNumber : tickNumber,
 
     navigation : {
-      x : state.margin.left,
-      y : marginNav.top,
-      scale : navScale
+      x : width - (width * navScale) - marginNav,
+      y : height - (height * navScale) - marginNav,
+      scale : navScale, 
+      strokeWidth : 2
     },
 
     startDate : state.startDate,

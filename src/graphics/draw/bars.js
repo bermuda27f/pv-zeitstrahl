@@ -8,9 +8,12 @@ export function draw (stateRefs, graph){
 
     console.log(stateRefs)
 
-    const bars = graph.append("g")
-        .attr("id", "kaiserBars")
+    const clipGroup = graph.append("g")
+        .attr("id", "clipGroupMain")
         .attr("clip-path", "url(#clipPath_main)")
+
+    const bars = clipGroup.append("g")
+        .attr("id", "kaiserBars")
 
     bars.selectAll("rect")
             .data(stateRefs.state.data.kaiser, d => d.id)
@@ -39,10 +42,12 @@ export function draw (stateRefs, graph){
                 .text(d=>d.name)
                 .attr("text-anchor", "end")
                 .style("font-family", "serif")
-                .style("font-size", "12pt")
+                .style("font-size", stateRefs.state.barHeight)
                 .style("user-select", "none")
                 .style("dominant-baseline", "baseline")
                 // .call(behaviour)
                 // .call(events);
 
+    return bars
+    
 }

@@ -90,7 +90,7 @@ export default function Graph (props) {
 
     useEffect(()=>{ 
         if(stateRefs.current.isDrawed) {
-            removeElAndNewZoom()
+            //removeElAndNewZoom()
             // helper.drawIt(svg_ref, nav_ref, stateRefs.current, d3Refs, zoomObjRefs)
             // helper.setSelections(stateRefs.current, zoomObjRefs, d3Refs, svg_ref, nav_ref)
         }
@@ -106,14 +106,14 @@ export default function Graph (props) {
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.scale, "wahlen")
-            toggle.handles(stateRefs.current, "wahlen", infoElements.handle_wahlen)
+            //zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.scale, "wahlen")
+            //toggle.handles(stateRefs.current, "wahlen", infoElements.handle_wahlen)
         }
     }, [infoElements.handle_wahlen])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            toggle.label(stateRefs.current); 
+            //toggle.label(stateRefs.current); 
         }
     }, [infoElements.labelPartei])
 
