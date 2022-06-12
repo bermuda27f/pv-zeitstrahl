@@ -89,7 +89,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     axis.x(stateRefs, mainGraph, "main")
     // label
     // context
-    navigation.context(stateRefs)
+    //navigation.context(stateRefs)
     linesPatterns.frame(mainGraph, stateRefs)
 
     //linesPatterns.highlightLine(stateRefs, wahlenGroup, "wahlen")

@@ -3,7 +3,7 @@ import * as d3_zoom from 'd3-zoom';
 export function zoom ({ state }, setZoom, setZOOMINFO) {
 
     const zoomed = (e) => {
-        if(e === undefined || e.sourceEvent === undefined || (e.sourceEvent && e.sourceEvent.type === "brush")) return;
+        if(e === undefined || e.sourceEvent === undefined) return;
         console.log("zoom!!")
         setZoom(e.transform)
     }
