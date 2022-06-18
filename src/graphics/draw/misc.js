@@ -1,4 +1,6 @@
 
+import * as icons from '../icons.js';
+
 export function lines({ state }, container) {
 
     const lineContainer = container.append("g")
@@ -21,20 +23,55 @@ export function lines({ state }, container) {
 
 export function zero({ state }, container) {
 
+    const x = state.x_scale(new Date(0)) - 1;
+    const y_offset = icons.jesus.circle.r + 5
+
     const zero = container.append("g")
         .attr("id", "zero")
-        .attr("clip-path", "url(#clipPath_main)")
+        //.attr("clip-path", "url(#clipPath_main)")
+        .attr("transform", `translate(${x}, ${0})`)
+        .attr("opacity", 0.9)
 
-    const x = state.x_scale(new Date(0)) - 1;
+    const jesus = (g, color) => {
+
+        const jesusPaths = (g, path) => {
+            g.append("path")
+                .attr("d", path)
+                .attr("transform", `translate(${-icons.jesus.circle.r - 2}, ${-y_offset - icons.jesus.circle.r })`)
+                .attr("fill", color)
+        }
+        g.append("circle")
+            // .attr("cx", 0)
+            .attr("cy", -y_offset)
+            .attr("r", icons.jesus.circle.r)
+            .attr("stroke-width", icons.jesus.circle.strokeWidth)
+            .attr("stroke", color)
+            .attr("fill", "none")
+        g.call(jesusPaths, icons.jesus.path1.d)
+        g.call(jesusPaths, icons.jesus.path2.d)
+        g.call(jesusPaths, icons.jesus.path3.d)
+        g.call(jesusPaths, icons.jesus.path4.d)
+        g.call(jesusPaths, icons.jesus.path5.d)
+        g.call(jesusPaths, icons.jesus.path6.d)
+        g.call(jesusPaths, icons.jesus.path7.d)
+        g.call(jesusPaths, icons.jesus.path8.d)
+        g.call(jesusPaths, icons.jesus.path9.d)
+
+    }
 
     zero.append("line")
-        .attr("x1", x)
-        .attr("x2", x)
-        .attr("y1", 0)
-        .attr("y2", state.height)
-        .attr("opacity", 0.5)
-        .attr("stroke-width", 0.77)
+        .attr("x1", 0)
+        .attr("x2", 0)
+        .attr("y1",  -3)
+        .attr("y2", state.height )
+        .attr("stroke-width", 1.5)
         .attr("stroke", "red")
+
+    zero.append("g")
+        .attr("id", "jesusIcon")
+        .attr("transform", "scale(0.4)")
+        .call(jesus, "red")
+
 }
 
 export function map({state}, bars, container ){

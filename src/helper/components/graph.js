@@ -24,21 +24,16 @@ export function killSwitch(stateRefs){
     }
 };
 
-export function zoomIt(stateRefs, zoomObjRefs){
+export function zoomIt(stateRefs){
     if(stateRefs.firstSet && stateRefs.isDrawed) {
 
         const newXScale = stateRefs.zoomState.rescaleX(stateRefs.state.x_scale);
         const newYScale = stateRefs.zoomState.rescaleY(stateRefs.state.y_scale);
 
-        const range = newXScale.range().map(stateRefs.zoomState.invertX, stateRefs.zoomState);
-
-        // stateRefs.state.selections.context.call(zoomObjRefs.current.brush.move, range);
         zoomGraph.xAxis(stateRefs, newXScale, "main");
 
         zoomGraph.bars(stateRefs, newXScale, newYScale); 
 
-        //if(stateRefs.infoElements.handle_wahlen) (stateRefs, newXScale, "wahlen")
-        
     }
 };
 
@@ -52,7 +47,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             // main
             mainGraph : d3_select.select("#mainGraph"),
             bars : d3_select.select("#kaiserBars"),
-            zero : d3_select.select("#zero").select("line"),
+            zero : d3_select.select("#zero"),
             // zoom / context
             focus : d3_select.select(".focus"),
             // ereignisse
@@ -86,10 +81,11 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     linesPatterns.frame(mainGraph, stateRefs)
     misc.lines(stateRefs, mainGraph)
-    misc.zero(stateRefs, mainGraph)
 
     const barSelection = bars.draw(stateRefs, mainGraph)
     misc.map(stateRefs, barSelection, mainGraph)
+    misc.zero(stateRefs, mainGraph)
+
     // achsen
     axis.x(stateRefs, mainGraph, "main")
     // label

@@ -6,7 +6,6 @@ import '../styles.css'
 
 import { useKeyPress } from "../helper/hooks.js";
 
-import * as lines from  '../graphics/draw/lines.js';
 import * as zoomGraph from  '../graphics/update/zoom.js';
 import * as toggle from  '../graphics/update/toggle.js';
 import * as d3Zoom from  '../helper/events/zoom.js';
@@ -99,7 +98,7 @@ export default function Graph (props) {
     // ZOOM AND BRUSH:
 
     useEffect(()=>{ 
-        helper.zoomIt(stateRefs.current, zoomObjRefs) 
+        helper.zoomIt(stateRefs.current) 
     }, [zoomState])
 
     // TOGGLE HANDLES:

@@ -48,28 +48,3 @@ export function recGraph({ state, highlight}, container, type){
         .attr("stroke-width", 0.4)
         .attr("opacity", isBarhighlight ? 1 : 0);
 }
-
-export function navHLline({ state, highlight }, container, type){
-
-    const _highlight = container.append("g")
-        .attr("id", type)
-        .style("pointer-events", "none");
-
-    const isLineHighlight = 
-        highlight.highlight_main &&
-        (highlight.ident !== "perioden" &&
-        highlight.ident !== "partei")
-
-    const coords = isLineHighlight ? setCoords(state, highlight.element, 0, "line", null) : setCoords(state, null, 0, "init", null)
-
-    _highlight.append("line")
-        .attr("id", "left")
-        .attr("x1", coords.x)
-        .attr("y1", 0)
-        .attr("x2", coords.x)
-        .attr("y2", state.navigation.height)
-        .attr("stroke", state.highlightColor )
-        .attr("opacity", 1)
-        .attr("stroke-width", 0.5)
-        .attr("opacity", 0);
-}

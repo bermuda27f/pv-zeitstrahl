@@ -4,7 +4,7 @@ export function bars({ state, zoomInfo, zoomState }, newX, newY) {
 
     state.selections.bars.attr("transform", zoomState);
     state.selections.y_lines.attr("transform", zoomState);
-    state.selections.zero.attr("x1", newX(new Date(0))).attr("x2", newX(new Date(0)))
+    state.selections.zero.attr("transform", `translate(${newX(new Date(0))}, ${0})`)
 }
 
 export function highlightLines ({ state }, newXScale, type){
