@@ -28,10 +28,10 @@ export function draw ({ state }, graph){
                         .attr("x", d => state.x_scale(d.born) )
                         .attr("y", d => state.y_scale(d.id + 3))
                         .attr("width", function (d) { return state.x_scale(d.died) - state.x_scale(d.born); })
-                        // .attr("stroke", "lightgrey")
-                        // .attr("stroke-width", state.lifebarWidth)
+                        .attr("stroke", "black")
+                        .attr("stroke-width", state.lineWidth)
                         .attr("height", state.barHeight)
-                        .style("fill", "yellow");
+                        .style("fill", "url(#circlePattern)");
                 }
                 selection
                     .append("rect")

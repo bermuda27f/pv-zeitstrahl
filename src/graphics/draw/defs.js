@@ -28,8 +28,8 @@ export function set(defs, { state }) {
         .attr('patternTransform', 'rotate(45)')
         .attr('id', 'circlePattern')
             .append('circle')
-            .style('fill', state.standardColor)
-            .style('opacity', 0.5)
+            .style('fill', "black")
+            .style('opacity', 1)
             .attr('r', 1)
             .attr('cx', 0)
             .attr('cy', 0);

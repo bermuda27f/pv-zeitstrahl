@@ -31,7 +31,7 @@ export function zero({ state }, container) {
         .attr("id", "zero")
         //.attr("clip-path", "url(#clipPath_main)")
         .attr("transform", `translate(${x}, ${0})`)
-        .attr("opacity", 0.9)
+        .attr("opacity", 1)
 
     const jesus = (g, color) => {
 
@@ -66,12 +66,12 @@ export function zero({ state }, container) {
         .attr("y1",  -3)
         .attr("y2", state.height )
         .attr("stroke-width", 1.5)
-        .attr("stroke", "red")
+        .attr("stroke", "black")
 
     zero.append("g")
         .attr("id", "jesusIcon")
         .attr("transform", "scale(0.4)")
-        .call(jesus, "red")
+        .call(jesus, "black")
 
 }
 
@@ -100,7 +100,7 @@ export function map({state}, bars, container ){
         .append("rect").attr("x", 0).attr("y", 0)
         .attr("width", state.width).attr("height", state.height)
         .attr("fill", "none")
-        .attr("stroke", "magenta").attr("stroke-width", state.navigation.strokeWidth);
+        .attr("stroke", "black").attr("stroke-width", state.navigation.strokeWidth);
   
     mapBG.lower();
     //mapHighlight.raise();
