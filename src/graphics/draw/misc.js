@@ -1,5 +1,6 @@
 
 import * as icons from '../icons.js';
+import * as d3_select from 'd3-selection';
 
 export function lines({ state }, container) {
 
@@ -84,14 +85,16 @@ export function map({state}, bars, container ){
     //     .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`);
 
     map.selectAll("text").remove()
+    map.selectAll("line").remove()
     map.selectAll("rect").attr('id', null)
 
-    const mapBG = container.append("g")
-        .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`)
+    const mapBG = map
         .append("rect")
+        .attr("id", "cool")
         .attr("width", state.width).attr("height", state.height)
-        .attr("fill", "none")
+        .attr("fill", "white")
         .attr("stroke", "black").attr("stroke-width", 0.5);
+
     const focus = map.append("g")
         .attr("id", "_focus")
         .append("rect").attr("x", 0).attr("y", 0)
@@ -99,7 +102,7 @@ export function map({state}, bars, container ){
         .attr("fill", "none")
         .attr("stroke", "magenta").attr("stroke-width", state.navigation.strokeWidth);
   
-    map.raise();
+    mapBG.lower();
     //mapHighlight.raise();
 
 }

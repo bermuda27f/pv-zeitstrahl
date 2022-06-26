@@ -75,13 +75,14 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     linesPatterns.frame(mainGraph, stateRefs)
 
+    axis.x(stateRefs, mainGraph, "main")
 
     const barSelection = bars.draw(stateRefs, mainGraph)
-    misc.map(stateRefs, barSelection, mainGraph)
     misc.zero(stateRefs, mainGraph)
 
     // achsen
-    axis.x(stateRefs, mainGraph, "main")
+    misc.map(stateRefs, barSelection, mainGraph)
+
     // label
     // context
     //navigation.context(stateRefs)
