@@ -1,194 +1,218 @@
 [
-    {
-      "id": -2,
-      "name": "1. Triumvirat",
-      "start": -60,
-      "end": -49,
-      "dauer": 11,
-      "wiki": null
-    },
-    {
-      "id": -1,
-      "name": "CAESAR",
-      "start": -48,
-      "end": -44,
-      "dauer": 4,
-      "wiki": null
-    },
-    {
-      "id": 0,
-      "name": "2. Triumvirat",
-      "start": -43,
-      "end": -32,
-      "dauer": 11,
-      "wiki": null
-    },
-    {
-      "id": 1,
-      "name": "AUGUSTUS",
-      "start": -27,
-      "end": 14,
-      "dauer": 13,
-      "wiki": null
-    },
-    {
-      "id": 2,
-      "name": "TIBERIUS",
-      "start": 14,
-      "end": 37,
-      "dauer": 23,
-      "wiki": null
-    },
-    {
-      "id": 3,
-      "name": "CALIGULA",
-      "start": 37,
-      "end": 41,
-      "dauer": 4,
-      "wiki": null
-    },
-    {
-      "id": 4,
-      "name": "CLAUDIUS",
-      "start": 41,
-      "end": 54,
-      "dauer": 13,
-      "wiki": null
-    },
-    {
-      "id": 5,
-      "name": "NERO",
-      "start": 54,
-      "end": 68,
-      "dauer": 14,
-      "wiki": null
-    },
-    {
-      "id": 6,
-      "name": "VESPASIAN",
-      "start": 69,
-      "end": 79,
-      "dauer": 10,
-      "wiki": null
-    },
-    {
-      "id": 7,
-      "name": "TITUS",
-      "start": 79,
-      "end": 81,
-      "dauer": 2,
-      "wiki": null
-    },
-    {
-      "id": 8,
-      "name": "DOMITIAN",
-      "start": 81,
-      "end": 96,
-      "dauer": 15,
-      "wiki": null
-    },
-    {
-      "id": 9,
-      "name": "NERVA",
-      "start": 96,
-      "end": 98,
-      "dauer": 2,
-      "wiki": null
-    },
-    {
-      "id": 10,
-      "name": "TRAJAN",
-      "start": 98,
-      "end": 117,
-      "dauer": 19,
-      "wiki": null
-    },
-    {
-      "id": 11,
-      "name": "HADRIAN",
-      "start": 117,
-      "end": 138,
-      "dauer": 21,
-      "wiki": null
-    },
-    {
-      "id": 12,
-      "name": "ANTONINUS PIUS",
-      "start": 138,
-      "end": 161,
-      "dauer": 23,
-      "wiki": null
-    },
-    {
-      "id": 13,
-      "name": "VERUS",
-      "start": 161,
-      "end": 169,
-      "dauer": 8,
-      "wiki": null
-    },
-    {
-      "id": 14,
-      "name": "MARK AUREL",
-      "start": 161,
-      "end": 180,
-      "dauer": 19,
-      "wiki": null
-    },
-    {
-      "id": 15,
-      "name": "COMMODUS",
-      "start": 180,
-      "end": 192,
-      "dauer": 12,
-      "wiki": null
-    },
-    {
-      "id": 16,
-      "name": "CLODIUS ALBINUS",
-      "start": 193,
-      "end": 197,
-      "dauer": 4,
-      "wiki": null
-    },
-    {
-      "id": 17,
-      "name": "SEPTIMIUS SEVERUS",
-      "start": 193,
-      "end": 211,
-      "dauer": 18,
-      "wiki": null
-    },
-    {
-      "id": 18,
-      "name": "CARACALLA",
-      "start": 211,
-      "end": 217,
-      "dauer": 6,
-      "wiki": null
-    },
-    {
-      "id": 19,
-      "name": "MACRINUS",
-      "start": 217,
-      "end": 218,
-      "dauer": 1,
-      "wiki": null
-    },
-    {
-      "id": 20,
-      "name": "ELAGABAL",
-      "start": 218,
-      "end": 222,
-      "dauer": 4,
-      "wiki": null
-    },
-    {
-      "id": 21,
-      "name": "SEVERUS ALEXANDER",
-      "start": 222,
-      "end": 235,
-      "dauer": 13,
-      "wiki": null
-    }
-  ]
+  {
+    "id": -2,
+    "name": "1. Triumvirat",
+    "start": -60,
+    "end": -49,
+    "born": null,
+    "died": null,
+    "wiki": null
+  },
+  {
+    "id": -1,
+    "name": "CAESAR",
+    "start": -48,
+    "end": -44,
+    "born": -100,
+    "died": -44,
+    "wiki": null
+  },
+  {
+    "id": 0,
+    "name": "2. Triumvirat",
+    "start": -43,
+    "end": -32,
+    "born": null,
+    "died": null,
+    "wiki": null
+  },
+  {
+    "id": 1,
+    "name": "AUGUSTUS",
+    "start": -27,
+    "end": 14,
+    "born": -63,
+    "died": 14,
+    "wiki": null
+  },
+  {
+    "id": 2,
+    "name": "TIBERIUS",
+    "start": 14,
+    "end": 37,
+    "born": -42,
+    "died": 37,
+    "wiki": null
+  },
+  {
+    "id": 3,
+    "name": "CALIGULA",
+    "start": 37,
+    "end": 41,
+    "born": 12,
+    "died": 41,
+    "wiki": null
+  },
+  {
+    "id": 4,
+    "name": "CLAUDIUS",
+    "start": 41,
+    "end": 54,
+    "born": -10,
+    "died": 54,
+    "wiki": null
+  },
+  {
+    "id": 5,
+    "name": "NERO",
+    "start": 54,
+    "end": 68,
+    "born": 37,
+    "died": 68,
+    "wiki": null
+  },
+  {
+    "id": 6,
+    "name": "VESPASIAN",
+    "start": 69,
+    "end": 79,
+    "born": -9,
+    "died": 79,
+    "wiki": null
+  },
+  {
+    "id": 7,
+    "name": "TITUS",
+    "start": 79,
+    "end": 81,
+    "born": 39,
+    "died": 81,
+    "wiki": null
+  },
+  {
+    "id": 8,
+    "name": "DOMITIAN",
+    "start": 81,
+    "end": 96,
+    "born": 51,
+    "died": 96,
+    "wiki": null
+  },
+  {
+    "id": 9,
+    "name": "NERVA",
+    "start": 96,
+    "end": 98,
+    "born": 30,
+    "died": 98,
+    "wiki": null
+  },
+  {
+    "id": 10,
+    "name": "TRAJAN",
+    "start": 98,
+    "end": 117,
+    "born": 53,
+    "died": 117,
+    "wiki": null
+  },
+  {
+    "id": 11,
+    "name": "HADRIAN",
+    "start": 117,
+    "end": 138,
+    "born": 76,
+    "died": 138,
+    "wiki": null
+  },
+  {
+    "id": 12,
+    "name": "ANTONINUS PIUS",
+    "start": 138,
+    "end": 161,
+    "born": 86,
+    "died": 161,
+    "wiki": null
+  },
+  {
+    "id": 13,
+    "name": "LUCIUS VERUS",
+    "start": 161,
+    "end": 169,
+    "born": 130,
+    "died": 169,
+    "wiki": null
+  },
+  {
+    "id": 14,
+    "name": "MARK AUREL",
+    "start": 161,
+    "end": 180,
+    "born": 121,
+    "died": 180,
+    "wiki": null
+  },
+  {
+    "id": 15,
+    "name": "COMMODUS",
+    "start": 180,
+    "end": 192,
+    "born": 161,
+    "died": 192,
+    "wiki": null
+  },
+  {
+    "id": 16,
+    "name": "CLODIUS ALBINUS",
+    "start": 193,
+    "end": 197,
+    "born": 150,
+    "died": 197,
+    "wiki": null
+  },
+  {
+    "id": 17,
+    "name": "SEPTIMIUS SEVERUS",
+    "start": 193,
+    "end": 211,
+    "born": 145,
+    "died": 211,
+    "wiki": null
+  },
+  {
+    "id": 18,
+    "name": "CARACALLA",
+    "start": 211,
+    "end": 217,
+    "born": 188,
+    "died": 217,
+    "wiki": null
+  },
+  {
+    "id": 19,
+    "name": "MACRINUS",
+    "start": 217,
+    "end": 218,
+    "born": 165,
+    "died": 218,
+    "wiki": null
+  },
+  {
+    "id": 20,
+    "name": "ELAGABAL",
+    "start": 218,
+    "end": 222,
+    "born": 204,
+    "died": 222,
+    "wiki": null
+  },
+  {
+    "id": 21,
+    "name": "SEVERUS ALEXANDER",
+    "start": 222,
+    "end": 235,
+    "born": 208,
+    "died": 235,
+    "wiki": null
+  }
+]

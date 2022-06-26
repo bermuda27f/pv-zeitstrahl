@@ -8,7 +8,7 @@ export function buildToolTip ({ state }, event, d, type) {
     switch(type) {
         case "story" :
             const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-            const date = new Date(d.Datum)
+            const date = d.Datum
             _text = date.toLocaleDateString('de-DE', dateOptions) + " — " + d.Name;
             break;
         case "name":

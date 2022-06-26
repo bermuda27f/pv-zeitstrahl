@@ -77,9 +77,6 @@ export function size(state){
       .tickFormat(d3_format.format(3))
       .tickSize(height),
 
-    y_axis : d3_axis.axisLeft(y_scale).ticks(5),
-    y_axis_lines : d3_axis.axisLeft(y_scale).ticks(5).tickSize(width),
-
     width : width,
     height : height,
 

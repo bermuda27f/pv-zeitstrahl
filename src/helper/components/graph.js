@@ -25,14 +25,10 @@ export function killSwitch(stateRefs){
 };
 
 export function zoomIt(stateRefs){
-    if(stateRefs.firstSet && stateRefs.isDrawed) {
+    if(stateRefs.firstSet && stateRefs.isDrawed && stateRefs.zoomInfo.scaleY) {
 
-        const newXScale = stateRefs.zoomState.rescaleX(stateRefs.state.x_scale);
-        const newYScale = stateRefs.zoomState.rescaleY(stateRefs.state.y_scale);
-
-        zoomGraph.xAxis(stateRefs, newXScale, "main");
-
-        zoomGraph.bars(stateRefs, newXScale, newYScale); 
+        zoomGraph.xAxis(stateRefs, stateRefs.zoomInfo.scaleX, "main");
+        zoomGraph.graph(stateRefs, stateRefs.zoomState); 
 
     }
 };
@@ -48,8 +44,8 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             mainGraph : d3_select.select("#mainGraph"),
             bars : d3_select.select("#kaiserBars"),
             zero : d3_select.select("#zero"),
+            focus : d3_select.select("#_focus"),
             // zoom / context
-            focus : d3_select.select(".focus"),
             // ereignisse
             ereignisse : d3_select.selectAll(".ereignisseGroup"), 
             ereignisseSymbol : d3_select.selectAll(".ereignisseSymbol"),
@@ -59,7 +55,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             xAxis : d3_select.selectAll(".xAxis"),
             xAxisLines : d3_select.selectAll(".xAxisLines"),
             // Y-Lines
-            y_lines : d3_select.selectAll("#lines_t"),
+            y_lines : d3_select.select("#lines_t").selectAll("line"),
             // Highlighter
             mainHL : d3_select.select("#BarHighLight_main"),
         },
@@ -80,9 +76,10 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr("opacity", 1)
 
     linesPatterns.frame(mainGraph, stateRefs)
-    misc.lines(stateRefs, mainGraph)
+
 
     const barSelection = bars.draw(stateRefs, mainGraph)
+    misc.lines(stateRefs, mainGraph)
     misc.map(stateRefs, barSelection, mainGraph)
     misc.zero(stateRefs, mainGraph)
 
@@ -99,7 +96,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         //.on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
-    zoomHelper.initZoom(mainGraph, zoomObjRefs.current.zoom, stateRefs)
+    //zoomHelper.initZoom(mainGraph, zoomObjRefs.current.zoom, stateRefs)
 
 };
 

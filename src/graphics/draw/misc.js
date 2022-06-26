@@ -23,7 +23,7 @@ export function lines({ state }, container) {
 
 export function zero({ state }, container) {
 
-    const x = state.x_scale(new Date(0)) - 1;
+    const x = state.x_scale(0) - 1;
     const y_offset = icons.jesus.circle.r + 5
 
     const zero = container.append("g")
@@ -84,6 +84,7 @@ export function map({state}, bars, container ){
     //     .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`);
 
     map.selectAll("text").remove()
+    map.selectAll("rect").attr('id', null)
 
     const mapBG = container.append("g")
         .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`)

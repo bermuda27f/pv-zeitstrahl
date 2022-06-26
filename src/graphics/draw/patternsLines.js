@@ -39,8 +39,8 @@ export function highlightLine(props, container, type){
             .attr("stroke-width", 1)
             .attr("fill",  d => isHighlight(d) ? props.state.highlightColor : props.state.ereignisHandle.color)
             .attr("opacity", d => isHighlight(d) ? 1 : props.state.ereignisHandle.opacity)
-            .call(behaviour)
-            .call(events)
+            // .call(behaviour)
+            // .call(events)
 
     const line = (g) => g
         .append("line")
@@ -57,7 +57,7 @@ export function highlightLine(props, container, type){
             .enter()
             .append("g")
                 .attr("class", "highlightLine highlightLine_" + type)
-                .attr("transform", (d) => { return `translate(${props.state.x_scale(new Date(d[dateKey]))}, 0)`})
+                .attr("transform", (d) => { return `translate(${props.state.x_scale(d[dateKey])}, 0)`})
                 .attr("opacity", 1)
                 .call(line)
 

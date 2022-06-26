@@ -2,48 +2,6 @@ import * as d3_select from 'd3-selection';
 
 import * as check from  '../../helper/check.js';
 
-export function curves({ state, infoElements, parteienState}) {
-
-    const t = state.transition;
-
-    const opacity = (org) => { return parteienState["checked_" + org.partei] ?
-        state.pathOpacity.active : state.pathOpacity.disabled }
-
-    state.selections.fuenfProzentX.transition(t)
-        .attr("y1", state.y_scale(5));
-    state.selections.fuenfProzentX.transition(t)
-        .attr("y2", state.y_scale(5));
-    state.selections.fuenfProzentY.transition(t)
-        .attr("y1", state.graph.height).attr("opacity", state.huerde.opacity);
-
-    state.data.pathWahlen.forEach((org) => {
-        d3_select.selectAll(".label_" + org.partei)
-            .data(org.ergebnisse.filter((d, i) => { return d !== null && org.firstPoints.includes(i) }))
-            .transition(t)
-                .attr("y", function (d) { return state.y_scale(d.Ergebnis)})
-                .attr("opacity",  infoElements.labelPartei ? parteienState["checked_" + org.partei] ? 1 : state.pathOpacity.disabled : 0)
-                .style("pointer-events", infoElements.labelPartei ? parteienState["checked_" + org.partei] ? "auto" : "none" : "none");
-        d3_select.select("#" + org.partei + "_circleGroup").selectAll("circle")
-            .data(org.ergebnisse.filter(function(d) { return check.nullHundret(d) }))
-            .transition(t)
-                .attr("cy", function (d) { return state.y_scale(d.Ergebnis)})
-                .attr("opacity", opacity(org))
-                .style("pointer-events", "auto");
-        d3_select.select("#" + org.partei + "_path")
-            .datum(org.ergebnisse)
-            .transition(t)
-                .attr("d", state.lines.partei)
-                .attr("opacity", opacity(org))
-                .style("pointer-events", "auto");
-        d3_select.select("#" + org.partei + "_clickPath")
-            .datum(org.ergebnisse)
-            .transition(t)
-                .attr("d", state.lines.partei)
-                .style("pointer-events", "auto");
-    });
-
-}
-
 export function handles({ state }, type, active){
     const t = state.transition
     switch(type){
@@ -79,11 +37,9 @@ export function highlighterNAV({ state }, d, mode, type) {
         default: break;
     }
 
-    const date_start = new Date(d.start)
-    const date_end = new Date(d[end])
     const coords = {
-        x: state.x_scale(date_start),
-        width : state.x_scale(date_end) - state.x_scale(date_start)
+        x: state.x_scale(d.start),
+        width : state.x_scale(d.end) - state.x_scale(d.start)
     }
 
     state.selections.navHL.select("#rect")
@@ -107,11 +63,9 @@ export function highlighterNAV({ state }, d, mode, type) {
 export function highlighter({ state, zoomInfo }, d, mode, type) {
 
     const t = state.transition;
-    const date_start = new Date(d.start);
-    const date_end = new Date(d.end);
     const coords = {
-        x: zoomInfo.scale(date_start),
-        width : zoomInfo.scale(date_end) - zoomInfo.scale(date_start)
+        x: zoomInfo.scaleX(d.start),
+        width : zoomInfo.scaleX(d.end) - zoomInfo.scaleX(d.start)
     }
 
     state.selections[type + "HL"].select("#rect")

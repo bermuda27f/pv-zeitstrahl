@@ -18,11 +18,11 @@ import * as d3_ease from 'd3-ease';
 import data_kaiser from "./data/kaiser.json";
 import data_ereignisse from "./data/ereignisse.json";
 
-const startDate = -125;
+const startDate = -133;
 
 const standardColor = "#141452";
 const highlightColor = "magenta";
-const margin = { top: 25, right: 30, bottom: 5, left: 30 };
+const margin = { top: 25, right: 40, bottom: 5, left: 30 };
 const padding = 15;
 const transitionDuration = 350;
 
@@ -67,6 +67,8 @@ function App (){
         ereignisHandle : {
             opacity : 0.33, color : standardColor
         },
+
+        lifebarWidth : 0.25,
 
         selections : null,
         zoomObject : null

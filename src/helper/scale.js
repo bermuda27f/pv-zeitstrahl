@@ -8,6 +8,6 @@ export function calc_xScale (state, width){
 
 export function calc_yScale (state, height){
 
-    return d3_scale.scaleLinear([state.data.kaiser.length, 0],[0, (height)]);
+    return d3_scale.scaleLinear([state.data.kaiser.length, 0],[0, height]);
 
 }

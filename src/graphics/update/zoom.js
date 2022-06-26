@@ -1,10 +1,14 @@
-export function bars({ state, zoomInfo, zoomState }, newX, newY) {
-
-    //const newX = date => { return newXScale(new Date(date)) }
+export function graph({ state, zoomInfo, zoomState }) {
 
     state.selections.bars.attr("transform", zoomState);
-    state.selections.y_lines.attr("transform", zoomState);
-    state.selections.zero.attr("transform", `translate(${newX(new Date(0))}, ${0})`)
+    state.selections.y_lines
+        .attr("y1", d => zoomInfo.scaleY(d.id + 3))
+        .attr("y2", d => zoomInfo.scaleY(d.id + 3))
+
+    state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, ${0})`)
+    state.selections.focus.attr('transform', zoomInfo.focus)
+    state.selections.focus.select("rect").attr('stroke-width', state.navigation.strokeWidth * zoomState.k);
+
 }
 
 export function highlightLines ({ state }, newXScale, type){
@@ -16,21 +20,21 @@ export function highlightLines ({ state }, newXScale, type){
         default: break;
     }
 
-    selection.attr("transform", (d) => { return `translate(${newXScale(new Date(d.Datum))}, 0)`; });
+    selection.attr("transform", (d) => { return `translate(${newXScale(d.Datum)}, 0)`; });
 
 }
 
 export function bg(props, newScale, type){
     props.state.selections[type].selectAll("rect")
-        .attr("x", d => { return newScale(new Date(d.start))} )
+        .attr("x", d => { return newScale(d.start)} )
         .attr("width", d => {
-            return newScale(new Date(d.end)) - newScale(new Date(d.start))
+            return newScale(d.end) - newScale(d.start)
         })
 }
 
 export function perioden(props, newXScale){
     props.state.selections.periodenHL
-        .attr("transform", (d) => { return `translate(${newXScale(new Date(d.start))}, 0)`; })
+        .attr("transform", (d) => { return `translate(${newXScale(d.start)}, 0)`; })
 }
 
 export function xAxis (props, newXScale, type){
@@ -62,13 +66,9 @@ export function xAxis (props, newXScale, type){
 
 export function highlights ({ state, highlight }, newScale, type){
 
-    const endData = highlight.ident === "perioden" ? "end" : "stopp";
-
-    const date_start = new Date(highlight.element.start)
-    const date_end = new Date(highlight.element[endData]);
     const coords = {
-        x: newScale(date_start),
-        width : newScale(date_end) - newScale(date_start)
+        x: newScale(highlight.element.start),
+        width : newScale(highlight.element.end) - newScale(highlight.element.start)
     }
     state.selections[type + "HL"].select("#rect")
         .attr("x", coords.x)

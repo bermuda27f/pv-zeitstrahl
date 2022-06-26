@@ -107,8 +107,8 @@ export function toggle(props, mode, switchMode, eventType) {
             if(eventType === "click" && _type !== "perioden"){
                 props.state.selections.HL_NavLine
                     .transition(t)
-                    .attr("x1", props.state.x_scale(new Date(_d.Datum)))
-                    .attr("x2", props.state.x_scale(new Date(_d.Datum)))
+                    .attr("x1", props.state.x_scale(_d.Datum))
+                    .attr("x2", props.state.x_scale(_d.Datum))
                     .attr("opacity", mode ? 1 : 0)
             }
             break;
