@@ -1,9 +1,7 @@
 export function graph({ state, zoomInfo, zoomState }) {
 
     state.selections.bars.attr("transform", zoomState);
-    state.selections.y_lines
-        .attr("y1", d => zoomInfo.scaleY(d.id + 3))
-        .attr("y2", d => zoomInfo.scaleY(d.id + 3))
+    state.selections.bars.selectAll(".kaiser_lines").attr('stroke-width', state.lineWidth * (1/zoomState.k));
 
     state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, ${0})`)
     state.selections.focus.attr('transform', zoomInfo.focus)

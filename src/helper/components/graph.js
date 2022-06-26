@@ -54,8 +54,6 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             // X-Achsen:
             xAxis : d3_select.selectAll(".xAxis"),
             xAxisLines : d3_select.selectAll(".xAxisLines"),
-            // Y-Lines
-            y_lines : d3_select.select("#lines_t").selectAll("line"),
             // Highlighter
             mainHL : d3_select.select("#BarHighLight_main"),
         },
@@ -79,7 +77,6 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
 
     const barSelection = bars.draw(stateRefs, mainGraph)
-    misc.lines(stateRefs, mainGraph)
     misc.map(stateRefs, barSelection, mainGraph)
     misc.zero(stateRefs, mainGraph)
 

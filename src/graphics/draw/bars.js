@@ -60,6 +60,17 @@ export function draw ({ state }, graph){
                     .style("dominant-baseline", "baseline")
                     // .call(behaviour)
                     // .call(events);
+
+                selection
+                    .append("line")
+                    .attr("class", d => "kaiser_lines")
+                    .attr("x1", 0)
+                    .attr("y1", (d,i) => state.y_scale(d.id + 3))
+                    .attr("x2", state.width)
+                    .attr("y2", (d,i) => state.y_scale(d.id + 3))
+                    .attr("stroke-width", state.lineWidth)
+                    .attr("opacity", 0.5)
+                    .attr("stroke", "grey");
             })
 
     return bars

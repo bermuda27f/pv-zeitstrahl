@@ -68,7 +68,7 @@ function App (){
             opacity : 0.33, color : standardColor
         },
 
-        lifebarWidth : 0.25,
+        lineWidth : 0.25,
 
         selections : null,
         zoomObject : null
