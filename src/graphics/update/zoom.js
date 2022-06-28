@@ -78,10 +78,3 @@ export function highlights ({ state, highlight }, newScale, type){
         .attr("x1", (coords.x + coords.width))
         .attr("x2", (coords.x + coords.width))
 }
-
-export function jetzt(props, newScale){
-    props.state.selections.jetzt.selectAll("line")
-        .attr("x1", newScale(Date.now()))
-        .attr("x2", newScale(Date.now()));
-    props.state.selections.jetzt.selectAll("circle").attr("cx", newScale(Date.now()));
-}
