@@ -78,5 +78,3 @@ export function highlights ({ state, highlight }, newScale, type){
         .attr("x1", (coords.x + coords.width))
         .attr("x2", (coords.x + coords.width))
 }
-
-//
