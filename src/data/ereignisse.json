@@ -1,52 +1,92 @@
 [
-    {
-      "id": 1,
-      "name": "Die Iden des März (15.3.44 v.Chr.)",
-      "datum": -44
-    },
-    {
-      "id": 2,
-      "name": "Schlacht bei Actium – Octavian besiegt Marc Anton und Cleopatra (2.9.31 v.Chr.)",
-      "datum": -31
-    },
-    {
-      "id": 3,
-      "name": "Varusschlacht",
-      "datum": 9
-    },
-    {
-      "id": 4,
-      "name": "Großer Brand Roms",
-      "datum": 64
-    },
-    {
-      "id": 5,
-      "name": "Ausbruch des Versuv",
-      "datum": 79
-    },
-    {
-      "id": 6,
-      "name": "Schlacht bei Philippi – Marc Anton und Brutus schlagen die Anhänger des Senats",
-      "datum": -42
-    },
-    {
-      "id": 7,
-      "name": "Fertigstellung des Kolosseums",
-      "datum": 82
-    },
-    {
-      "id": 8,
-      "name": "Vierkaiserjahr: Galba, Otho, Vitellius, Vespasian",
-      "datum": 68
-    },
-    {
-      "id": 9,
-      "name": "Fünfkaiserjahr: Pertinax, Didius Salvius Julianus, Pescennius Niger, Clodius Albinus, Septimius Severus",
-      "datum": 193
-    },
-    {
-      "id": 10,
-      "name": "Das römische Reich erreicht seine größte Ausdehnung, geschätzt 50 Mio. Einwohner",
-      "datum": 117
-    }
-  ]
+  {
+    "id": 1,
+    "name": "Die Iden des März (15.3.44 v.Chr.)",
+    "datum": -44,
+    "src_name": "iden",
+    "author": "Vincenzo Camuccini",
+    "title": "La morte di Cesare",
+    "year": 1798
+  },
+  {
+    "id": 2,
+    "name": "Schlacht bei Philippi – Marc Anton und Brutus schlagen die Anhänger des Senats",
+    "datum": -42,
+    "src_name": "brutus",
+    "author": "Ward and Lock's Illustrated History of the World",
+    "title": "The suicide of Brutus after the Battle of Philippi",
+    "year": 1882
+  },
+  {
+    "id": 3,
+    "name": "Schlacht bei Actium – Octavian besiegt Marc Anton und Cleopatra (2.9.31 v.Chr.)",
+    "datum": -31,
+    "src_name": "actium",
+    "author": " Jean Baptiste Bourguignon d'Anville",
+    "title": "Plan de la Bataille d'Actium",
+    "year": 1784
+  },
+  {
+    "id": 4,
+    "name": "Varusschlacht",
+    "datum": 9,
+    "src_name": "varus",
+    "author": "",
+    "title": "Roman ceremonial face mask found at Kalkriese",
+    "year": 0
+  },
+  {
+    "id": 5,
+    "name": "Großer Brand Roms",
+    "datum": 64,
+    "src_name": "feuer_rom",
+    "author": "Hubert Robert",
+    "title": "Incendie à Rome",
+    "year": 1785
+  },
+  {
+    "id": 6,
+    "name": "Vierkaiserjahr: Galba, Otho, Vitellius, Vespasian",
+    "datum": 68,
+    "src_name": "vierkaiserjahr",
+    "author": "Georges-Antoine Rochegrosse",
+    "title": "Vitellius traîné dans les rues de Rome par la populace",
+    "year": 1883
+  },
+  {
+    "id": 7,
+    "name": "Ausbruch des Versuv",
+    "datum": 79,
+    "src_name": "pompeji",
+    "author": "Christen Schjellerup Købke",
+    "title": "The Forum at Pompeii with Vesuvius in the Background",
+    "year": 1841
+  },
+  {
+    "id": 8,
+    "name": "Fertigstellung des Kolosseums",
+    "datum": 82,
+    "src_name": "colosseum",
+    "author": "",
+    "title": "structure of the colosseum",
+    "year": 0
+  },
+  {
+    "id": 9,
+    "name": "Das römische Reich erreicht seine größte Ausdehnung, geschätzt 50 Mio. Einwohner",
+    "datum": 117,
+    "src_name": "trajan",
+    "author": "",
+    "title": "emperor trajan",
+    "year": 0
+  },
+  {
+    "id": 10,
+    "name": "Fünfkaiserjahr: Pertinax, Didius Salvius Julianus, Pescennius Niger, Clodius Albinus, Septimius Severus",
+    "datum": 193,
+    "src_name": "commodus",
+    "author": "Fernand Pelez",
+    "title": "Mort de l'empereur Commode",
+    "year": 1879
+  }
+]

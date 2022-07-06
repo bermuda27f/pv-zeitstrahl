@@ -26,6 +26,8 @@ export function zero({ state }, container) {
 
     const x = state.x_scale(0) - 1;
     const y_offset = icons.jesus.circle.r + 5
+    const test = new Date("-001999-03-11T00:00:00")
+    console.log(test)
 
     const zero = container.append("g")
         .attr("id", "zero")

@@ -17,25 +17,31 @@ export function frame (container, { state }){
 
 }
 
-export function highlightLine(props, container, type){
+export function highlightLine({ state }, container){
 
-    const imgNode = svg.selectAll("g.node")
-        .data(props.state.data.ereignisse, d => d.id)
+    const imgNode = container.selectAll("g.node")
+        .data(state.data.ereignisse, d => d.datum)
         .enter()
-        .append("svg:g")
+        .append("g")
         .attr("class", "img_node")
 
-    const defs = imgNode.append("defs")
+    imgNode.append("defs")
+        .append('pattern')
+            .attr("id", function(d) { return "clipImage_"+ d.id;}  )
+            .attr("width", 1)
+            .attr("height", 1)
+            .append("image")
+                .attr("href", function(d) { 
+                    return require('../../img/thumb/' + d.src_name + '.png')
+                    })
+                .attr("width", 50)
+                .attr("height", 50);
 
-    defs.append('pattern')
-        .attr("id", function(d) { return "image"+ d.name;}  )
-        .attr("width", 1)
-        .attr("height", 1)
-        .append("svg:image")
-        .attr("xlink:href", function(d) { return d.img;})
-        .attr("width", 100)
-        .attr("height", 150);
-
+    imgNode.append("circle")
+        .attr("cx", d => state.x_scale(d.datum))
+        .attr("cy", d => 300)  
+        .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
+        .attr("r", 25)
 
     // const events = call.events(type, key, props)
     // const behaviour = call.behaviour(props.infoElements["handle_" + type])

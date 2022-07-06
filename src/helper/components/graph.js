@@ -87,7 +87,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     // context
     //navigation.context(stateRefs)
 
-    //linesPatterns.highlightLine(stateRefs, wahlenGroup, "wahlen")
+    linesPatterns.highlightLine(stateRefs, mainGraph)
     //highlighter.recGraph(stateRefs, mainGraph, "main")
 
     mainGraph.call(zoomObjRefs.current.zoom)
