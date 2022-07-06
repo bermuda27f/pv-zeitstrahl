@@ -3,21 +3,7 @@ import { getKeyType } from  '../../helper/calc_set.js';
 import * as icons from '../icons.js';
 import * as call from  '../../helper/events/call.js';
 
-export function frame (container, { state }){
-
-    container.append("rect")
-        .attr("class", "graphFrame")
-        .attr("y", 1)
-        .attr("width", state.width)
-        .attr("height", state.graph.height)
-        .attr("fill", "white")
-        .attr("stroke", state.standardColor)
-        .attr("stroke-width", 0.5)
-        .attr("opacity", 0.5)
-
-}
-
-export function highlightLine({ state }, container){
+export function handle({ state }, container){
 
     const imgNode = container.selectAll("g.node")
         .data(state.data.ereignisse, d => d.datum)
@@ -39,7 +25,9 @@ export function highlightLine({ state }, container){
 
     imgNode.append("circle")
         .attr("cx", d => state.x_scale(d.datum))
-        .attr("cy", d => 300)  
+        .attr("cy", d => 300)
+        .attr("stroke", "black")
+        .attr("stroke-width", 1)
         .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
         .attr("r", 25)
 

@@ -2,6 +2,20 @@
 import * as icons from '../icons.js';
 import * as d3_select from 'd3-selection';
 
+export function frame (container, { state }){
+
+    container.append("rect")
+        .attr("class", "graphFrame")
+        .attr("y", 1)
+        .attr("width", state.width)
+        .attr("height", state.graph.height)
+        .attr("fill", "white")
+        .attr("stroke", state.standardColor)
+        .attr("stroke-width", 0.5)
+        .attr("opacity", 0.5)
+
+}
+
 export function lines({ state }, container) {
 
     const lineContainer = container.append("g")
@@ -22,12 +36,11 @@ export function lines({ state }, container) {
             .attr("stroke", "grey");
 }
 
-export function zero({ state }, container) {
+export function zero({ state }, container, jesus) {
 
     const x = state.x_scale(0) - 1;
     const y_offset = icons.jesus.circle.r + 5
     const test = new Date("-001999-03-11T00:00:00")
-    console.log(test)
 
     const zero = container.append("g")
         .attr("id", "zero")
@@ -35,7 +48,7 @@ export function zero({ state }, container) {
         .attr("transform", `translate(${x}, ${0})`)
         .attr("opacity", 1)
 
-    const jesus = (g, color) => {
+    const drawJesus = (g, color) => {
 
         const jesusPaths = (g, path) => {
             g.append("path")
@@ -50,31 +63,25 @@ export function zero({ state }, container) {
             .attr("stroke-width", icons.jesus.circle.strokeWidth)
             .attr("stroke", color)
             .attr("fill", "none")
-        g.call(jesusPaths, icons.jesus.path1.d)
-        g.call(jesusPaths, icons.jesus.path2.d)
-        g.call(jesusPaths, icons.jesus.path3.d)
-        g.call(jesusPaths, icons.jesus.path4.d)
-        g.call(jesusPaths, icons.jesus.path5.d)
-        g.call(jesusPaths, icons.jesus.path6.d)
-        g.call(jesusPaths, icons.jesus.path7.d)
-        g.call(jesusPaths, icons.jesus.path8.d)
-        g.call(jesusPaths, icons.jesus.path9.d)
+        
+        for(let i = 1; i< 9; i++ ){ g.call(jesusPaths, icons.jesus["path" + i].d)}
 
     }
 
     zero.append("line")
         .attr("x1", 0)
         .attr("x2", 0)
-        .attr("y1",  -3)
+        .attr("y1",  jesus ? -3 : 0)
         .attr("y2", state.height )
         .attr("stroke-width", 1.5)
         .attr("stroke", "black")
 
-    zero.append("g")
-        .attr("id", "jesusIcon")
-        .attr("transform", "scale(0.4)")
-        .call(jesus, "black")
-
+    if(jesus){
+        zero.append("g")
+            .attr("id", "jesusIcon")
+            .attr("transform", "scale(0.4)")
+            .call(drawJesus, "black")
+    }
 }
 
 export function map({state}, bars, container ){

@@ -1,4 +1,4 @@
-import { buildToolTip } from '../../graphics/draw/toolTips.js';
+import { buildToolTip } from '../../graphics/draw/tooltips.js';
 import * as toggleFuncs from  '../../graphics/update/toggle.js';
 
 import * as d3_select from 'd3-selection';

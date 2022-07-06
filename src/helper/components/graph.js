@@ -2,19 +2,17 @@ import * as handleEvents from  '../events/events.js';
 import * as zoomGraph from  '../../graphics/update/zoom.js';
 import * as d3_zoom from 'd3-zoom';
 import * as d3_select from 'd3-selection';
-import * as linesPatterns from '../../graphics/draw/patternsLines.js';
 import * as svgDef from '../../graphics/draw/defs.js';
 import * as misc from  '../../graphics/draw/misc.js';
 import * as bars from  '../../graphics/draw/bars.js';
-import * as highlighter from  '../../graphics/draw/highlighter.js';
+import * as moment from  '../../graphics/draw/moment.js';
 import * as axis from  '../../graphics/draw/axis.js';
 import * as label from  '../../graphics/draw/label.js';
-import * as navigation from  '../../graphics/draw/navigation.js';
 import * as zoomHelper from  '../../helper/zoom.js';
 import * as check from  '../check.js';
 import * as calc from  '../calc_set.js';
 
-import { deleteTooltip } from '../../graphics/draw/toolTips.js';
+import { deleteTooltip } from '../../graphics/draw/tooltips.js';
 
 export function killSwitch(stateRefs){
         
@@ -73,12 +71,13 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", 1)
 
-    linesPatterns.frame(mainGraph, stateRefs)
+    misc.frame(mainGraph, stateRefs)
 
     axis.x(stateRefs, mainGraph, "main")
+    label.x_axis(stateRefs, mainGraph)
 
     const barSelection = bars.draw(stateRefs, mainGraph)
-    misc.zero(stateRefs, mainGraph)
+    misc.zero(stateRefs, mainGraph, false)
 
     // achsen
     misc.map(stateRefs, barSelection, mainGraph)
@@ -87,7 +86,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     // context
     //navigation.context(stateRefs)
 
-    linesPatterns.highlightLine(stateRefs, mainGraph)
+    moment.handle(stateRefs, mainGraph)
     //highlighter.recGraph(stateRefs, mainGraph, "main")
 
     mainGraph.call(zoomObjRefs.current.zoom)
