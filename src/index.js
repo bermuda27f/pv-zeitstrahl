@@ -64,8 +64,12 @@ function App (){
             active : 0.7, disabled: 0
         },
 
-        ereignisHandle : {
-            opacity : 0.33, color : standardColor
+        handle : {
+            size : 15,
+            offset : 27,
+            bottom : 15,
+            opacity : 0.33, 
+            color : standardColor
         },
 
         lineWidth : 0.25,

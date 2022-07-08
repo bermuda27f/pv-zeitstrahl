@@ -10,6 +10,7 @@ export function handle({ state }, container){
         .enter()
         .append("g")
         .attr("class", "img_node")
+        .attr("transform", d => `translate(${state.x_scale(d.datum)}, 0)`)
 
     imgNode.append("defs")
         .append('pattern')
@@ -20,16 +21,31 @@ export function handle({ state }, container){
                 .attr("href", function(d) { 
                     return require('../../img/thumb/' + d.src_name + '.png')
                     })
-                .attr("width", 50)
-                .attr("height", 50);
+                .attr("width", 2 * state.handle.size)
+                .attr("height", 2 * state.handle.size);
 
-    imgNode.append("circle")
-        .attr("cx", d => state.x_scale(d.datum))
-        .attr("cy", d => 300)
+    // imgNode.append("circle")
+    //     .attr("cx", d => state.x_scale(d.datum))
+    //     .attr("cy", d => state.height + state.handle.offset + state.handle.size)
+    //     .attr("stroke", "black")
+    //     .attr("stroke-width", 1)
+    //     .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
+    //     .attr("r", state.handle.size)
+
+    imgNode.append("rect")
+        .attr("y", d => state.height + state.handle.offset)
         .attr("stroke", "black")
         .attr("stroke-width", 1)
         .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
-        .attr("r", 25)
+        .attr("width", 2 * state.handle.size)
+        .attr("height", 2 * state.handle.size)
+
+    imgNode.append("line")
+        .attr("y2", + state.height + state.handle.offset )
+        .attr("stroke",  "black")
+        .attr("stroke-width", 1)
+        .attr("opacity", 1)
+        .attr("class", "eventLine")
 
     // const events = call.events(type, key, props)
     // const behaviour = call.behaviour(props.infoElements["handle_" + type])

@@ -44,10 +44,6 @@ export function setTimeOffset (state, element, type ){
 
 export function size(state){
 
-  const handleSize = 15;
-  const handleOffset = 27;
-  const handleBottom = 7;
-
   const navScale = 0.25;
   const marginNav = 5
 
@@ -80,7 +76,7 @@ export function size(state){
     width : width,
     height : height,
 
-    mainGraphHeight : height + state.margin.top + state.margin.bottom + handleOffset + handleSize + handleBottom,
+    mainGraphHeight : height + state.margin.top + state.margin.bottom + state.handle.offset + state.handle.size + state.handle.bottom,
 
     barHeight : (height - state.margin.bottom) / state.data.kaiser.map(x=>x.id).length,
 
@@ -88,14 +84,6 @@ export function size(state){
       x : state.margin.left,
       y : state.margin.top,
       height: height,
-    },
-
-    handle : {
-
-      size : handleSize,
-      offset : handleOffset,
-      marginBottom : handleBottom
-
     },
 
     tickNumber : tickNumber,
