@@ -43,7 +43,7 @@ function App (){
 
         width : null,
         mainRef : mainRef,
-        maxScale : 6,
+        maxScale : 10,
         dateOptions : { year: 'numeric', month: 'long' },
         dateOptionsStory : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
         transition : getTransition,

@@ -86,7 +86,7 @@ export function zero({ state }, container, jesus) {
 
 export function map({state}, bars, container ){
 
-    const map = bars.clone(true)
+    const map = container.append(() =>bars.clone(true).node())
         .attr("id", "minimap")
         .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`);
     // const mapHighlight = highlight.clone(true)

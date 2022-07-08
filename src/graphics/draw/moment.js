@@ -3,9 +3,12 @@ import { getKeyType } from  '../../helper/calc_set.js';
 import * as icons from '../icons.js';
 import * as call from  '../../helper/events/call.js';
 
-export function handle({ state }, container){
+export function handles({ state }, container){
 
-    const imgNode = container.selectAll("g.node")
+    const events = container.append("g")
+        .attr("id", "eventContainer")
+
+    const imgNode = events.selectAll("g.node")
         .data(state.data.ereignisse, d => d.datum)
         .enter()
         .append("g")
@@ -19,31 +22,22 @@ export function handle({ state }, container){
             .attr("height", 1)
             .append("image")
                 .attr("href", function(d) { 
-                    return require('../../img/thumb/' + d.src_name + '.png')
+                    return require('../../img/thumb/' + d.src_name + '.jpg')
                     })
                 .attr("width", 2 * state.handle.size)
                 .attr("height", 2 * state.handle.size);
 
-    // imgNode.append("circle")
-    //     .attr("cx", d => state.x_scale(d.datum))
-    //     .attr("cy", d => state.height + state.handle.offset + state.handle.size)
-    //     .attr("stroke", "black")
-    //     .attr("stroke-width", 1)
-    //     .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
-    //     .attr("r", state.handle.size)
-
-    imgNode.append("rect")
-        .attr("y", d => state.height + state.handle.offset)
-        .attr("stroke", "black")
+    imgNode.append("circle")
+        .attr("cy", state.height + state.handle.offset + state.handle.size)
+        .attr("stroke", "darkslateblue")
         .attr("stroke-width", 1)
         .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
-        .attr("width", 2 * state.handle.size)
-        .attr("height", 2 * state.handle.size)
+        .attr("r", state.handle.size)
 
     imgNode.append("line")
         .attr("y2", + state.height + state.handle.offset )
-        .attr("stroke",  "black")
-        .attr("stroke-width", 1)
+        .attr("stroke",  "darkslateblue")
+        .attr("stroke-width", 0.5)
         .attr("opacity", 1)
         .attr("class", "eventLine")
 
