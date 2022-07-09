@@ -76,7 +76,7 @@ export function size(state){
     width : width,
     height : height,
 
-    mainGraphHeight : height + state.margin.top + state.margin.bottom + state.handle.offset + state.handle.size + state.handle.bottom,
+    mainGraphHeight : height + state.margin.top + state.margin.bottom + state.handle.offset + (2 * state.handle.size),
 
     barHeight : (height - state.margin.bottom) / state.data.kaiser.map(x=>x.id).length,
 

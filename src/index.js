@@ -65,9 +65,8 @@ function App (){
         },
 
         handle : {
-            size : 15,
+            size : 25,
             offset : 27,
-            bottom : 15,
             opacity : 0.33, 
             color : standardColor
         },

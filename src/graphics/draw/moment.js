@@ -9,7 +9,7 @@ export function handles({ state }, container){
         .attr("id", "eventContainer")
 
     const imgNode = events.selectAll("g.node")
-        .data(state.data.ereignisse, d => d.datum)
+        .data(state.data.ereignisse, d => d.id)
         .enter()
         .append("g")
         .attr("class", "img_node")
@@ -29,17 +29,19 @@ export function handles({ state }, container){
 
     imgNode.append("circle")
         .attr("cy", state.height + state.handle.offset + state.handle.size)
-        .attr("stroke", "darkslateblue")
+        .attr("stroke", state.handle.color)
         .attr("stroke-width", 1)
         .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
         .attr("r", state.handle.size)
 
     imgNode.append("line")
         .attr("y2", + state.height + state.handle.offset )
-        .attr("stroke",  "darkslateblue")
+        .attr("stroke",  state.handle.color)
         .attr("stroke-width", 0.5)
         .attr("opacity", 1)
         .attr("class", "eventLine")
+
+    imgNode.lower()
 
     //const testArray = [lines]
 
