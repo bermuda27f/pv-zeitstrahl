@@ -7,7 +7,7 @@ export function update(stateRefs, eventContainer, x_scale){
 
     const events = call.events("events", "id", stateRefs)
     const behaviour = call.behaviour(infoElements.handle_ereignisse)
-    
+
     eventContainer.selectAll("g")
         .data(state.data.events, d => d.id)
         .join(
@@ -49,14 +49,11 @@ export function update(stateRefs, eventContainer, x_scale){
                 return tmpEnter
 
             }
-        );
-
-        eventContainer.selectAll("g").each(function(d){
-
+        ).each(function(d){
             d3_select.select(this).lower();
             const xScale = x_scale(d.datum)
             if(xScale < 0 || xScale > state.width)  d3_select.select(this).remove()
-        })
+        });
 
 }
 

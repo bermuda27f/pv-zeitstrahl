@@ -5,7 +5,7 @@ import * as d3_select from 'd3-selection';
 import * as svgDef from '../../graphics/draw/defs.js';
 import * as misc from  '../../graphics/draw/misc.js';
 import * as bars from  '../../graphics/draw/bars.js';
-import * as moment from  '../../graphics/draw/moment.js';
+import * as moment from  '../../graphics/draw/events.js';
 import * as axis from  '../../graphics/draw/axis.js';
 import * as label from  '../../graphics/draw/label.js';
 import * as zoomHelper from  '../../helper/zoom.js';
