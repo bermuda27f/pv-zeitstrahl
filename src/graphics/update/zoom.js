@@ -1,14 +1,16 @@
 import * as handles from "../draw/moment.js"
 
-export function graph({ state, zoomInfo, zoomState }) {
+export function graph(stateRefs) {
+
+    const { state, zoomInfo, zoomState } = stateRefs
 
     state.selections.bars.attr("transform", zoomState);
     state.selections.bars.selectAll(".kaiser_lines").attr('stroke-width', state.lineWidth * (1/zoomState.k));
 
-    state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, ${0})`)
-    state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, ${0})`)
+    state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, 0)`)
+    state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, 0)`)
 
-    handles.update(state, state.selections.events, zoomInfo.scaleX)
+    handles.update(stateRefs, state.selections.events, zoomInfo.scaleX)
 
     state.selections.focus.attr('transform', zoomInfo.focus)
     state.selections.focus.select("rect").attr('stroke-width', state.navigation.strokeWidth * zoomState.k);

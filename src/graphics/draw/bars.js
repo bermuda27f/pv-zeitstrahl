@@ -2,10 +2,12 @@ import * as check from  '../../helper/check.js';
 import * as call from  '../../helper/events/call.js';
 import * as d3_select from 'd3-selection';
 
-export function draw ({ state }, graph){
+export function draw (stateRefs, graph){
 
-    // const events = call.events(type, key, props)
-    // const behaviour = call.behaviour(true);
+    const { state } = stateRefs
+
+    const events = call.events("person", "id", stateRefs)
+    const behaviour = call.behaviour(true);
 
     const clipGroup = graph.append("g")
         .attr("clip-path", "url(#clipPath_main)")
@@ -31,7 +33,9 @@ export function draw ({ state }, graph){
                         .attr("stroke", "black")
                         .attr("stroke-width", state.lineWidth)
                         .attr("height", state.barHeight)
-                        .style("fill", "url(#circlePattern)");
+                        .style("fill", "url(#circlePattern)")
+                        .call(behaviour)
+                        .call(events);
                 }
                 selection
                     .append("rect")
@@ -42,8 +46,8 @@ export function draw ({ state }, graph){
                     .attr("width", function (d) { return state.x_scale(d.end) - state.x_scale(d.start); })
                     .attr("height", state.barHeight)
                     .style("fill", function(d){ return d.id === -2 || d.id === 0 ? "url(#hatching)" : "black"})
-                    // .call(behaviour)
-                    // .call(events)
+                    .call(behaviour)
+                    .call(events)
 
                 selection
                     .append("text")
@@ -72,6 +76,11 @@ export function draw ({ state }, graph){
                     .attr("opacity", 0.5)
                     .attr("stroke", "grey");
             })
+
+    const zoomRect = graph.append("rect")
+        .attr("fill", "transparent")
+        .attr("width", state.width)
+        .attr("height", state.height)
 
     return bars
     

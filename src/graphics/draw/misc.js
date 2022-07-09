@@ -13,6 +13,7 @@ export function frame (container, { state }){
         .attr("stroke", state.standardColor)
         .attr("stroke-width", 0.5)
         .attr("opacity", 0.5)
+        .attr("pointer-events", "none")
 
 }
 
@@ -38,7 +39,7 @@ export function lines({ state }, container) {
 
 export function zero({ state }, container, jesus) {
 
-    const x = state.x_scale(0) - 1;
+    const x = state.x_scale(0);
     const y_offset = icons.jesus.circle.r + 5
     const test = new Date("-001999-03-11T00:00:00")
 
@@ -73,8 +74,8 @@ export function zero({ state }, container, jesus) {
         .attr("x2", 0)
         .attr("y1",  jesus ? -3 : 0)
         .attr("y2", state.height )
-        .attr("stroke-width", 1.5)
-        .attr("stroke", "black")
+        .attr("stroke-width", 1)
+        .attr("stroke", "red")
 
     if(jesus){
         zero.append("g")

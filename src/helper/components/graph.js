@@ -68,7 +68,10 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     svgDef.set(defs, stateRefs);
 
-    const mainGraph = svg.append("g").attr("id", "mainGraph")
+    const zoomGroup = svg.append("g").attr("id", "graphGroup")
+        .style("pointer-events", "auto")
+
+    const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", 1)
 
@@ -90,11 +93,9 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     //highlighter.recGraph(stateRefs, mainGraph, "main")
 
-    mainGraph.call(zoomObjRefs.current.zoom)
+    zoomGroup.call(zoomObjRefs.current.zoom)
         //.on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
-
-    //zoomHelper.initZoom(mainGraph, zoomObjRefs.current.zoom, stateRefs)
 
 };
 

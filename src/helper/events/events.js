@@ -5,44 +5,18 @@ import * as d3_select from 'd3-selection';
 
 export function mouse(eType, type, key, props, e, d) {
 
-    let _key, _keyName, _dataSet, _d
-
-    switch(type){
-        case "partei":
-            _key =
-                e.srcElement.className.baseVal.includes("circle") ?
-                e.srcElement.className.baseVal.split("_circle")[0] :
-                e.path ? 
-                e.path[1].id.split("_pathCircleGroup")[0] :
-                e.target.id.includes("_clickPath") ?
-                e.target.id.split("_clickPath")[0] :
-                e.target.id.includes("_path") ?
-                e.target.id.split("_path")[0] : 
-                e.target.tagName === "text" ?
-                e.target.parentNode.id.split("_pathCircleGroup")[0] : 
-                null;
-            _keyName = "ORG";
-            _dataSet = "infos";
-            _d = null; 
-            break;
-        default:
-            _key = d[key.key];
-            _keyName = key.key;
-            _dataSet = key.dataSet;
-            _d = d;
-            break;
-    }
+    console.log(d)
 
     props.setMOUSE({
         type : "MULTIPLE", 
         value : { 
                 mouseEvent : eType,
                 type : type,
-                key : _key,
-                keyName : _keyName,
-                dataSet : _dataSet,
+                key : key,
+                keyName : "id",
+                dataSet : "ereignisse",
                 e : e,
-                d : _d
+                d : d
             }
         })
 }

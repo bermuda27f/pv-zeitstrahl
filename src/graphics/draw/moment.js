@@ -4,10 +4,12 @@ import * as d3_select from 'd3-selection';
 import * as icons from '../icons.js';
 import * as call from  '../../helper/events/call.js';
 
-export function update(state, eventContainer, x_scale){
+export function update(stateRefs, eventContainer, x_scale){
 
-    const events = call.events(type, key, props)
-    const behaviour = call.behaviour(props.infoElements["handle_" + type])
+    const { state, infoElements } = stateRefs
+
+    const events = call.events("moment", "id", stateRefs)
+    const behaviour = call.behaviour(infoElements.handle_ereignisse)
     
     eventContainer.selectAll("g")
         .data(state.data.ereignisse, d => d.id)
@@ -37,13 +39,15 @@ export function update(state, eventContainer, x_scale){
                     .attr("stroke", state.handle.color)
                     .attr("stroke-width", 1)
                     .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
-                    .attr("r", state.handle.size);
+                    .attr("r", state.handle.size)
+                    .call(events)
+                    .call(behaviour)
 
                 tmpEnter.append("line")
                     .attr("y2", + state.height + state.handle.offset )
                     .attr("stroke",  state.handle.color)
-                    .attr("stroke-width", 0.5)
-                    .attr("opacity", 1)
+                    .attr("stroke-width", .4)
+                    .attr("opacity", .75)
                     .attr("class", "eventLine");
 
 
@@ -65,12 +69,12 @@ export function update(state, eventContainer, x_scale){
 
 }
 
-export function build({ state }, container){
+export function build(stateRefs, container){
 
     const eventContainer = container.append("g")
         .attr("id", "eventContainer")
 
-    update(state, eventContainer, state.x_scale)
+    update(stateRefs, eventContainer, stateRefs.state.x_scale)
 
     // const imgNode = events.selectAll("g.node")
     //     .data(state.data.ereignisse, d => d.id)
