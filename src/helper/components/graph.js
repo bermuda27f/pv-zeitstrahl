@@ -25,8 +25,8 @@ export function killSwitch(stateRefs){
 export function zoomIt(stateRefs){
     if(stateRefs.firstSet && stateRefs.isDrawed && stateRefs.zoomInfo.scaleY) {
 
-        zoomGraph.xAxis(stateRefs, stateRefs.zoomInfo.scaleX, "main");
         zoomGraph.graph(stateRefs, stateRefs.zoomState); 
+        zoomGraph.xAxis(stateRefs, stateRefs.zoomInfo.scaleX, "main");
 
     }
 };
@@ -47,7 +47,6 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             focus : d3_select.select("#_focus"),
             // zoom / context
             // ereignisse
-            ereignisse : d3_select.selectAll(".ereignisseGroup"), 
             ereignisseSymbol : d3_select.selectAll(".ereignisseSymbol"),
             // label
             label : d3_select.selectAll(".parteiLabel"),
@@ -94,7 +93,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     //highlighter.recGraph(stateRefs, mainGraph, "main")
 
     zoomGroup.call(zoomObjRefs.current.zoom)
-        //.on("wheel.zoom", null)
+        .on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
 };
@@ -106,8 +105,6 @@ export function handleMouse(stateRefs){
         const { mouseEvents : mouse, highlight } = stateRefs
 
         const same = check.sameHighlight (stateRefs, mouse.type, mouse.key)
-        const isPeriod = mouse.type === "perioden"
-        const wasPeriod = highlight.ident === "perioden"
 
         if(mouse.mouseEvent === "enter") {
             handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent); 
@@ -127,13 +124,8 @@ export function handleMouse(stateRefs){
             deleteTooltip();
             // highlight switch
             if (highlight.highlight_main && !same){
-                if((isPeriod && wasPeriod)){
-                    handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                }
-                else {
-                    handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
-                    handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                }
+                handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
+                handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
             }
             // highlight off
             else if(highlight.highlight_main && same){

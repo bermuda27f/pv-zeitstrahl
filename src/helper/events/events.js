@@ -8,7 +8,7 @@ export function mouse(eType, type, key, props, e, d) {
     // eType = click, mouseleave etc.
     // type = bars or event-handles?
     // key = item name
-    // dataset = ereignisse or kaiser
+    // dataset = events or persons
 
     props.setMOUSE({
         type : "MULTIPLE", 
@@ -42,13 +42,9 @@ export function showTooltip(props){
 export function toggle(props, mode, switchMode, eventType) {
 
     function toggleLineSymbol(type, key, _mode) {
-        const symbol = d3_select.select("#symbol_" + type + "_" + key);
-        const lines = d3_select.selectAll(".normalLine_" + type + "_" + key);
-        symbol
-            .attr("opacity", _mode ? 1 : props.state.ereignisHandle.opacity)
-            .attr("fill", _mode ? props.state.highlightColor : props.state.standardColor);
-        lines.attr("opacity", _mode ? 1 : props.state.ereignisHandle.opacity);
-        lines.attr("stroke", _mode ? props.state.highlightColor : props.state.standardColor);
+        const circle = props.state.selections.events.selectAll("circle");
+        //lines.attr("opacity", _mode ? 1 : props.state.ereignisHandle.opacity);
+        circle.attr("stroke", _mode ? props.state.highlightColor : props.state.standardColor);
     }
 
     let _type, _key, _d
@@ -70,8 +66,8 @@ export function toggle(props, mode, switchMode, eventType) {
     }
    
     switch(_type){
-        case "wahlen" :
-        case "perioden" :
+        case "events" :
+        case "persons" :
             toggleLineSymbol(_type, _key, mode);
             if(eventType === "click" && _type !== "perioden"){
                 props.state.selections.HL_NavLine
@@ -81,19 +77,12 @@ export function toggle(props, mode, switchMode, eventType) {
                     .attr("opacity", mode ? 1 : 0)
             }
             break;
-        case "partei" :
-            const path = d3_select.select("#" + _key + "_path")
-            path.attr("stroke-width", mode ? props.state.graphHighlight.pathActive : props.state.graphHighlight.pathIdle)
-            path.transition(t).attr("opacity", mode ? 
-                props.state.pathOpacity.active : props.parteienState["checked_" + _key] ? 
-                props.state.pathOpacity.active : props.state.pathOpacity.disabled)
-            break;
         default:
             break;
         }
 
     switch(_type){
-        case "perioden":
+        case "persons":
             if(eventType === "click"){
                 if(props.highlight.ident === "perioden") toggleLineSymbol(props.highlight.ident, props.highlight.key, false) 
                 if(switchMode === "new") toggleLineSymbol("perioden", _key, true)

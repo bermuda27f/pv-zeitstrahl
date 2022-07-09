@@ -15,8 +15,8 @@ import PeriodeSelect from './Components/SelectPeriod';
 import * as d3_transition from 'd3-transition';
 import * as d3_ease from 'd3-ease';
 
-import data_kaiser from "./data/kaiser.json";
-import data_ereignisse from "./data/ereignisse.json";
+import data_persons from "./data/persons.json";
+import data_events from "./data/events.json";
 
 const startDate = -133;
 
@@ -93,15 +93,15 @@ function App (){
     if(!firstSet && state.mainRef.current){
 
         const data = {
-            kaiser : data_kaiser,
-            ereignisse : data_ereignisse
+            persons : data_persons,
+            events : data_events
         }
         
         const sizeData = calc.size({
             ...state,
             data,
             startDate : startDate,
-            stopDate : data_kaiser[data_kaiser.length - 1].end,
+            stopDate : data_persons[data_persons.length - 1].end,
             })
 
         const newState = {

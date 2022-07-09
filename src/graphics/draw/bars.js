@@ -6,7 +6,7 @@ export function draw (stateRefs, graph){
 
     const { state } = stateRefs
 
-    const events = call.events("kaiser", "id", stateRefs)
+    const events = call.events("persons", "id", stateRefs)
     const behaviour = call.behaviour(true);
 
     const clipGroup = graph.append("g")
@@ -17,7 +17,7 @@ export function draw (stateRefs, graph){
         .attr("id", "kaiserBars")
 
     bars.selectAll("rect")
-        .data(state.data.kaiser, d => d.id )
+        .data(state.data.persons, d => d.id )
             .enter()
             .each(function(d,i){
                 const selection = d3_select.select(this)

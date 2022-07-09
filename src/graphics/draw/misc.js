@@ -24,7 +24,7 @@ export function lines({ state }, container) {
         
     lineContainer.append("g").attr("id", "lines_t")
         .selectAll("line")
-            .data(state.data.kaiser, d => d.id)
+            .data(state.data.persons, d => d.id)
             .join("line")
             .attr("class", d => "kaiser_lines")
             .attr("x1", 0)

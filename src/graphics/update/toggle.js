@@ -5,11 +5,11 @@ import * as check from  '../../helper/check.js';
 export function handles({ state }, type, active){
     const t = state.transition
     switch(type){
-        case "perioden" : 
-            state.selections.perioden.transition(t).attr("opacity", active ? 1 : 0);
+        case "events" : 
+            state.selections.events.transition(t).attr("opacity", active ? 1 : 0);
             state.selections.periodenHL.selectAll("rect").style("pointer-events", active ? "auto" : "none");
             break;
-        case "wahlen" :
+        case "persons" :
             state.selections.wahlen.transition(t).attr("opacity", active ? 1 : 0);
             state.selections.wahlen.selectAll("path")
                 .style("pointer-events", active ? "auto" : "none")
