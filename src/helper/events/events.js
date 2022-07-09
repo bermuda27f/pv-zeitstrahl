@@ -69,13 +69,13 @@ export function toggle(props, mode, switchMode, eventType) {
         case "events" :
         case "persons" :
             toggleLineSymbol(_type, _key, mode);
-            if(eventType === "click" && _type !== "perioden"){
-                props.state.selections.HL_NavLine
-                    .transition(t)
-                    .attr("x1", props.state.x_scale(_d.Datum))
-                    .attr("x2", props.state.x_scale(_d.Datum))
-                    .attr("opacity", mode ? 1 : 0)
-            }
+            // if(eventType === "click" && _type !== "perioden"){
+            //     props.state.selections.HL_NavLine
+            //         .transition(t)
+            //         .attr("x1", props.state.x_scale(_d.Datum))
+            //         .attr("x2", props.state.x_scale(_d.Datum))
+            //         .attr("opacity", mode ? 1 : 0)
+            // }
             break;
         default:
             break;
@@ -84,10 +84,10 @@ export function toggle(props, mode, switchMode, eventType) {
     switch(_type){
         case "persons":
             if(eventType === "click"){
-                if(props.highlight.ident === "perioden") toggleLineSymbol(props.highlight.ident, props.highlight.key, false) 
-                if(switchMode === "new") toggleLineSymbol("perioden", _key, true)
-                toggleFuncs.highlighter(props, _d, mode, "main") 
-                toggleFuncs.highlighterNAV(props, _d, mode, "perioden");
+                // if(props.highlight.ident === "perioden") toggleLineSymbol(props.highlight.ident, props.highlight.key, false) 
+                // if(switchMode === "new") toggleLineSymbol("perioden", _key, true)
+                // toggleFuncs.highlighter(props, _d, mode, "main") 
+                // toggleFuncs.highlighterNAV(props, _d, mode, "perioden");
             }
             break;
         default:

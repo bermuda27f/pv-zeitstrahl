@@ -55,7 +55,7 @@ export function update(stateRefs, eventContainer, x_scale){
 
             d3_select.select(this).lower();
             const xScale = x_scale(d.datum)
-            if(xScale < 0 || xScale > state.width)  d3_select.select(this).transition(state.transition).attr("opacity", 0).remove()
+            if(xScale < 0 || xScale > state.width)  d3_select.select(this).remove()
         })
 
 }
