@@ -6,7 +6,7 @@ export function draw (stateRefs, graph){
 
     const { state } = stateRefs
 
-    const events = call.events("person", "id", stateRefs)
+    const events = call.events("kaiser", "id", stateRefs)
     const behaviour = call.behaviour(true);
 
     const clipGroup = graph.append("g")
@@ -46,8 +46,10 @@ export function draw (stateRefs, graph){
                     .attr("width", function (d) { return state.x_scale(d.end) - state.x_scale(d.start); })
                     .attr("height", state.barHeight)
                     .style("fill", function(d){ return d.id === -2 || d.id === 0 ? "url(#hatching)" : "black"})
-                    .call(behaviour)
+                    .attr("stroke-width", state.lineWidth)
+                    .style("stroke", "black")
                     .call(events)
+                    .call(behaviour);
 
                 selection
                     .append("text")
@@ -62,8 +64,6 @@ export function draw (stateRefs, graph){
                     .style("font-size", state.barHeight)
                     .style("user-select", "none")
                     .style("dominant-baseline", "baseline")
-                    // .call(behaviour)
-                    // .call(events);
 
                 selection
                     .append("line")
@@ -76,11 +76,6 @@ export function draw (stateRefs, graph){
                     .attr("opacity", 0.5)
                     .attr("stroke", "grey");
             })
-
-    const zoomRect = graph.append("rect")
-        .attr("fill", "transparent")
-        .attr("width", state.width)
-        .attr("height", state.height)
 
     return bars
     

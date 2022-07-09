@@ -38,7 +38,6 @@ export default function Graph (props) {
         mouseEvent : null,
         type : null,
         key : null,
-        keyName : null,
         dataSet : null,
         e : null,
     })

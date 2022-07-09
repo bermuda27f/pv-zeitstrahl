@@ -8,8 +8,8 @@ export function graph(stateRefs) {
     state.selections.bars.selectAll(".kaiser_lines").attr('stroke-width', state.lineWidth * (1/zoomState.k));
 
     state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, 0)`)
-    state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, 0)`)
 
+    state.selections.events.selectAll("g").attr("transform", d => `translate(${zoomInfo.scaleX(d.datum)}, 0)`)
     handles.update(stateRefs, state.selections.events, zoomInfo.scaleX)
 
     state.selections.focus.attr('transform', zoomInfo.focus)

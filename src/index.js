@@ -154,7 +154,7 @@ function App (){
                 </div>
                 <MainGraph {...mainProps} />
                 <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}} className = "Text" >
-                    {highlight.highlight_main ? "HIGHLIGHT: " + highlight.element.Name : ""}
+                    {highlight.highlight_main ? "HIGHLIGHT: " + highlight.element.name : ""}
                     <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel
                     </button>
                 </div>

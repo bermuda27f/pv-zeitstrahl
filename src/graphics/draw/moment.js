@@ -8,7 +8,7 @@ export function update(stateRefs, eventContainer, x_scale){
 
     const { state, infoElements } = stateRefs
 
-    const events = call.events("moment", "id", stateRefs)
+    const events = call.events("ereignisse", "id", stateRefs)
     const behaviour = call.behaviour(infoElements.handle_ereignisse)
     
     eventContainer.selectAll("g")
@@ -53,18 +53,14 @@ export function update(stateRefs, eventContainer, x_scale){
 
                 return tmpEnter
 
-            },
-            update => update
-                .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`),
+            }
         );
 
         eventContainer.selectAll("g").each(function(d){
 
             d3_select.select(this).lower();
             const xScale = x_scale(d.datum)
-            if(xScale < 0 || xScale > state.width){
-                this.remove()
-            }
+            if(xScale < 0 || xScale > state.width) this.remove()
         })
 
 }

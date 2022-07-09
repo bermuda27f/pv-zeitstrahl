@@ -11,9 +11,8 @@ export function frame (container, { state }){
         .attr("height", state.graph.height)
         .attr("fill", "white")
         .attr("stroke", state.standardColor)
-        .attr("stroke-width", 0.5)
-        .attr("opacity", 0.5)
-        .attr("pointer-events", "none")
+        .attr("stroke-width", 0.1)
+        .attr("opacity", 1)
 
 }
 
@@ -74,6 +73,7 @@ export function zero({ state }, container, jesus) {
         .attr("x2", 0)
         .attr("y1",  jesus ? -3 : 0)
         .attr("y2", state.height )
+        .attr("opacity", .5)
         .attr("stroke-width", 1)
         .attr("stroke", "red")
 

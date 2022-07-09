@@ -3,24 +3,7 @@ import * as d3_select from 'd3-selection';
 export function buildToolTip ({ state }, event, d, type) {  
 
     const padding = 9
-    let _text; 
-
-    switch(type) {
-        case "story" :
-            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-            const date = d.Datum
-            _text = date.toLocaleDateString('de-DE', dateOptions) + " — " + d.Name;
-            break;
-        case "name":
-            _text = d.Partei ? 
-                d.PersName + (d.Partei === "Sonstige" ? "" : ", " + d.Partei) + (d.koalition ? ", Kabinett " + d.Kabinett : "") : d.Name;
-            break;
-        case "partei" :
-            _text = state.data.infos.find(org => org.ORG === d).Name
-            break;
-        default:
-            break;
-    }
+    let _text = d.name; 
 
     let tooltip_container = d3_select.select("body")
         .append("div")

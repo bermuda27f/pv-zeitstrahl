@@ -5,16 +5,18 @@ import * as d3_select from 'd3-selection';
 
 export function mouse(eType, type, key, props, e, d) {
 
-    console.log(d)
+    // eType = click, mouseleave etc.
+    // type = bars or event-handles?
+    // key = item name
+    // dataset = ereignisse or kaiser
 
     props.setMOUSE({
         type : "MULTIPLE", 
         value : { 
                 mouseEvent : eType,
                 type : type,
-                key : key,
-                keyName : "id",
-                dataSet : "ereignisse",
+                key : d.id,
+                dataSet : type,
                 e : e,
                 d : d
             }
@@ -32,14 +34,7 @@ export function showTooltip(props){
 
     if(!props.highlight.highlight_main || key !== props.highlight.key){
         if(e && e.type !== "click" && !props.state.isTouch) {
-            switch(type){
-                case "partei" :
-                    buildToolTip(props, e, key, "partei"); 
-                    break;
-                default: 
-                    buildToolTip(props, e, d, "name");
-                    break;
-            }
+            buildToolTip(props, e, d, "name");
         }
     }
 }

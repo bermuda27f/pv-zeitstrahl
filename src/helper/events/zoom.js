@@ -38,5 +38,5 @@ export function zoom ({ state }, setZoom, setZOOMINFO) {
         .extent([[0, 0], [state.width, state.graph.height]])
         .translateExtent([[0, 0], [state.width, state.graph.height]])
         .on("zoom", zoomed)
-        //.on("end", zoomEnd)
+        //.on("end", zoomed)
 }

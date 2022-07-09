@@ -39,6 +39,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             // zoom
             container : d3_select.select(svg_ref.current),
             // main
+            zoomGroup : d3_select.select("#zoomGroup"),
             mainGraph : d3_select.select("#mainGraph"),
             bars : d3_select.select("#kaiserBars"),
             events : d3_select.select("#eventContainer"),
@@ -68,8 +69,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     svgDef.set(defs, stateRefs);
 
-    const zoomGroup = svg.append("g").attr("id", "graphGroup")
-        .style("pointer-events", "auto")
+    const zoomGroup = svg.append("g").attr("id", "zoomGroup")
 
     const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
@@ -152,7 +152,7 @@ export function handleMouse(stateRefs){
                 infos :  stateRefs.state.data[mouse.dataSet],
                 key : mouse.key,
                 ident : mouse.type,
-                element : calc.getElement(stateRefs.state.data[mouse.dataSet], mouse.keyName, mouse.key)
+                element : calc.getElement(stateRefs.state.data[mouse.dataSet], "id", mouse.key)
             })
 
         }

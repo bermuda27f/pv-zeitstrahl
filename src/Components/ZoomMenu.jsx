@@ -11,17 +11,17 @@ export default function ZoomMenu(props) {
 
         switch (symbol){
             case "Reset Zoom":
-                props.state.selections.mainGraph
+                props.state.selections.zoomGroup
                     .transition().duration(250)                
                     .call(props.state.zoomObject.transform, d3_zoom.zoomIdentity.scale(1))
                 break;
             case "+":
-                props.state.selections.mainGraph
+                props.state.selections.zoomGroup
                     .transition().duration(250).ease(d3_ease.easePoly.exponent(4))
                     .call(props.state.zoomObject.scaleBy, 1.5)
                 break;
             case "-":
-                props.state.selections.mainGraph
+                props.state.selections.zoomGroup
                     .transition().duration(250).ease(d3_ease.easePoly.exponent(4))
                     .call(props.state.zoomObject.scaleBy, 1/1.5)
                 break;
