@@ -41,7 +41,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             // main
             mainGraph : d3_select.select("#mainGraph"),
             bars : d3_select.select("#kaiserBars"),
-            events : d3_select.selectAll(".img_node"),
+            events : d3_select.select("#eventContainer"),
             zero : d3_select.select("#zero"),
             focus : d3_select.select("#_focus"),
             // zoom / context
@@ -78,7 +78,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     label.x_axis(stateRefs, mainGraph)
 
     const barSelection = bars.draw(stateRefs, mainGraph)
-    moment.handles(stateRefs, mainGraph)
+    moment.build(stateRefs, mainGraph)
 
     misc.zero(stateRefs, mainGraph, false)
 

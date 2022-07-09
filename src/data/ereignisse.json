@@ -67,8 +67,8 @@
     "name": "Fertigstellung des Kolosseums",
     "datum": 82,
     "src_name": "colosseum",
-    "author": "",
-    "title": "structure of the colosseum",
+    "author": "Reverend Calvert Jones",
+    "title": "Kolosseum, 1846",
     "year": 0
   },
   {
@@ -88,5 +88,14 @@
     "author": "Fernand Pelez",
     "title": "Mort de l'empereur Commode",
     "year": 1879
+  },
+  {
+    "id": 11,
+    "name": "Kreuzigung von Jesus Christus",
+    "datum": 31,
+    "src_name": "jesus",
+    "author": "Diego Velázquez",
+    "title": "Cristo crucificado",
+    "year": 1630
   }
 ]

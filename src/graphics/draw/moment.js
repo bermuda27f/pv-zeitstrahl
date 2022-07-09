@@ -1,47 +1,83 @@
 import { getKeyType } from  '../../helper/calc_set.js';
+import * as d3_select from 'd3-selection';
 
 import * as icons from '../icons.js';
 import * as call from  '../../helper/events/call.js';
 
-export function handles({ state }, container){
+export function update(state, eventContainer, x_scale){
 
-    const events = container.append("g")
+    const events = call.events(type, key, props)
+    const behaviour = call.behaviour(props.infoElements["handle_" + type])
+    
+    eventContainer.selectAll("g")
+        .data(state.data.ereignisse, d => d.id)
+        .join(
+            (enter) => {
+
+                const tmpEnter = enter.append("g")
+                    .attr("class", "img_node")
+                    .call(enter => enter.transition(state.transition)
+                        .attr("opacity", 1))
+                    .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`);
+
+                tmpEnter.append("defs")
+                    .append('pattern')
+                        .attr("id", function(d) { return "clipImage_"+ d.id;}  )
+                        .attr("width", 1)
+                        .attr("height", 1)
+                        .append("image")
+                            .attr("href", function(d) { 
+                                return require('../../img/thumb/' + d.src_name + '.jpg')
+                                })
+                            .attr("width", 2 * state.handle.size)
+                            .attr("height", 2 * state.handle.size);
+
+                tmpEnter.append("circle")
+                    .attr("cy", state.height + state.handle.offset + state.handle.size)
+                    .attr("stroke", state.handle.color)
+                    .attr("stroke-width", 1)
+                    .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
+                    .attr("r", state.handle.size);
+
+                tmpEnter.append("line")
+                    .attr("y2", + state.height + state.handle.offset )
+                    .attr("stroke",  state.handle.color)
+                    .attr("stroke-width", 0.5)
+                    .attr("opacity", 1)
+                    .attr("class", "eventLine");
+
+
+                return tmpEnter
+
+            },
+            update => update
+                .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`),
+        );
+
+        eventContainer.selectAll("g").each(function(d){
+
+            d3_select.select(this).lower();
+            const xScale = x_scale(d.datum)
+            if(xScale < 0 || xScale > state.width){
+                this.remove()
+            }
+        })
+
+}
+
+export function build({ state }, container){
+
+    const eventContainer = container.append("g")
         .attr("id", "eventContainer")
 
-    const imgNode = events.selectAll("g.node")
-        .data(state.data.ereignisse, d => d.id)
-        .enter()
-        .append("g")
-        .attr("class", "img_node")
-        .attr("transform", d => `translate(${state.x_scale(d.datum)}, 0)`)
+    update(state, eventContainer, state.x_scale)
 
-    imgNode.append("defs")
-        .append('pattern')
-            .attr("id", function(d) { return "clipImage_"+ d.id;}  )
-            .attr("width", 1)
-            .attr("height", 1)
-            .append("image")
-                .attr("href", function(d) { 
-                    return require('../../img/thumb/' + d.src_name + '.jpg')
-                    })
-                .attr("width", 2 * state.handle.size)
-                .attr("height", 2 * state.handle.size);
-
-    imgNode.append("circle")
-        .attr("cy", state.height + state.handle.offset + state.handle.size)
-        .attr("stroke", state.handle.color)
-        .attr("stroke-width", 1)
-        .attr("fill",function(d) { return "url(#clipImage_"+ d.id +")" }  )
-        .attr("r", state.handle.size)
-
-    imgNode.append("line")
-        .attr("y2", + state.height + state.handle.offset )
-        .attr("stroke",  state.handle.color)
-        .attr("stroke-width", 0.5)
-        .attr("opacity", 1)
-        .attr("class", "eventLine")
-
-    imgNode.lower()
+    // const imgNode = events.selectAll("g.node")
+    //     .data(state.data.ereignisse, d => d.id)
+    //     .enter()
+    //     .append("g")
+    //     .attr("class", "img_node")
+    //     .attr("transform", d => `translate(${state.x_scale(d.datum)}, 0)`)
 
     //const testArray = [lines]
 
