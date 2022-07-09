@@ -125,8 +125,6 @@ export default function Graph (props) {
         helper.killSwitch(stateRefs.current)
     }, [keyPress, props.killSwitch])
 
-    console.log(props.state.mainGraphHeight)
-
     return (
         <div>
             <div>

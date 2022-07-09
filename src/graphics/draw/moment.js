@@ -41,6 +41,8 @@ export function handles({ state }, container){
         .attr("opacity", 1)
         .attr("class", "eventLine")
 
+    //const testArray = [lines]
+
     // const events = call.events(type, key, props)
     // const behaviour = call.behaviour(props.infoElements["handle_" + type])
     
