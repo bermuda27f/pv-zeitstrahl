@@ -86,10 +86,6 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     misc.map(stateRefs, barSelection, mainGraph)
 
-    // label
-    // context
-    //navigation.context(stateRefs)
-
     //highlighter.recGraph(stateRefs, mainGraph, "main")
 
     zoomGroup.call(zoomObjRefs.current.zoom)
