@@ -42,9 +42,15 @@ export function showTooltip(props){
 export function toggle(props, mode, switchMode, eventType) {
 
     function toggleLineSymbol(type, key, _mode) {
-        const circle = props.state.selections.events.selectAll("circle");
-        //lines.attr("opacity", _mode ? 1 : props.state.ereignisHandle.opacity);
+        const el = props.state.selections.events.select("#img_node_" + key)
+        const circle = el.select("circle");
+        const line = el.select("line");
+        console.log(line)
+
         circle.attr("stroke", _mode ? props.state.highlightColor : props.state.standardColor);
+        line.attr("stroke", _mode ? props.state.highlightColor : props.state.standardColor)
+            .attr("opacity", _mode ? 1 : props.state.handle.opacity)
+            .attr("stroke-width", _mode ? 1.5 : props.state.handle.lineWidth);
     }
 
     let _type, _key, _d
@@ -82,8 +88,10 @@ export function toggle(props, mode, switchMode, eventType) {
         }
 
     switch(_type){
-        case "persons":
+        case "events":
             if(eventType === "click"){
+                const el = props.state.selections.events.select("#img_node_" + _key)
+                el.raise();
                 // if(props.highlight.ident === "perioden") toggleLineSymbol(props.highlight.ident, props.highlight.key, false) 
                 // if(switchMode === "new") toggleLineSymbol("perioden", _key, true)
                 // toggleFuncs.highlighter(props, _d, mode, "main") 

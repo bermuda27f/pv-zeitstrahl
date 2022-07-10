@@ -3,7 +3,7 @@ import * as call from  '../../helper/events/call.js';
 
 export function update(stateRefs, eventContainer, x_scale){
 
-    const { state, infoElements } = stateRefs
+    const { state, infoElements, highlight } = stateRefs
 
     const events = call.events("events", "id", stateRefs)
     const behaviour = call.behaviour(infoElements.handle_ereignisse)
@@ -14,6 +14,7 @@ export function update(stateRefs, eventContainer, x_scale){
             enter => {
                 const tmpEnter = enter.append("g")
                     .attr("class", "img_node")
+                    .attr("id", d => "img_node_" + d.id)
                     .call(enter => enter.transition(state.transition)
                         .attr("opacity", 1))
                     .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`);
@@ -24,9 +25,7 @@ export function update(stateRefs, eventContainer, x_scale){
                         .attr("width", 1)
                         .attr("height", 1)
                         .append("image")
-                            .attr("href", function(d) { 
-                                return require('../../img/thumb/' + d.src_name + '.jpg')
-                                })
+                            .attr("href", function(d) { return require('../../img/thumb/' + d.src_name + '.jpg') })
                             .attr("width", 2 * state.handle.size)
                             .attr("height", 2 * state.handle.size);
 
@@ -42,15 +41,15 @@ export function update(stateRefs, eventContainer, x_scale){
                 tmpEnter.append("line")
                     .attr("y2", + state.height + state.handle.offset )
                     .attr("stroke",  state.handle.color)
-                    .attr("stroke-width", .4)
-                    .attr("opacity", .75)
+                    .attr("stroke-width", state.handle.lineWidth)
+                    .attr("opacity", state.handle.opacity)
                     .attr("class", "eventLine");
 
                 return tmpEnter
 
             }
         ).each(function(d){
-            d3_select.select(this).lower();
+            if(highlight.highlight_main && d.id !== highlight.key) d3_select.select(this).lower();
             const xScale = x_scale(d.datum)
             if(xScale < 0 || xScale > state.width)  d3_select.select(this).remove()
         });

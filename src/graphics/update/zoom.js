@@ -10,9 +10,6 @@ export function graph(stateRefs) {
     state.selections.bars.selectAll(".kaiser_lines").attr('stroke-width', state.lineWidth * (1/zoomState.k));
 
     state.selections.zero.attr("transform", `translate(${zoomInfo.scaleX(0)}, 0)`)
-
-
-
     state.selections.focus.attr('transform', zoomInfo.focus)
     state.selections.focus.select("rect").attr('stroke-width', state.navigation.strokeWidth * zoomState.k);
 

@@ -67,8 +67,12 @@ function App (){
         handle : {
             size : 25,
             offset : 27,
-            opacity : 0.33, 
-            color : standardColor
+            opacity : .5, 
+            color : standardColor,
+            lineWidth : .4
+        },
+        events : {
+
         },
 
         lineWidth : 0.25,
