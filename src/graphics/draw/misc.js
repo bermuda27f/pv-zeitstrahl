@@ -16,6 +16,19 @@ export function frame (container, { state }){
 
 }
 
+export function highlight({ state, highlight}, container){
+
+    const _highlight = container.append("g").attr("id", "BarHighLight")
+        .style("pointer-events", "none");
+
+    _highlight.append("rect")
+        .attr("width", state.width)
+        .attr("height", state.barHeight)
+        .attr("fill", "cyan")
+        .attr("opacity", 0);
+
+}
+
 export function lines({ state }, container) {
 
     const lineContainer = container.append("g")

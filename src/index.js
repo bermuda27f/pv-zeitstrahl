@@ -69,7 +69,10 @@ function App (){
             offset : 27,
             opacity : .5, 
             color : standardColor,
-            lineWidth : .4
+            lineWidth : {
+                normal : .4,
+                highlight : 1.5
+            },
         },
         events : {
 
@@ -174,7 +177,7 @@ function App (){
             <div ref = { mainRef } >
                 <div style = {{ overflow : "hidden", display: "flex" }}>
                     <span style = {{ display: "flex", alignItems: "center", justifyContent: "center", height: 500, width: "100%"}}>
-                        Wird geladen
+                        loading
                     </span>
                 </div>
             </div>

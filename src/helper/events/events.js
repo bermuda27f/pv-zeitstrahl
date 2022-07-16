@@ -41,18 +41,6 @@ export function showTooltip(props){
 
 export function toggle(props, mode, switchMode, eventType) {
 
-    function toggleLineSymbol(type, key, _mode) {
-        const el = props.state.selections.events.select("#img_node_" + key)
-        const circle = el.select("circle");
-        const line = el.select("line");
-        console.log(line)
-
-        circle.attr("stroke", _mode ? props.state.highlightColor : props.state.standardColor);
-        line.attr("stroke", _mode ? props.state.highlightColor : props.state.standardColor)
-            .attr("opacity", _mode ? 1 : props.state.handle.opacity)
-            .attr("stroke-width", _mode ? 1.5 : props.state.handle.lineWidth);
-    }
-
     let _type, _key, _d
     const t = props.state.transition
 
@@ -73,33 +61,42 @@ export function toggle(props, mode, switchMode, eventType) {
    
     switch(_type){
         case "events" :
-        case "persons" :
-            toggleLineSymbol(_type, _key, mode);
-            // if(eventType === "click" && _type !== "perioden"){
-            //     props.state.selections.HL_NavLine
-            //         .transition(t)
-            //         .attr("x1", props.state.x_scale(_d.Datum))
-            //         .attr("x2", props.state.x_scale(_d.Datum))
-            //         .attr("opacity", mode ? 1 : 0)
-            // }
-            break;
-        default:
-            break;
-        }
-
-    switch(_type){
-        case "events":
+            toggleEventElement(props, _key, mode);
             if(eventType === "click"){
                 const el = props.state.selections.events.select("#img_node_" + _key)
                 el.raise();
-                // if(props.highlight.ident === "perioden") toggleLineSymbol(props.highlight.ident, props.highlight.key, false) 
-                // if(switchMode === "new") toggleLineSymbol("perioden", _key, true)
-                // toggleFuncs.highlighter(props, _d, mode, "main") 
-                // toggleFuncs.highlighterNAV(props, _d, mode, "perioden");
+            }
+            break;
+        case "persons" :
+            if(eventType === "click"){
+                togglePerson(props, _key, mode)
             }
             break;
         default:
             break;
     }
 
+}
+
+function toggleEventElement({state}, key, on) {
+
+    const el = state.selections.events.select("#img_node_" + key)
+    const circle = el.select("circle");
+    const line = el.select("line");
+
+    circle.attr("stroke", on ? state.highlightColor : state.standardColor)
+        .attr("stroke-width", on ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal);
+    line.attr("stroke", on ? state.highlightColor : state.standardColor)
+        .attr("opacity", on ? 1 : state.handle.opacity)
+        .attr("stroke-width", on ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal);
+}
+
+
+function togglePerson({state}, id, on) {
+
+    const el = state.selections.personHL.select("rect")
+
+    el.transition(state.transition)
+        .attr("y", state.y_scale(id + 3))
+        .attr("opacity", on ? 1 : 0)
 }

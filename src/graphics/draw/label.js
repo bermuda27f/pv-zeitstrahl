@@ -1,6 +1,6 @@
 export function x_axis ({ state }, container) {
 
-    const label = container.append("g")
+    container.append("g")
         .attr("class", "yAxisLabel noselect")
         .attr("opacity", 1)
         .attr("id", "label")

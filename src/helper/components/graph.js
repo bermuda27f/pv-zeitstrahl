@@ -7,12 +7,14 @@ import * as misc from  '../../graphics/draw/misc.js';
 import * as bars from  '../../graphics/draw/bars.js';
 import * as moment from  '../../graphics/draw/events.js';
 import * as axis from  '../../graphics/draw/axis.js';
+
 import * as label from  '../../graphics/draw/label.js';
 import * as zoomHelper from  '../../helper/zoom.js';
 import * as check from  '../check.js';
 import * as calc from  '../calc_set.js';
 
 import { deleteTooltip } from '../../graphics/draw/tooltips.js';
+import { highlight } from '../reducer.js';
 
 export function killSwitch(stateRefs){
         
@@ -42,19 +44,17 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             zoomGroup : d3_select.select("#zoomGroup"),
             mainGraph : d3_select.select("#mainGraph"),
             bars : d3_select.select("#kaiserBars"),
-            events : d3_select.select("#eventContainer"),
+            events : d3_select.select("#eventGroup"),
             zero : d3_select.select("#zero"),
             focus : d3_select.select("#_focus"),
-            // zoom / context
             // ereignisse
             ereignisseSymbol : d3_select.selectAll(".ereignisseSymbol"),
             // label
-            label : d3_select.selectAll(".parteiLabel"),
             // X-Achsen:
             xAxis : d3_select.selectAll(".xAxis"),
             xAxisLines : d3_select.selectAll(".xAxisLines"),
-            // Highlighter
-            mainHL : d3_select.select("#BarHighLight_main"),
+            // Highlight
+            personHL : d3_select.select("#BarHighLight"),
         },
         selectionsSet : true
     })
@@ -69,24 +69,30 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     svgDef.set(defs, stateRefs);
 
     const zoomGroup = svg.append("g").attr("id", "zoomGroup")
-
+        .attr("clip-path", "url(#clipPath_main)")
+    const eventGroup = svg.append("g").attr("id", "eventGroup")
+        .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
     const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
-        .attr("opacity", 1)
+        .attr("opacity", 1);
+    const axisContainer = svg.append("g").attr("id", "axisGroup")
+        .attr("transform", `translate(${stateRefs.state.graph.x}, ${stateRefs.state.graph.y})`)
+    const map = svg.append("g").attr("id", "mapGroup")
+        .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
 
     misc.frame(mainGraph, stateRefs)
+    misc.highlight(stateRefs, mainGraph)
 
-    axis.x(stateRefs, mainGraph, "main")
-    label.x_axis(stateRefs, mainGraph)
+    axis.x(stateRefs, axisContainer, "main")
+    label.x_axis(stateRefs, axisContainer)
 
     const barSelection = bars.draw(stateRefs, mainGraph)
-    moment.build(stateRefs, mainGraph)
+
+    moment.update(stateRefs, eventGroup, stateRefs.state.x_scale)
 
     misc.zero(stateRefs, mainGraph, false)
 
-    misc.map(stateRefs, barSelection, mainGraph)
-
-    //highlighter.recGraph(stateRefs, mainGraph, "main")
+    misc.map(stateRefs, barSelection, map)
 
     zoomGroup.call(zoomObjRefs.current.zoom)
         .on("wheel.zoom", null)

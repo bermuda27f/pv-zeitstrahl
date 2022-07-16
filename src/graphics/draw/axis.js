@@ -1,6 +1,6 @@
-export function x ({ state }, graphGroup) {
+export function x ({ state }, axisContainer) {
 
-    graphGroup.append("g")
+    axisContainer.append("g")
         .attr("id", "x_axis")
         .attr("class", "xAxis noselect")
         .attr("transform", `translate(${ 0 }, ${ state.graph.height })`)
@@ -10,7 +10,7 @@ export function x ({ state }, graphGroup) {
         .call(g => g.selectAll(".tick text").attr("color", "grey"))
         .call(g => g.selectAll(".tick text").attr("font-size", "9pt"));
 
-    graphGroup.append("g")
+    axisContainer.append("g")
         .attr("class", "xAxisLines noselect")
         .call(state.x_axis_lines)
         .call(g => g.selectAll("line").attr("opacity", 0.1))

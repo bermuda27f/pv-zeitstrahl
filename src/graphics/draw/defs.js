@@ -3,8 +3,8 @@ export function set(defs, { state }) {
     defs.append("clipPath")
         .attr("id", "clipPath_main")
             .append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
+            .attr("x", state.margin.left)
+            .attr("y", state.margin.top)
             .attr("width", state.width )
             .attr("height", state.graph.height);
 

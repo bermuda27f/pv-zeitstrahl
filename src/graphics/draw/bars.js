@@ -2,18 +2,14 @@ import * as check from  '../../helper/check.js';
 import * as call from  '../../helper/events/call.js';
 import * as d3_select from 'd3-selection';
 
-export function draw (stateRefs, graph){
+export function draw (stateRefs, container){
 
     const { state } = stateRefs
 
     const events = call.events("persons", "id", stateRefs)
     const behaviour = call.behaviour(true);
-
-    const clipGroup = graph.append("g")
-        .attr("clip-path", "url(#clipPath_main)")
-        .attr("id", "clipGroupMain")
         
-    const bars = clipGroup.append("g")
+    const bars = container.append("g")
         .attr("id", "kaiserBars")
 
     bars.selectAll("rect")
@@ -46,7 +42,7 @@ export function draw (stateRefs, graph){
                     .attr("width", function (d) { return state.x_scale(d.end) - state.x_scale(d.start); })
                     .attr("height", state.barHeight)
                     .style("fill", function(d){ return d.id === -2 || d.id === 0 ? "url(#hatching)" : "black"})
-                    .attr("stroke-width", state.lineWidth)
+                    .attr("stroke-width", state.lineWidth.normal)
                     .style("stroke", "black")
                     .call(events)
                     .call(behaviour);
