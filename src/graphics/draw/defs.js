@@ -7,6 +7,11 @@ export function set(defs, { state }) {
             .attr("y", state.margin.top)
             .attr("width", state.width )
             .attr("height", state.graph.height);
+    defs.append("clipPath")
+        .attr("id", "clipPath_events")
+            .append("rect")
+            .attr("width", state.width )
+            .attr("height", state.mainGraphHeight);
 
     defs.append('pattern')
         .attr('width', 4)

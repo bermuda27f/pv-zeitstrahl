@@ -18,7 +18,7 @@ export function frame (container, { state }){
 
 export function highlight({ state, highlight}, container){
 
-    const _highlight = container.append("g").attr("id", "BarHighLight")
+    const _highlight = container.append("g").attr("id", "BarHighlight")
         .style("pointer-events", "none");
 
     _highlight.append("rect")

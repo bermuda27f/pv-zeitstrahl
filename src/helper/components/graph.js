@@ -5,7 +5,7 @@ import * as d3_select from 'd3-selection';
 import * as svgDef from '../../graphics/draw/defs.js';
 import * as misc from  '../../graphics/draw/misc.js';
 import * as bars from  '../../graphics/draw/bars.js';
-import * as moment from  '../../graphics/draw/events.js';
+import * as events from  '../../graphics/draw/events.js';
 import * as axis from  '../../graphics/draw/axis.js';
 
 import * as label from  '../../graphics/draw/label.js';
@@ -54,7 +54,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             xAxis : d3_select.selectAll(".xAxis"),
             xAxisLines : d3_select.selectAll(".xAxisLines"),
             // Highlight
-            personHL : d3_select.select("#BarHighLight"),
+            personHL : d3_select.select("#BarHighlight"),
         },
         selectionsSet : true
     })
@@ -71,6 +71,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     const zoomGroup = svg.append("g").attr("id", "zoomGroup")
         .attr("clip-path", "url(#clipPath_main)")
     const eventGroup = svg.append("g").attr("id", "eventGroup")
+        .attr("clip-path", "url(#clipPath_events)")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
     const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
@@ -88,7 +89,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     const barSelection = bars.draw(stateRefs, mainGraph)
 
-    moment.update(stateRefs, eventGroup, stateRefs.state.x_scale)
+    events.build(stateRefs, eventGroup, stateRefs.state.x_scale)
 
     misc.zero(stateRefs, mainGraph, false)
 

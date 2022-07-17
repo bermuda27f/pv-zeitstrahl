@@ -42,7 +42,7 @@ export function draw (stateRefs, container){
                     .attr("width", function (d) { return state.x_scale(d.end) - state.x_scale(d.start); })
                     .attr("height", state.barHeight)
                     .style("fill", function(d){ return d.id === -2 || d.id === 0 ? "url(#hatching)" : "black"})
-                    .attr("stroke-width", state.lineWidth.normal)
+                    .attr("stroke-width", state.lineWidth)
                     .style("stroke", "black")
                     .call(events)
                     .call(behaviour);
