@@ -1,11 +1,15 @@
 import * as events from "../draw/events.js"
+import * as check from "../../helper/check.js"
 
 export function graph(stateRefs) {
 
-    const { state, zoomInfo, zoomState } = stateRefs
+    const { state, setState, zoomInfo, zoomState } = stateRefs
 
     state.selections.bars.attr("transform", zoomState);
-    state.selections.events.selectAll("g").attr("transform", d => `translate(${zoomInfo.scaleX(d.datum)}, 0)`)
+
+    check.eventsVisible(state, setState, zoomInfo)
+    events.set(stateRefs, state.selections.events, stateRefs.zoomInfo.scaleX)
+    
     state.selections.bars.selectAll(".kaiser_lines").attr('stroke-width', state.lineWidth * (1/zoomState.k));
     state.selections.personHL.attr("transform", zoomState);
 
@@ -16,7 +20,6 @@ export function graph(stateRefs) {
 }
 
 export function xAxis (props, newXScale, type){
-
 
     props.state.selections.xAxis.call(props.state.x_axis.scale(newXScale))
         .call(g => g.select(".domain").attr("stroke-opacity", 1).attr("color", "grey"))

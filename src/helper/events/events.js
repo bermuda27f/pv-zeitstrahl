@@ -1,5 +1,6 @@
 import { buildToolTip } from '../../graphics/draw/tooltips.js';
 import * as toggleFuncs from  '../../graphics/update/toggle.js';
+import * as d3_array from 'd3-array';
 
 import * as d3_select from 'd3-selection';
 
@@ -62,10 +63,6 @@ export function toggle(props, mode, switchMode, eventType) {
     switch(_type){
         case "events" :
             toggleEventElement(props, _key, mode);
-            if(eventType === "click"){
-                const el = props.state.selections.events.select("#img_node_" + _key)
-                el.raise();
-            }
             break;
         case "persons" :
             if(eventType === "click"){
@@ -91,7 +88,6 @@ function toggleEventElement({state}, key, on) {
         .attr("stroke-width", on ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal);
 }
 
-
 function togglePerson({state}, id, on) {
 
     const el = state.selections.personHL.select("rect")
@@ -99,4 +95,32 @@ function togglePerson({state}, id, on) {
     el.transition(state.transition)
         .attr("y", state.y_scale(id + 3))
         .attr("opacity", on ? 1 : 0)
+}
+
+export function setOrder (props, _key){
+
+    const el = props.state.selections.events.select("#img_node_" + _key)
+    const oldOrder = el.data()[0].order
+    el.raise();
+
+    const tmpArray = JSON.parse(JSON.stringify(props.state.data.events))
+        .map((event, i) => {
+            if(event.order < oldOrder){
+                return { ...event, order : event.order + 1 }
+            }
+            else if(event.order === oldOrder ){
+                return { ...event, order : 0 }
+            }
+            else return { ...event }
+        }).sort((a,b) => { return d3_array.descending(a.order, b.order) })
+
+    const newData = {
+        ...props.state.data,
+        events : tmpArray,
+    }
+
+    props.setState({
+        ...props.state,
+        data : newData
+    })
 }

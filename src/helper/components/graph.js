@@ -47,10 +47,13 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             events : d3_select.select("#eventGroup"),
             zero : d3_select.select("#zero"),
             focus : d3_select.select("#_focus"),
+            map : d3_select.select("#mapGroup"),
+
             // ereignisse
             ereignisseSymbol : d3_select.selectAll(".ereignisseSymbol"),
             // label
             // X-Achsen:
+            axisGroup : d3_select.selectAll("#axisGroup"),
             xAxis : d3_select.selectAll(".xAxis"),
             xAxisLines : d3_select.selectAll(".xAxisLines"),
             // Highlight
@@ -63,7 +66,6 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
 export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     const svg = d3_select.select(svg_ref.current)
-
     const defs = svg.append("defs").attr("id", "graphDefs");
 
     svgDef.set(defs, stateRefs);
@@ -71,7 +73,6 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     const zoomGroup = svg.append("g").attr("id", "zoomGroup")
         .attr("clip-path", "url(#clipPath_main)")
     const eventGroup = svg.append("g").attr("id", "eventGroup")
-        .attr("clip-path", "url(#clipPath_events)")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
     const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
@@ -83,16 +84,11 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     misc.frame(mainGraph, stateRefs)
     misc.highlight(stateRefs, mainGraph)
-
     axis.x(stateRefs, axisContainer, "main")
     label.x_axis(stateRefs, axisContainer)
-
     const barSelection = bars.draw(stateRefs, mainGraph)
-
-    events.build(stateRefs, eventGroup, stateRefs.state.x_scale)
-
+    events.set(stateRefs, eventGroup, stateRefs.state.x_scale)
     misc.zero(stateRefs, mainGraph, false)
-
     misc.map(stateRefs, barSelection, map)
 
     zoomGroup.call(zoomObjRefs.current.zoom)
@@ -129,6 +125,7 @@ export function handleMouse(stateRefs){
             if (highlight.highlight_main && !same){
                 handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
+                handleEvents.setOrder(stateRefs, mouse.key)
             }
             // highlight off
             else if(highlight.highlight_main && same){
@@ -137,6 +134,7 @@ export function handleMouse(stateRefs){
             // highlight new
             else if(!highlight.highlight_main){
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
+                handleEvents.setOrder(stateRefs, mouse.key)
             }
 
             const setType = (highlight.highlight_main && same) ? 

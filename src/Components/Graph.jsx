@@ -67,13 +67,6 @@ export default function Graph (props) {
     useEffect(()=>{ stateRefs.current.isDrawed = isDrawed; }, [isDrawed])
     useEffect(()=>{ stateRefs.current.zoomState = zoomState; }, [zoomState])
 
-    const removeElAndNewZoom = () => {
-        zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current, setZoomState, setZOOMINFO)
-
-        stateRefs.current.state.selections.container.select("defs").remove()
-        stateRefs.current.state.selections.container.select("#mainGraph").remove()
-    };
-
     //
 
     useEffect(()=>{ 
@@ -88,9 +81,14 @@ export default function Graph (props) {
 
     useEffect(()=>{ 
         if(stateRefs.current.isDrawed) {
-            //removeElAndNewZoom()
-            // helper.drawIt(svg_ref, nav_ref, stateRefs.current, d3Refs, zoomObjRefs)
-            // helper.setSelections(stateRefs.current, zoomObjRefs, d3Refs, svg_ref, nav_ref)
+            zoomObjRefs.current.zoom = d3Zoom.zoom(stateRefs.current, setZoomState, setZOOMINFO)
+            stateRefs.current.state.selections.container.select("#graphDefs").remove()
+            stateRefs.current.state.selections.container.select("#eventGroup").remove()
+            stateRefs.current.state.selections.container.select("#zoomGroup").remove()
+            stateRefs.current.state.selections.container.select("#axisGroup").remove()
+            stateRefs.current.state.selections.container.select("#mapGroup").remove()
+            helper.drawIt(svg_ref, stateRefs.current, zoomObjRefs)
+            helper.setSelections(stateRefs.current, zoomObjRefs, svg_ref)
         }
     }, [props.state.width])
 

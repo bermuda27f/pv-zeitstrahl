@@ -14,6 +14,7 @@ import PeriodeSelect from './Components/SelectPeriod';
 
 import * as d3_transition from 'd3-transition';
 import * as d3_ease from 'd3-ease';
+import * as d3_array from 'd3-array';
 
 import data_persons from "./data/persons.json";
 import data_events from "./data/events.json";
@@ -74,9 +75,6 @@ function App (){
                 highlight : 1.5
             },
         },
-        events : {
-
-        },
 
         lineWidth : 0.25,
 
@@ -99,11 +97,15 @@ function App (){
 
     if(!firstSet && state.mainRef.current){
 
+        const calc_events = data_events.map((events, i) => { return {...events, order: i}})
+            .sort((a,b) => { return d3_array.descending(a.order, b.order) });
+
         const data = {
             persons : data_persons,
-            events : data_events
+            events : calc_events,
+            events_visible : calc_events
         }
-        
+
         const sizeData = calc.size({
             ...state,
             data,
