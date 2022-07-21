@@ -95,7 +95,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
-    zoomHelper.initZoom(zoomGroup, zoom, { state, zoomInfo })
+    zoomHelper.initZoom(zoomGroup, zoomObjRefs.current.zoom, stateRefs)
 
 };
 
@@ -127,7 +127,7 @@ export function handleMouse(stateRefs){
             if (highlight.highlight_main && !same){
                 handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                handleEvents.setOrder(stateRefs, mouse.key)
+                if(mouse.type === "events") handleEvents.setOrder(stateRefs, mouse.key)
             }
             // highlight off
             else if(highlight.highlight_main && same){
@@ -136,7 +136,7 @@ export function handleMouse(stateRefs){
             // highlight new
             else if(!highlight.highlight_main){
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                handleEvents.setOrder(stateRefs, mouse.key)
+                if(mouse.type === "events") handleEvents.setOrder(stateRefs, mouse.key)
             }
 
             const setType = (highlight.highlight_main && same) ? 

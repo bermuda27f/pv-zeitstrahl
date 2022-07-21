@@ -95,6 +95,7 @@ export default function Graph (props) {
     // ZOOM AND BRUSH:
 
     useEffect(()=>{ 
+        console.log("?")
         helper.zoomIt(stateRefs.current) 
     }, [zoomState])
 
