@@ -56,3 +56,21 @@ export function zoomToElement (state, type, key, element){
                 .scale((state.width / (state.x_scale(time.end) - state.x_scale(time.start))))
                 .translate(-state.x_scale(time.start), 0));
 }
+
+export function initZoom(zoomGroup, zoom, { state, zoomInfo }){
+
+    if(state.zoomObject){
+        const start = zoomInfo._start_
+        const end = zoomInfo._stop_
+        zoomGroup
+            .call(zoom.transform, d3_zoom.zoomIdentity
+                .scale((state.width / (state.x_scale(end) - state.x_scale(start))))
+                .translate(-state.x_scale(start), 0));
+    }
+    else{
+        zoomGroup
+            .call(zoom.transform, d3_zoom.zoomIdentity
+                .scale(1)
+                .translate(-0.000000001, 0));
+    }
+}

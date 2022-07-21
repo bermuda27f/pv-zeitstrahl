@@ -95,6 +95,8 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
+    zoomHelper.initZoom(zoomGroup, zoom, { state, zoomInfo })
+
 };
 
 export function handleMouse(stateRefs){
