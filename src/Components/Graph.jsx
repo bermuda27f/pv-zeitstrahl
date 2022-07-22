@@ -10,6 +10,9 @@ import * as zoomGraph from  '../graphics/update/zoom.js';
 import * as toggle from  '../graphics/update/toggle.js';
 import * as d3Zoom from  '../helper/events/zoom.js';
 import * as calc from  '../helper/calc_set.js';
+import * as check from  '../helper/check.js';
+
+import * as events from  '../graphics/draw/events.js';
 
 import * as reducer from "../helper/reducer.js"
 import * as helper from "../helper/components/graph.js"
@@ -17,8 +20,9 @@ import * as helper from "../helper/components/graph.js"
 export default function Graph (props) {
 
     const [infoElements, setINFOELEMENTS] = useReducer(reducer.mutables, {
-        handle_ereignisse : true,
-        label : true,       
+        events : true,
+        label : true,
+        map : true   
     });
 
     const keyPress = useKeyPress("Escape");
@@ -92,27 +96,30 @@ export default function Graph (props) {
         }
     }, [props.state.width])
 
-    // ZOOM AND BRUSH:
-
     useEffect(()=>{ 
-        console.log("?")
         helper.zoomIt(stateRefs.current) 
     }, [zoomState])
 
-    // TOGGLE HANDLES:
+    useEffect(()=>{ 
+        if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
+            const { selections } = stateRefs.current.state
+            const { zoomInfo, infoElements } = stateRefs.current
+            const visible = check.eventsVisible(stateRefs.current, zoomInfo.scaleX, infoElements.events ? true : false)
+            events.set(stateRefs.current, selections.events, zoomInfo.scaleX, visible)
+        }
+    }, [infoElements.events])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            //zoomGraph.highlightLines(stateRefs.current, stateRefs.current.zoomInfo.scale, "wahlen")
-            //toggle.handles(stateRefs.current, "wahlen", infoElements.handle_wahlen)
+            toggle.simpleElements(stateRefs.current, "label"); 
         }
-    }, [infoElements.handle_wahlen])
+    }, [infoElements.label])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            //toggle.label(stateRefs.current); 
+            toggle.simpleElements(stateRefs.current, "map"); 
         }
-    }, [infoElements.labelPartei])
+    }, [infoElements.map])
 
     useEffect(()=>{
         helper.handleMouse(stateRefs.current)

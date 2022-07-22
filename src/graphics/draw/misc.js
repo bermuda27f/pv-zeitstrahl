@@ -20,12 +20,15 @@ export function highlight({ state, highlight}, container){
 
     const _highlight = container.append("g").attr("id", "BarHighlight")
         .style("pointer-events", "none");
+    
+    const active = highlight.highlight_main && highlight.ident === "persons"
 
     _highlight.append("rect")
+        .attr("y", active ? state.y_scale(highlight.key + 3) : 0)
         .attr("width", state.width)
         .attr("height", state.barHeight)
         .attr("fill", "cyan")
-        .attr("opacity", 0);
+        .attr("opacity", active ? 1 : 0);
 
 }
 
@@ -98,34 +101,54 @@ export function zero({ state }, container, jesus) {
     }
 }
 
-export function map({state}, bars, container ){
+export function map({state, highlight, infoElements}, bars, container ){
 
     const map = container.append(() =>bars.clone(true).node())
         .attr("id", "minimap")
-        .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`);
-    // const mapHighlight = highlight.clone(true)
-    //     .attr("id", "_minimap_highlight")
-    //     .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`);
+        .attr("transform", `translate(${state.navigation.x}, ${state.navigation.y}) scale(${state.navigation.scale})`)
+
+    const hlActive_events = highlight.highlight_main && highlight.ident === "events"
+    const hlActive_persons = highlight.highlight_main && highlight.ident === "persons"
+    const eventHL = hlActive_events ? state.x_scale(highlight.element.datum) : 0
+    const personHL = hlActive_persons ? state.y_scale(highlight.element.id + 3) : 0
+
+    const mapBG = map
+        .append("rect")
+        .attr("width", state.width).attr("height", state.height)
+        .attr("fill", "white")
+        .attr("stroke", "black").attr("stroke-width", 1);
 
     map.selectAll("text").remove()
     map.selectAll("line").remove()
     map.selectAll("rect").attr('id', null)
 
-    const mapBG = map
-        .append("rect")
-        .attr("id", "cool")
-        .attr("width", state.width).attr("height", state.height)
-        .attr("fill", "white")
-        .attr("stroke", "black").attr("stroke-width", 0.5);
+    map.append("rect")
+        .attr("id", "mapPersonHL")
+        .attr("x", 0)
+        .attr("y", personHL)
+        .attr("width", state.width)
+        .attr("height", state.barHeight)
+        .attr("fill", "cyan")
+        .attr("opacity", hlActive_persons ? 0.5 : 0);
 
-    const focus = map.append("g")
+    map.append("line")
+        .attr("id", "mapEventHL")
+        .attr("x1", eventHL)
+        .attr("x2", eventHL)
+        .attr("y1", 0)
+        .attr("y2", state.graph.height)
+        .attr("height", state.height)
+        .attr("stroke", "magenta")
+        .attr("stroke-width", 2)
+        .attr("opacity", hlActive_events ? 1 : 0 );
+
+    map.append("g")
         .attr("id", "_focus")
         .append("rect").attr("x", 0).attr("y", 0)
-        .attr("width", state.width).attr("height", state.height)
-        .attr("fill", "none")
-        .attr("stroke", "black").attr("stroke-width", state.navigation.strokeWidth);
+            .attr("width", state.width).attr("height", state.height)
+            .attr("fill", "none")
+            .attr("stroke", "black").attr("stroke-width", state.navigation.strokeWidth);
   
     mapBG.lower();
-    //mapHighlight.raise();
 
 }

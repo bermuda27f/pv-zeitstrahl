@@ -13,21 +13,30 @@ export default function HandleCheckboxes(props) {
         <div>show elements: </div>
         <div >
           <input 
-            disabled ={props.highlight.highlight_main && props.highlight.ident === "wahlen"}
+            disabled ={props.highlight.highlight_main}
             type="checkbox" 
-            name = "handle_wahlen" 
-            checked = {props.infoElements.handle_wahlen} 
+            name = "events" 
+            checked = {props.infoElements.events} 
             onChange = { handleChange }/>
-          <label htmlFor="handle_wahlen">events</label>
+          <label htmlFor="events">events</label>
         </div>
         <div>
           <input 
             disabled ={props.highlight.highlight_main}
             type="checkbox" 
-            name = "labelPartei" 
-            checked = {props.infoElements.labelPartei} 
+            name = "label" 
+            checked = {props.infoElements.label} 
             onChange = { handleChange }/>
-          <label htmlFor="labelPartei">label</label>
+          <label htmlFor="label">label</label>
+        </div>
+        <div>
+          <input 
+            disabled ={ false }
+            type="checkbox" 
+            name = "map" 
+            checked = {props.infoElements.map} 
+            onChange = { handleChange }/>
+          <label htmlFor="map">map</label>
         </div>
       </div>
     </Fragment>

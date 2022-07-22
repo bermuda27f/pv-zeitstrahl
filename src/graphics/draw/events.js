@@ -2,23 +2,22 @@ import * as d3_select from 'd3-selection';
 import * as call from  '../../helper/events/call.js';
 import * as check from  '../../helper/check.js';
 
-export function set(stateRefs, eventContainer, x_scale){
+export function set(stateRefs, eventContainer, x_scale, visible){
 
     const { state, infoElements, highlight } = stateRefs
 
     const events = call.events("events", "id", stateRefs)
-    const behaviour = call.behaviour(infoElements.handle_ereignisse)
+    const behaviour = call.behaviour(infoElements.events)
     const same = (d) => check.sameHighlight (stateRefs, "events", d.id)
 
-    console.log(state.data.events_visible)
-
     eventContainer.selectAll("g")
-        .data(state.data.events_visible, d => d.id)
+        .data(visible, d => d.id)
         .join(
             enter => {
                 const tmpEnter = enter.append("g")
                     .attr("class", "img_node")
                     .attr("id", d => "img_node_" + d.id)
+                    //.attr("opacity", 1)
                     .call(enter => enter.transition(state.transition)
                         .attr("opacity", 1))
                     .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`);
@@ -52,6 +51,9 @@ export function set(stateRefs, eventContainer, x_scale){
 
             },
             update => update.attr("transform", d => `translate(${x_scale(d.datum)}, 0)`),
-            exit => exit.remove()
+            exit => exit
+                    .transition()
+                    .attr("opacity", 0)
+                    .remove()
         )
 }

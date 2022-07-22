@@ -103,7 +103,6 @@ function App (){
         const data = {
             persons : data_persons,
             events : calc_events,
-            events_visible : calc_events
         }
 
         const sizeData = calc.size({

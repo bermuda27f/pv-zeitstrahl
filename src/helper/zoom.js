@@ -62,11 +62,12 @@ export function initZoom(zoomGroup, zoom, { state, zoomInfo }){
     if(state.zoomObject){
         const start = zoomInfo._start_
         const end = zoomInfo._stop_
-        console.log(zoomInfo.transform)
+        const y_top = zoomInfo.y_top
+
         zoomGroup
             .call(zoom.transform, d3_zoom.zoomIdentity
-                .scale(zoomInfo.transform.k)
-                .translate(-zoomInfo.transform.x, -zoomInfo.transform.y));
+                .scale((state.width / (state.x_scale(end) - state.x_scale(start))))
+                .translate(-state.x_scale(start), -state.y_scale(y_top)));
 
     }
     else{

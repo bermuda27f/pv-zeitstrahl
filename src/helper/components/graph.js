@@ -1,5 +1,7 @@
 import * as handleEvents from  '../events/events.js';
+
 import * as zoomGraph from  '../../graphics/update/zoom.js';
+import * as toggleFuncs from  '../../graphics/update/toggle.js';
 import * as d3_zoom from 'd3-zoom';
 import * as d3_select from 'd3-selection';
 import * as svgDef from '../../graphics/draw/defs.js';
@@ -21,6 +23,8 @@ export function killSwitch(stateRefs){
     if(stateRefs.highlight && stateRefs.firstSet && stateRefs.isDrawed){
         stateRefs.setHIGHLIGHT({ type : "KILL_HIGHLIGHT_MAIN" })
         handleEvents.toggle(stateRefs, false, "switch", "click")
+        if(stateRefs.highlight.ident === "events") toggleFuncs.mapEventHL(stateRefs, stateRefs.highlight.element, false)
+        if(stateRefs.highlight.ident === "persons") toggleFuncs.mapPersonHL(stateRefs, stateRefs.highlight.element, false)
     }
 };
 
@@ -48,9 +52,11 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             zero : d3_select.select("#zero"),
             focus : d3_select.select("#_focus"),
             map : d3_select.select("#mapGroup"),
-
+            label : d3_select.selectAll(".person_label"),
             // ereignisse
             ereignisseSymbol : d3_select.selectAll(".ereignisseSymbol"),
+            mapEventHL : d3_select.select("#mapEventHL"),
+            mapPersonHL : d3_select.select("#mapPersonHL"),
             // label
             // X-Achsen:
             axisGroup : d3_select.selectAll("#axisGroup"),
@@ -81,13 +87,15 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr("transform", `translate(${stateRefs.state.graph.x}, ${stateRefs.state.graph.y})`)
     const map = svg.append("g").attr("id", "mapGroup")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
+        .attr("opacity", stateRefs.infoElements.map ? 1 : 0)
 
     misc.frame(mainGraph, stateRefs)
     misc.highlight(stateRefs, mainGraph)
     axis.x(stateRefs, axisContainer, "main")
     label.x_axis(stateRefs, axisContainer)
     const barSelection = bars.draw(stateRefs, mainGraph)
-    events.set(stateRefs, eventGroup, stateRefs.state.x_scale)
+    const visible = check.eventsVisible(stateRefs, stateRefs.state.x_scale, stateRefs.infoElements.events)
+    events.set(stateRefs, eventGroup, stateRefs.state.x_scale, visible)
     misc.zero(stateRefs, mainGraph, false)
     misc.map(stateRefs, barSelection, map)
 
@@ -127,16 +135,37 @@ export function handleMouse(stateRefs){
             if (highlight.highlight_main && !same){
                 handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                if(mouse.type === "events") handleEvents.setOrder(stateRefs, mouse.key)
+                if(mouse.type === "events") {
+                    handleEvents.setOrder(stateRefs, mouse.key)
+                    toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
+                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, false)
+
+                }
+                else{
+                    toggleFuncs.mapEventHL(stateRefs, mouse.d, false)
+                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, true)
+                }
             }
             // highlight off
             else if(highlight.highlight_main && same){
                 handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
+                if(mouse.type === "events"){
+                    toggleFuncs.mapEventHL(stateRefs, mouse.d, false)
+                }
+                else{
+                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, false)
+                }
             }
             // highlight new
             else if(!highlight.highlight_main){
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                if(mouse.type === "events") handleEvents.setOrder(stateRefs, mouse.key)
+                if(mouse.type === "events") {
+                    handleEvents.setOrder(stateRefs, mouse.key)
+                    toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
+                }
+                else{
+                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, true)
+                }
             }
 
             const setType = (highlight.highlight_main && same) ? 

@@ -4,7 +4,7 @@ import * as d3_select from 'd3-selection';
 
 export function draw (stateRefs, container){
 
-    const { state } = stateRefs
+    const { state, infoElements } = stateRefs
 
     const events = call.events("persons", "id", stateRefs)
     const behaviour = call.behaviour(true);
@@ -49,8 +49,8 @@ export function draw (stateRefs, container){
 
                 selection
                     .append("text")
-                    .attr("class", d => "label_" + d.name)
-                    .attr("opacity", 1)
+                    .attr("class", "person_label")
+                    .attr("opacity", infoElements.label ? 1 : 0)
                     .attr("x", d => state.x_scale(d.id === -2 || d.id === 0 ? d.start : d.born) - 5 )
                     .attr("y", d => state.y_scale(d.id + 2) - 2)
                     .style("fill", "black")

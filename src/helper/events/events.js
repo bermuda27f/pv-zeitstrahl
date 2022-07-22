@@ -65,9 +65,7 @@ export function toggle(props, mode, switchMode, eventType) {
             toggleEventElement(props, _key, mode);
             break;
         case "persons" :
-            if(eventType === "click"){
-                togglePerson(props, _key, mode)
-            }
+            if(eventType === "click") togglePerson(props, _key, mode)
             break;
         default:
             break;
@@ -111,7 +109,7 @@ export function setOrder (props, _key){
             else if(event.order === oldOrder ){
                 return { ...event, order : 0 }
             }
-            else return { ...event }
+            else { return { ...event } }
         }).sort((a,b) => { return d3_array.descending(a.order, b.order) })
 
     const newData = {
