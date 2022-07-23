@@ -101,7 +101,6 @@ export function size(state){
   }
 }
 
-
 export function dauer (zoomInfo) {
   const zeit = new Date(zoomInfo._start_).getFullYear() - new Date(zoomInfo._stop_).getFullYear() 
   const _zeit = zeit === 0 ? "under 1 year" : -zeit + " years"
@@ -121,7 +120,7 @@ export function order (props, _key){
     const oldOrder = el.data()[0].order
     el.raise();
 
-    const tmpArray = JSON.parse(JSON.stringify(props.state.data.events))
+    const tmpArray = props.state.data.events
         .map((event, i) => {
             if(event.order < oldOrder){
                 return { ...event, order : event.order + 1 }
