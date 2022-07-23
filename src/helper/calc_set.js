@@ -2,6 +2,7 @@ import { calc_xScale, calc_yScale } from './scale.js';
 
 import * as d3_axis from 'd3-axis';
 import * as d3_format from 'd3-format'
+import * as d3_array from 'd3-array';
 
 export function getPatterns(type){
 
@@ -112,4 +113,32 @@ export function zeit (props, zoomInfo) {
   const start = noZoom ? new Date(props.state.startDate).toLocaleDateString("en-EN", props.state.dateOptions) + " - " : zoomInfo._startDate + " - "
   const bis = noZoom ? new Date(props.state.stopDate).toLocaleDateString("en-EN", props.state.dateOptions) : zoomInfo._stopDate
   return (start + bis)
+}
+
+export function order (props, _key){
+
+    const el = props.state.selections.events.select("#img_node_" + _key)
+    const oldOrder = el.data()[0].order
+    el.raise();
+
+    const tmpArray = JSON.parse(JSON.stringify(props.state.data.events))
+        .map((event, i) => {
+            if(event.order < oldOrder){
+                return { ...event, order : event.order + 1 }
+            }
+            else if(event.order === oldOrder ){
+                return { ...event, order : 0 }
+            }
+            else { return { ...event } }
+        }).sort((a,b) => { return d3_array.descending(a.order, b.order) })
+
+    const newData = {
+        ...props.state.data,
+        events : tmpArray,
+    }
+
+    props.setState({
+        ...props.state,
+        data : newData
+    })
 }

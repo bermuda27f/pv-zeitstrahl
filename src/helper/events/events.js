@@ -1,7 +1,5 @@
 import { buildToolTip } from '../../graphics/draw/tooltips.js';
 import * as toggleFuncs from  '../../graphics/update/toggle.js';
-import * as d3_array from 'd3-array';
-
 import * as d3_select from 'd3-selection';
 
 export function mouse(eType, type, key, props, e, d) {
@@ -93,32 +91,4 @@ function togglePerson({state}, id, on) {
     el.transition(state.transition)
         .attr("y", state.y_scale(id + 3))
         .attr("opacity", on ? 1 : 0)
-}
-
-export function setOrder (props, _key){
-
-    const el = props.state.selections.events.select("#img_node_" + _key)
-    const oldOrder = el.data()[0].order
-    el.raise();
-
-    const tmpArray = JSON.parse(JSON.stringify(props.state.data.events))
-        .map((event, i) => {
-            if(event.order < oldOrder){
-                return { ...event, order : event.order + 1 }
-            }
-            else if(event.order === oldOrder ){
-                return { ...event, order : 0 }
-            }
-            else { return { ...event } }
-        }).sort((a,b) => { return d3_array.descending(a.order, b.order) })
-
-    const newData = {
-        ...props.state.data,
-        events : tmpArray,
-    }
-
-    props.setState({
-        ...props.state,
-        data : newData
-    })
 }

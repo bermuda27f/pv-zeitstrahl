@@ -31,6 +31,20 @@ const getTransition = () => {
     return d3_transition.transition().duration(transitionDuration).ease(d3_ease.easeLinear);
 }
 
+const Image = (highlight) => {
+    if(highlight.ident === "events"){
+    return(
+        <div style ={{padding : 5}}>
+            <img
+                style = {{width : "100%"}}
+                src = { require("./img/" + highlight.element.src_name + ".jpg")}
+            />
+        </div>
+        )
+    }
+    else return null
+}
+
 function App (){
 
     const mainRef = useRef();
@@ -163,8 +177,8 @@ function App (){
                 <MainGraph {...mainProps} />
                 <div style = {{backgroundColor: "magenta", color: "white", marginLeft: margin.left, display : highlight.highlight_main ? "block" : "none"}} className = "Text" >
                     {highlight.highlight_main ? "HIGHLIGHT: " + highlight.element.name : ""}
-                    <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel
-                    </button>
+                    <button onClick = { () => { setKill(() =>  killSwitch ? false : true) }}>cancel</button>
+                    <Image { ... highlight } />
                 </div>
                 <div style ={{width:"100%", marginLeft: margin.left, marginRight : margin.right}}>
                     {/* <PeriodeSelect state = { state }/> */}

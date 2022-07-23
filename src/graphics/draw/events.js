@@ -17,7 +17,6 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                 const tmpEnter = enter.append("g")
                     .attr("class", "img_node")
                     .attr("id", d => "img_node_" + d.id)
-                    //.attr("opacity", 1)
                     .call(enter => enter.transition(state.transition)
                         .attr("opacity", 1))
                     .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`);
@@ -54,6 +53,7 @@ export function set(stateRefs, eventContainer, x_scale, visible){
             exit => exit
                     .transition()
                     .attr("opacity", 0)
+                    .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`)
                     .remove()
         )
 }

@@ -2,8 +2,10 @@ import * as handleEvents from  '../events/events.js';
 
 import * as zoomGraph from  '../../graphics/update/zoom.js';
 import * as toggleFuncs from  '../../graphics/update/toggle.js';
+
 import * as d3_zoom from 'd3-zoom';
 import * as d3_select from 'd3-selection';
+
 import * as svgDef from '../../graphics/draw/defs.js';
 import * as misc from  '../../graphics/draw/misc.js';
 import * as bars from  '../../graphics/draw/bars.js';
@@ -89,6 +91,12 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", stateRefs.infoElements.map ? 1 : 0)
 
+    zoomGroup.call(zoomObjRefs.current.zoom)
+        .on("wheel.zoom", null)
+        //.on("dblclick.zoom", null);
+
+    zoomHelper.initZoom(zoomGroup, zoomObjRefs.current.zoom, stateRefs)
+
     misc.frame(mainGraph, stateRefs)
     misc.highlight(stateRefs, mainGraph)
     axis.x(stateRefs, axisContainer, "main")
@@ -98,12 +106,6 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     events.set(stateRefs, eventGroup, stateRefs.state.x_scale, visible)
     misc.zero(stateRefs, mainGraph, false)
     misc.map(stateRefs, barSelection, map)
-
-    zoomGroup.call(zoomObjRefs.current.zoom)
-        .on("wheel.zoom", null)
-        //.on("dblclick.zoom", null);
-
-    zoomHelper.initZoom(zoomGroup, zoomObjRefs.current.zoom, stateRefs)
 
 };
 
@@ -136,7 +138,7 @@ export function handleMouse(stateRefs){
                 handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
                 if(mouse.type === "events") {
-                    handleEvents.setOrder(stateRefs, mouse.key)
+                    calc.order(stateRefs, mouse.key)
                     toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
                     toggleFuncs.mapPersonHL(stateRefs, mouse.d, false)
 
@@ -160,7 +162,7 @@ export function handleMouse(stateRefs){
             else if(!highlight.highlight_main){
                 handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
                 if(mouse.type === "events") {
-                    handleEvents.setOrder(stateRefs, mouse.key)
+                    calc.order(stateRefs, mouse.key)
                     toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
                 }
                 else{

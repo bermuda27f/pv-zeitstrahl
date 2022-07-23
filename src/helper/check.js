@@ -15,7 +15,7 @@ export function sameHighlight (props, type, key) {
 
 export function eventsVisible(stateRefs, x_scale, on){
 
-    const { state, setState } = stateRefs
+    const { state } = stateRefs
 
     let calc_events = []
     if(on){
