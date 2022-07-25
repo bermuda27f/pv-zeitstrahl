@@ -95,15 +95,15 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
-    zoomHelper.initZoom(zoomGroup, zoomObjRefs.current.zoom, stateRefs)
+    //zoomHelper.initZoom(zoomGroup, zoomObjRefs.current.zoom, stateRefs)
 
     misc.frame(mainGraph, stateRefs)
     misc.highlight(stateRefs, mainGraph)
     axis.x(stateRefs, axisContainer, "main")
     label.x_axis(stateRefs, axisContainer)
     const barSelection = bars.draw(stateRefs, mainGraph)
-    const visible = check.eventsVisible(stateRefs, stateRefs.state.x_scale, stateRefs.infoElements.events)
-    events.set(stateRefs, eventGroup, stateRefs.state.x_scale, visible)
+    const visible = check.eventsVisible(stateRefs, stateRefs.state.x_scale_2, stateRefs.infoElements.events)
+    events.set(stateRefs, eventGroup, stateRefs.state.x_scale_2, visible)
     misc.zero(stateRefs, mainGraph, false)
     misc.map(stateRefs, barSelection, map)
 

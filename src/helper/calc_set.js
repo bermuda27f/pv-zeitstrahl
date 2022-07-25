@@ -1,4 +1,4 @@
-import { calc_xScale, calc_yScale } from './scale.js';
+import { calc_xScale, calc_xScale_2, calc_yScale } from './scale.js';
 
 import * as d3_axis from 'd3-axis';
 import * as d3_format from 'd3-format'
@@ -57,6 +57,8 @@ export function size(state){
   const height = width * graph_ratio;
 
   const x_scale = calc_xScale(state, width);
+  const x_scale_2 = calc_xScale_2(state, width);
+
   const y_scale = calc_yScale(state, height);
 
   return {
@@ -64,6 +66,7 @@ export function size(state){
     mainRefSize : clientWidth,
 
     x_scale : x_scale,
+    x_scale_2 : x_scale_2,
     y_scale : y_scale,
 
     x_axis : d3_axis.axisBottom(x_scale)

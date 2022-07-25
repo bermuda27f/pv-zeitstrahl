@@ -1,0 +1,38 @@
+[
+    {
+      "id": 4,
+      "order": 4,
+      "name": "Severer",
+      "start": "+000193-04-09",
+      "end": "+000235-03-22",
+      "notes": null,
+      "wiki": null
+    },
+    {
+      "id": 3,
+      "order": 3,
+      "name": "Adoptivkaiser",
+      "start": "+000096-09-18",
+      "end": "+000192-12-31",
+      "notes": null,
+      "wiki": null
+    },
+    {
+      "id": 2,
+      "order": 2,
+      "name": "Flavier",
+      "start": "+000069-07-01",
+      "end": "+000096-09-18",
+      "notes": null,
+      "wiki": null
+    },
+    {
+      "id": 1,
+      "order": 1,
+      "name": "Julisch-Claudische Dynastie",
+      "start": "+000027-01-16",
+      "end": "+000068-06-09",
+      "notes": null,
+      "wiki": null
+    }
+  ]
