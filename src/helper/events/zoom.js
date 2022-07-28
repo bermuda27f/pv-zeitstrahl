@@ -11,7 +11,7 @@ export function zoom ({ state, setState }, setZoom, setZOOMINFO) {
         const rangeY = newXScale.range().map(t.invertY, t);
 
         const rangeWidth = (rangeX[1] - rangeX[0]) * t.k;
-        const rangeHeight = (rangeY[1] - rangeY[0]) * t.k
+        const rangeHeight = (rangeY[1] - rangeY[0]) * t.k;
         const start = t.x === 0 ? rangeX[0] : t.k + (t.x / rangeX[0]);
         const stop = t.x === 0 ? rangeWidth : t.k + (t.x / rangeX[0]) + rangeWidth;
 

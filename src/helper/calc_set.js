@@ -1,8 +1,16 @@
-import { calc_xScale, calc_xScale_2, calc_yScale } from './scale.js';
+import * as scale from './scale.js';
 
 import * as d3_axis from 'd3-axis';
 import * as d3_format from 'd3-format'
 import * as d3_array from 'd3-array';
+import * as d3_timeFormat from 'd3-time-format'
+import * as d3_time from 'd3-time'
+
+import * as bars from  '../graphics/draw/bars.js';
+
+export function barWidth (state, start, end) { 
+  return state.x_scale(new Date(end)) - state.x_scale(new Date(start)); 
+  }
 
 export function getPatterns(type){
 
@@ -76,6 +84,14 @@ export function setTimeFormat (date){
 
 } 
 
+export function dateBoundaries(data){
+  const copy = JSON.parse(JSON.stringify(data))
+  return {
+    start : copy.sort((a,b) => { return d3_array.ascending(new Date(a.start), new Date(b.start)) })[0].start,
+    stop : copy.sort((a,b) => { return d3_array.descending(new Date(a.end), new Date(b.end)) })[0].end
+  }
+}
+
 export function size(state){
 
   const navScale = 0.25;
@@ -89,27 +105,28 @@ export function size(state){
 
   const height = width * graph_ratio;
 
-  const x_scale = calc_xScale(state, width);
-  const x_scale_2 = calc_xScale_2(state, width);
+  const x_scale = scale.time(state, width);
+  //const x_scale_linear = scale.linear(state.data.persons, width);
+  const y_scale = scale.linear({ min : state.data.persons.length, max : 0, start : 0, end : height});
 
-  const y_scale = calc_yScale(state, height);
+  const barHeight = (height - state.margin.bottom) / state.data.persons.map(x => x.id).length
+
+  const calcTextOffset = bars.dummys({...state, barHeight : barHeight, width : width, height : height }, x_scale, state.mainRef.current)
 
   return {
 
     mainRefSize : clientWidth,
 
-    x_scale : x_scale,
-    x_scale_2 : x_scale_2,
+    x_scale : x_scale.domain([calcTextOffset.result, new Date(state.stopDate)]),
     y_scale : y_scale,
 
     // setTimeFormat!
 
     x_axis : d3_axis.axisBottom(x_scale)
       .ticks(tickNumber)
-      .tickFormat(d3_format.format(3)),
+      .tickFormat(setTimeFormat),
     x_axis_lines : d3_axis.axisBottom(x_scale)
       .ticks(tickNumber)
-      .tickFormat(d3_format.format(3))
       .tickSize(height),
 
     width : width,
@@ -117,7 +134,7 @@ export function size(state){
 
     mainGraphHeight : height + state.margin.top + state.margin.bottom + state.handle.offset + (2 * state.handle.size),
 
-    barHeight : (height - state.margin.bottom) / state.data.persons.map(x=>x.id).length,
+    barHeight : barHeight,
 
     graph : { 
       x : state.margin.left,

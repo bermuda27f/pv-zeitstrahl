@@ -19,8 +19,6 @@ import * as d3_array from 'd3-array';
 import data_persons from "./data/persons.json";
 import data_events from "./data/events.json";
 
-const startDate = -133;
-
 const standardColor = "#141452";
 const highlightColor = "magenta";
 const margin = { top: 25, right: 40, bottom: 5, left: 30 };
@@ -91,6 +89,7 @@ function App (){
         },
 
         lineWidth : 0.25,
+        textOffset : 5,
 
         selections : null,
         zoomObject : null
@@ -111,7 +110,7 @@ function App (){
 
     if(!firstSet && state.mainRef.current){
 
-        const calc_events = data_events.map((events, i) => { return {...events, order: i}})
+        const calc_events = data_events.map((event, i) => { return {...event, order: i}})
             .sort((a,b) => { return d3_array.descending(a.order, b.order) });
 
         const data = {
@@ -119,11 +118,13 @@ function App (){
             events : calc_events,
         }
 
+        const date = calc.dateBoundaries(data_persons)
+
         const sizeData = calc.size({
             ...state,
             data,
-            startDate : startDate,
-            stopDate : data_persons[data_persons.length - 1].end,
+            startDate : new Date(date.start),
+            stopDate : new Date(date.stop),
             })
 
         const newState = {

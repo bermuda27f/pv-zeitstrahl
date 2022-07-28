@@ -13,7 +13,10 @@ export default function ZoomMenu(props) {
             case "Reset Zoom":
                 props.state.selections.zoomGroup
                     .transition().duration(250)                
-                    .call(props.state.zoomObject.transform, d3_zoom.zoomIdentity.scale(1))
+                    .call(props.state.zoomObject.transform, d3_zoom.zoomIdentity
+                        .scale(1)
+                        .translate(0, 0)
+                        )
                 break;
             case "+":
                 props.state.selections.zoomGroup

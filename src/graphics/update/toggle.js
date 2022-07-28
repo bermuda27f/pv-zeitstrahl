@@ -27,7 +27,7 @@ export function mapPersonHL ({state}, d, active) {
     const rect = state.selections.mapPersonHL
 
     if(active){
-        const y = state.y_scale(d.id + 3)
+        const y = state.y_scale(d.id)
         rect
             .transition()
             .attr("y", y)

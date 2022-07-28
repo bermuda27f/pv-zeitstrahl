@@ -89,6 +89,6 @@ function togglePerson({state}, id, on) {
     const el = state.selections.personHL.select("rect")
 
     el.transition(state.transition)
-        .attr("y", state.y_scale(id + 3))
+        .attr("y", state.y_scale(id))
         .attr("opacity", on ? 1 : 0)
 }

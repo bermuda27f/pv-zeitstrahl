@@ -74,6 +74,6 @@ export function initZoom(zoomGroup, zoom, { state, zoomInfo }){
         zoomGroup
             .call(zoom.transform, d3_zoom.zoomIdentity
                 .scale(1)
-                .translate(-0.000000001, 0));
+                .translate(0, 0));
     }
 }

@@ -19,7 +19,7 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                     .attr("id", d => "img_node_" + d.id)
                     .call(enter => enter.transition(state.transition)
                         .attr("opacity", 1))
-                    .attr("transform", d => { console.log(d, x_scale(new Date(d.datum)));  return `translate(${x_scale(new Date(d.datum))}, 0)`});
+                    .attr("transform", d => { return `translate(${x_scale(new Date(d.datum))}, 0)`});
 
                 tmpEnter.append("defs")
                     .append('pattern')
@@ -49,11 +49,11 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                     .attr("class", "eventLine");
 
             },
-            update => update.attr("transform", d => `translate(${x_scale(d.datum)}, 0)`),
+            update => update.attr("transform", d => `translate(${x_scale(new Date(d.datum))}, 0)`),
             exit => exit
-                    .transition()
-                    .attr("opacity", 0)
-                    .attr("transform", d => `translate(${x_scale(d.datum)}, 0)`)
-                    .remove()
+                .transition()
+                .attr("opacity", 0)
+                .attr("transform", d => `translate(${x_scale(new Date(d.datum))}, 0)`)
+                .remove()
         )
 }

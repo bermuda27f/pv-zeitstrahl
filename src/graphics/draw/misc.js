@@ -24,7 +24,7 @@ export function highlight({ state, highlight}, container){
     const active = highlight.highlight_main && highlight.ident === "persons"
 
     _highlight.append("rect")
-        .attr("y", active ? state.y_scale(highlight.key + 3) : 0)
+        .attr("y", active ? state.y_scale(highlight.key) : 0)
         .attr("width", state.width)
         .attr("height", state.barHeight)
         .attr("fill", "cyan")
@@ -44,9 +44,9 @@ export function lines({ state }, container) {
             .join("line")
             .attr("class", d => "kaiser_lines")
             .attr("x1", 0)
-            .attr("y1", (d,i) => state.y_scale(d.id + 3))
+            .attr("y1", (d,i) => state.y_scale(d.id))
             .attr("x2", state.width)
-            .attr("y2", (d,i) => state.y_scale(d.id + 3))
+            .attr("y2", (d,i) => state.y_scale(d.id))
             .attr("stroke-width", 0.25)
             .attr("opacity", 0.5)
             .attr("stroke", "grey");
@@ -110,7 +110,7 @@ export function map({state, highlight, infoElements}, bars, container ){
     const hlActive_events = highlight.highlight_main && highlight.ident === "events"
     const hlActive_persons = highlight.highlight_main && highlight.ident === "persons"
     const eventHL = hlActive_events ? state.x_scale(highlight.element.datum) : 0
-    const personHL = hlActive_persons ? state.y_scale(highlight.element.id + 3) : 0
+    const personHL = hlActive_persons ? state.y_scale(highlight.element.id) : 0
 
     const mapBG = map
         .append("rect")
