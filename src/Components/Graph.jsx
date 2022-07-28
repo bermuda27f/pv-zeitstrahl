@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer} from 'react';
 import ZoomMenu from './ZoomMenu';
 import Checkboxes from './Checkboxes';
+import SortType from './SortType';
 
 import '../styles.css'
 
@@ -22,7 +23,8 @@ export default function Graph (props) {
     const [infoElements, setINFOELEMENTS] = useReducer(reducer.mutables, {
         events : true,
         label : true,
-        map : true   
+        map : true,
+        sortType : "time"
     });
 
     const keyPress = useKeyPress("Escape");
@@ -111,13 +113,24 @@ export default function Graph (props) {
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            toggle.simpleElements(stateRefs.current, "label"); 
+            toggle.elementOpacity(stateRefs.current, "label"); 
         }
     }, [infoElements.label])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            toggle.simpleElements(stateRefs.current, "map"); 
+            console.log("wow")
+            // zoom 
+            // events
+            // periods
+            // scale
+            // update
+        }
+    }, [infoElements.sortType])
+
+    useEffect(()=>{ 
+        if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
+            toggle.elementOpacity(stateRefs.current, "map"); 
         }
     }, [infoElements.map])
 
@@ -145,6 +158,12 @@ export default function Graph (props) {
                 />
             </div>
             <div style = {{display : "block", marginLeft: props.state.margin.left}}>
+                <div>
+                    <SortType 
+                        sortType = { infoElements.sortType }
+                        setINFOELEMENTS = { setINFOELEMENTS }
+                    />
+                </div>
                 <div style ={{display: "flex", width:"100%"}}>
                     <ZoomMenu
                         state = { props.state }

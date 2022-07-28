@@ -110,11 +110,24 @@ function App (){
 
     if(!firstSet && state.mainRef.current){
 
-        const calc_events = data_events.map((event, i) => { return {...event, order: i}})
-            .sort((a,b) => { return d3_array.descending(a.order, b.order) });
-
+        const calc_events = data_events.map((event, i) => { 
+            return {
+                ...event, 
+                order: i
+            }}).sort((a,b) => { 
+                return d3_array.descending(a.order, b.order) 
+        });
+        
+        const calc_persons = data_persons.map((person, i) => { 
+            return {
+                ...person, 
+                age: new Date(person.end).getFullYear() - new Date(person.start).getFullYear(),
+                focus : person.focus_start !== null ? new Date(person.focus_end).getFullYear() - new Date(person.focus_start).getFullYear() : 0
+            }
+        })
+        
         const data = {
-            persons : data_persons,
+            persons : calc_persons,
             events : calc_events,
         }
 

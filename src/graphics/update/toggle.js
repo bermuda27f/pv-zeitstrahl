@@ -1,4 +1,4 @@
-export function simpleElements({ state, infoElements}, type){
+export function elementOpacity({ state, infoElements}, type){
     const t = state.transition;
     state.selections[type]
         .transition(t)

@@ -30,7 +30,10 @@ export function draw (stateRefs, container){
                     .attr("id", d => d.name + "_lifetime_bar")
                     .attr("class", "lifetimebar")
                     .attr("opacity", 1)
-                    .attr("x", d => state.x_scale(new Date(d.start)) )
+                    .attr("x", (d) => {
+                        console.log( state.x_scale(new Date(d.start)) ) 
+                        return state.x_scale(new Date(d.start)) 
+                    })
                     .attr("y", d => state.y_scale(d.id))
                     .attr("width", d => calc.barWidth(state, d.start, d.end))
                     .attr("stroke", "black")
@@ -118,7 +121,10 @@ export function dummys (state, x_scale, container){
         )
 
     const minObject = widthArray.sort((a,b) => { return d3_array.ascending(new Date(a.x), new Date(b.x)) })[0]
+    const maxBox = Math.max(...widthArray.map((x) => x.bbox))
     const scale = (Math.abs(minObject.x) / state.width)
+
+    console.log(maxBox)
 
     const offset = minObject.x * (1 + scale)
     const date = x_scale(new Date(minObject.date)) * (1 + scale)
@@ -129,5 +135,5 @@ export function dummys (state, x_scale, container){
 
     dummy.remove()
 
-    return { result : x_scale.invert(calc) }
+    return { result : x_scale.invert(calc), maxBBox :  maxBox}
 }

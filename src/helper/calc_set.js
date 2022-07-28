@@ -105,19 +105,34 @@ export function size(state){
 
   const height = width * graph_ratio;
 
-  const x_scale = scale.time(state, width);
-  //const x_scale_linear = scale.linear(state.data.persons, width);
-  const y_scale = scale.linear({ min : state.data.persons.length, max : 0, start : 0, end : height});
-
   const barHeight = (height - state.margin.bottom) / state.data.persons.map(x => x.id).length
+  
+  const x_scale = scale.time(state, width);
+
+  console.log(state.startDate)
 
   const calcTextOffset = bars.dummys({...state, barHeight : barHeight, width : width, height : height }, x_scale, state.mainRef.current)
+
+  const x_scale_linear = scale.linear({
+    min : 0,
+    max : Math.max(...state.data.persons.map((x) => x.age)),
+    start : calcTextOffset.maxBBox,
+    end : width
+  });
+  const y_scale = scale.linear({ 
+    min : state.data.persons.length, 
+    max : 0, 
+    start : 0, 
+    end : height
+  });
+
 
   return {
 
     mainRefSize : clientWidth,
 
     x_scale : x_scale.domain([calcTextOffset.result, new Date(state.stopDate)]),
+    x_scale_linear : x_scale_linear,
     y_scale : y_scale,
 
     // setTimeFormat!
@@ -171,28 +186,28 @@ export function zeit (props, zoomInfo) {
 
 export function order (props, _key){
 
-    const el = props.state.selections.events.select("#img_node_" + _key)
-    const oldOrder = el.data()[0].order
-    el.raise();
+  const el = props.state.selections.events.select("#img_node_" + _key)
+  const oldOrder = el.data()[0].order
+  el.raise();
 
-    const tmpArray = props.state.data.events
-        .map((event, i) => {
-            if(event.order < oldOrder){
-                return { ...event, order : event.order + 1 }
-            }
-            else if(event.order === oldOrder ){
-                return { ...event, order : 0 }
-            }
-            else { return { ...event } }
-        }).sort((a,b) => { return d3_array.descending(a.order, b.order) })
+  const tmpArray = props.state.data.events
+      .map((event, i) => {
+          if(event.order < oldOrder){
+              return { ...event, order : event.order + 1 }
+          }
+          else if(event.order === oldOrder ){
+              return { ...event, order : 0 }
+          }
+          else { return { ...event } }
+      }).sort((a,b) => { return d3_array.descending(a.order, b.order) })
 
-    const newData = {
-        ...props.state.data,
-        events : tmpArray,
-    }
+  const newData = {
+      ...props.state.data,
+      events : tmpArray,
+  }
 
-    props.setState({
-        ...props.state,
-        data : newData
-    })
+  props.setState({
+      ...props.state,
+      data : newData
+  })
 }
