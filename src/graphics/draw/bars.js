@@ -8,7 +8,7 @@ import * as d3_zoom from 'd3-zoom';
 
 export function draw (stateRefs, container){
 
-    const { state, infoElements } = stateRefs
+    const { state, uiElements } = stateRefs
 
     const events = call.events("persons", "id", stateRefs)
     const behaviour = call.behaviour(true);
@@ -30,10 +30,7 @@ export function draw (stateRefs, container){
                     .attr("id", d => d.name + "_lifetime_bar")
                     .attr("class", "lifetimebar")
                     .attr("opacity", 1)
-                    .attr("x", (d) => {
-                        console.log( state.x_scale(new Date(d.start)) ) 
-                        return state.x_scale(new Date(d.start)) 
-                    })
+                    .attr("x", (d) => { return state.x_scale(new Date(d.start)) })
                     .attr("y", d => state.y_scale(d.id))
                     .attr("width", d => calc.barWidth(state, d.start, d.end))
                     .attr("stroke", "black")
@@ -60,7 +57,7 @@ export function draw (stateRefs, container){
                     .append("text")
                     .attr("class", "person_label")
                     .attr("id", d => "person_label_" + d.id)
-                    .attr("opacity", infoElements.label ? 1 : 0)
+                    .attr("opacity", uiElements.label ? 1 : 0)
                     .attr("x", d => state.x_scale(new Date(d.start)) - state.textOffset)
                     .attr("y", d => state.y_scale(d.id - 1) - 1)
                     .style("fill", "black")
@@ -83,7 +80,7 @@ export function draw (stateRefs, container){
                     .attr("x2", state.width)
                     .attr("y2", (d,i) => state.y_scale(d.id))
                     .attr("stroke-width", state.lineWidth)
-                    .attr("opacity", 0.5)
+                    .attr("opacity", 1)
                     .attr("stroke", "grey");
 
         }

@@ -101,7 +101,7 @@ export function zero({ state }, container, jesus) {
     }
 }
 
-export function map({state, highlight, infoElements}, bars, container ){
+export function map({state, highlight, uiElements}, bars, container ){
 
     const map = container.append(() =>bars.clone(true).node())
         .attr("id", "minimap")

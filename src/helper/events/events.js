@@ -12,14 +12,14 @@ export function mouse(eType, type, key, props, e, d) {
     props.setMOUSE({
         type : "MULTIPLE", 
         value : { 
-                mouseEvent : eType,
-                type : type,
-                key : d.id,
-                dataSet : type,
-                e : e,
-                d : d
-            }
-        })
+            mouseEvent : eType,
+            type : type,
+            key : d.id,
+            dataSet : type,
+            e : e,
+            d : d
+        }
+    })
 }
 
 export function showTooltip(props){

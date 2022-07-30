@@ -4,7 +4,7 @@ import "../styles.css"
 export default function HandleCheckboxes(props) {
   
   const handleChange = (e) => {
-    props.setINFOELEMENTS({ type : "SINGLE_BOOL", varName : e.target.name });
+    props.setUIELEMENTS({ type : "SINGLE_BOOL", varName : e.target.name });
   };
 
   return (
@@ -16,7 +16,7 @@ export default function HandleCheckboxes(props) {
             disabled ={props.highlight.highlight_main}
             type="checkbox" 
             name = "events" 
-            checked = {props.infoElements.events} 
+            checked = {props.uiElements.events} 
             onChange = { handleChange }/>
           <label htmlFor="events">events</label>
         </div>
@@ -25,7 +25,7 @@ export default function HandleCheckboxes(props) {
             disabled ={props.highlight.highlight_main}
             type="checkbox" 
             name = "label" 
-            checked = {props.infoElements.label} 
+            checked = {props.uiElements.label} 
             onChange = { handleChange }/>
           <label htmlFor="label">label</label>
         </div>
@@ -34,7 +34,7 @@ export default function HandleCheckboxes(props) {
             disabled ={ false }
             type="checkbox" 
             name = "map" 
-            checked = {props.infoElements.map} 
+            checked = {props.uiElements.map} 
             onChange = { handleChange }/>
           <label htmlFor="map">map</label>
         </div>

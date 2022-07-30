@@ -58,8 +58,8 @@ function App (){
         mainRef : mainRef,
         maxScale : 10,
         dateOptions : { year: 'numeric', month: 'long' },
-        dateOptionsStory : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
         transition : getTransition,
+        sortTypes : ["Sequence", "Age", "Reign"],
 
         isTouch : check.touchDevice(),
 
@@ -78,12 +78,13 @@ function App (){
         },
 
         handle : {
-            size : 25,
-            offset : 27,
-            opacity : .5, 
+            size : 20,
+            offset : 15,
+            bottom : 30,
+            opacity : 1, 
             color : standardColor,
             lineWidth : {
-                normal : .4,
+                normal : .2,
                 highlight : 1.5
             },
         },

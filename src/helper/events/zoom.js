@@ -32,6 +32,7 @@ export function zoom ({ state, setState }, setZoom, setZOOMINFO) {
                 // _startDate: newXScale.invert(start).toLocaleDateString("en-EN", state.dateOptions),
                 // _stopDate: newXScale.invert(stop).toLocaleDateString("en-EN", state.dateOptions),
                 // string normal
+                start : t.x, 
                 _start_: newXScale.invert(start),
                 _stop_: newXScale.invert(stop),
                 y_top : newYScale.invert(y_top),

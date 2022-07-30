@@ -20,11 +20,12 @@ import * as helper from "../helper/components/graph.js"
 
 export default function Graph (props) {
 
-    const [infoElements, setINFOELEMENTS] = useReducer(reducer.mutables, {
+    const [uiElements, setUIELEMENTS] = useReducer(reducer.mutables, {
         events : true,
         label : true,
         map : true,
-        sortType : "time"
+        sortType : "Sequence",
+        zoom : true
     });
 
     const keyPress = useKeyPress("Escape");
@@ -56,7 +57,7 @@ export default function Graph (props) {
     })
     const stateRefs = useRef({
         ...props, 
-        infoElements : infoElements,
+        uiElements : uiElements,
         zoomInfo : zoomInfo,
         mouseEvents : mouseEvents,
         isDrawed : isDrawed,
@@ -67,7 +68,7 @@ export default function Graph (props) {
     useEffect(()=>{ stateRefs.current.state = props.state; }, [props.state])
     useEffect(()=>{ stateRefs.current.firstSet = props.firstSet; }, [props.firstSet])
     useEffect(()=>{ stateRefs.current.highlight = props.highlight; }, [props.highlight])
-    useEffect(()=>{ stateRefs.current.infoElements = infoElements; }, [infoElements])
+    useEffect(()=>{ stateRefs.current.uiElements = uiElements; }, [uiElements])
     useEffect(()=>{ stateRefs.current.zoomInfo = zoomInfo; }, [zoomInfo])
     useEffect(()=>{ stateRefs.current.mouseEvents = mouseEvents; }, [mouseEvents])
     useEffect(()=>{ stateRefs.current.isDrawed = isDrawed; }, [isDrawed])
@@ -99,23 +100,23 @@ export default function Graph (props) {
     }, [props.state.width])
 
     useEffect(()=>{ 
-        helper.zoomIt(stateRefs.current) 
+        if(uiElements.zoom)helper.zoomIt(stateRefs.current) 
     }, [zoomState])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             const { selections } = stateRefs.current.state
-            const { zoomInfo, infoElements } = stateRefs.current
-            const visible = check.eventsVisible(stateRefs.current, zoomInfo.scaleX, infoElements.events ? true : false)
+            const { zoomInfo, uiElements } = stateRefs.current
+            const visible = check.eventsVisible(stateRefs.current, zoomInfo.scaleX, uiElements.events ? true : false)
             events.set(stateRefs.current, selections.events, zoomInfo.scaleX, visible)
         }
-    }, [infoElements.events])
+    }, [uiElements.events])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             toggle.elementOpacity(stateRefs.current, "label"); 
         }
-    }, [infoElements.label])
+    }, [uiElements.label])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
@@ -126,13 +127,13 @@ export default function Graph (props) {
             // scale
             // update
         }
-    }, [infoElements.sortType])
+    }, [uiElements.sortType])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             toggle.elementOpacity(stateRefs.current, "map"); 
         }
-    }, [infoElements.map])
+    }, [uiElements.map])
 
     useEffect(()=>{
         helper.handleMouse(stateRefs.current)
@@ -160,8 +161,9 @@ export default function Graph (props) {
             <div style = {{display : "block", marginLeft: props.state.margin.left}}>
                 <div>
                     <SortType 
-                        sortType = { infoElements.sortType }
-                        setINFOELEMENTS = { setINFOELEMENTS }
+                        state = { props.state }
+                        sortType = { uiElements.sortType }
+                        setUIELEMENTS = { setUIELEMENTS }
                     />
                 </div>
                 <div style ={{display: "flex", width:"100%"}}>
@@ -173,9 +175,9 @@ export default function Graph (props) {
                 </div>
                 <div style ={{ width:"100%" }}>
                     <Checkboxes
-                        infoElements = { infoElements }
+                        uiElements = { uiElements }
                         highlight = { props.highlight }
-                        setINFOELEMENTS = { setINFOELEMENTS }
+                        setUIELEMENTS = { setUIELEMENTS }
                     />
                 </div>
             </div>

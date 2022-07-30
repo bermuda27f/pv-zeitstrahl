@@ -3,13 +3,14 @@ import * as check from "../../helper/check.js"
 
 export function graph(stateRefs) {
 
-    const { state, setState, zoomInfo, zoomState, infoElements } = stateRefs
+    const { state, setState, zoomInfo, zoomState, uiElements } = stateRefs
 
     state.selections.bars.attr("transform", zoomState);
 
-    const visible = check.eventsVisible(stateRefs, zoomInfo.scaleX, infoElements.events)
+    const visible = check.eventsVisible(stateRefs, zoomInfo.scaleX, uiElements.events)
+
     events.set(stateRefs, state.selections.events, stateRefs.zoomInfo.scaleX, visible)
-    
+
     state.selections.bars.selectAll(".kaiser_lines").attr('stroke-width', state.lineWidth * (1/zoomState.k));
     state.selections.personHL.attr("transform", zoomState);
 

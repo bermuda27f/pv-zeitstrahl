@@ -1,8 +1,8 @@
-export function elementOpacity({ state, infoElements}, type){
+export function elementOpacity({ state, uiElements}, type){
     const t = state.transition;
     state.selections[type]
         .transition(t)
-        .attr("opacity", infoElements[type] ? 1 : 0)
+        .attr("opacity", uiElements[type] ? 1 : 0)
 }
 
 export function mapEventHL ({state}, d, active) {
@@ -10,7 +10,7 @@ export function mapEventHL ({state}, d, active) {
     const line = state.selections.mapEventHL
 
     if(active){
-        const x = state.x_scale(d.datum)
+        const x = state.x_scale(new Date(d.datum))
         line
             .transition()
             .attr("x1", x)

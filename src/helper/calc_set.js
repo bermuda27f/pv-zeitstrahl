@@ -109,8 +109,6 @@ export function size(state){
   
   const x_scale = scale.time(state, width);
 
-  console.log(state.startDate)
-
   const calcTextOffset = bars.dummys({...state, barHeight : barHeight, width : width, height : height }, x_scale, state.mainRef.current)
 
   const x_scale_linear = scale.linear({
@@ -147,7 +145,7 @@ export function size(state){
     width : width,
     height : height,
 
-    mainGraphHeight : height + state.margin.top + state.margin.bottom + state.handle.offset + (2 * state.handle.size),
+    mainGraphHeight : height + state.handle.bottom + state.margin.top + state.margin.bottom + state.handle.offset + (2 * state.handle.size),
 
     barHeight : barHeight,
 

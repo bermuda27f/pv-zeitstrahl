@@ -89,7 +89,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr("transform", `translate(${stateRefs.state.graph.x}, ${stateRefs.state.graph.y})`)
     const map = svg.append("g").attr("id", "mapGroup")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
-        .attr("opacity", stateRefs.infoElements.map ? 1 : 0)
+        .attr("opacity", stateRefs.uiElements.map ? 1 : 0)
 
     zoomGroup.call(zoomObjRefs.current.zoom)
         .on("wheel.zoom", null)
@@ -101,8 +101,10 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     misc.highlight(stateRefs, mainGraph)
     axis.x(stateRefs, axisContainer, "main")
     label.x_axis(stateRefs, axisContainer)
+
     const barSelection = bars.draw(stateRefs, mainGraph)
-    const visible = check.eventsVisible(stateRefs, stateRefs.state.x_scale, stateRefs.infoElements.events)
+    const visible = check.eventsVisible(stateRefs, stateRefs.state.x_scale, stateRefs.uiElements.events)
+
     events.set(stateRefs, eventGroup, stateRefs.state.x_scale, visible)
     misc.zero(stateRefs, mainGraph, false)
     misc.map(stateRefs, barSelection, map)
