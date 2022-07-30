@@ -121,8 +121,6 @@ export function dummys (state, x_scale, container){
     const maxBox = Math.max(...widthArray.map((x) => x.bbox))
     const scale = (Math.abs(minObject.x) / state.width)
 
-    console.log(maxBox)
-
     const offset = minObject.x * (1 + scale)
     const date = x_scale(new Date(minObject.date)) * (1 + scale)
     const extra = (minObject.bbox * scale) + (state.barHeight * scale)

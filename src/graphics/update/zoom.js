@@ -28,6 +28,7 @@ export function xAxis (props, newXScale, type){
     props.state.selections.xAxis.call(props.state.x_axis.scale(newXScale))
         .call(g => g.select(".domain").attr("stroke-opacity", 1).attr("color", "grey"))
         .call(g => g.selectAll(".tick:not(:first-of-type) line").attr("stroke-opacity", 1).attr("color", "grey"))
+        .call(g => g.selectAll(".tick text").text((d)=>{ return d.getFullYear() }))
         .call(g => g.selectAll(".tick text").attr("color", "grey").attr("font-size", "9pt"));
     props.state.selections.xAxisLines.call(props.state.x_axis_lines.scale(newXScale))
         .call(g => g.selectAll("line").attr("opacity", 0.1))

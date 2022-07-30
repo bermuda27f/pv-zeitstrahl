@@ -42,26 +42,6 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                     .attr("r", state.handle.size)
                     .call(events)
                     .call(behaviour)
-
-                // tmpEnter.append("line")
-                //     .call(enter => enter.transition(state.transition)
-                //         .attr("opacity", 1))
-                //     .attr("stroke", d => highlight.highlight_main && same(d) ? state.highlightColor : state.handle.color)
-                //     .attr("stroke-width", d => highlight.highlight_main && same(d) ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal)
-                //     .attr("opacity", state.handle.opacity)
-                //     .attr("class", "eventLine");
-
-                // tmpEnter.append("line")
-                //     .call(enter => enter.transition(state.transition)
-                //         .attr("opacity", 1))
-                //     .attr("x1", d => x_scale(new Date(d.datum)))
-                //     .attr("y1", state.height)
-                //     .attr("x2", d => d.x)
-                //     .attr("y2", state.height + state.handle.offset + (state.handle.size * 2))
-                //     .attr("stroke", d => highlight.highlight_main && same(d) ? state.highlightColor : state.handle.color)
-                //     .attr("stroke-width", d => highlight.highlight_main && same(d) ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal)
-                //     .attr("opacity", state.handle.opacity)
-                //     .attr("class", "eventLineExtra");
             },
             update => update.attr("transform", d => `translate(${x_scale(new Date(d.datum))}, ${state.handle.offset})`),
             exit => exit
@@ -82,11 +62,21 @@ export function set(stateRefs, eventContainer, x_scale, visible){
             return d.y
         }))
         .force("collision", d3_force.forceCollide()
-            .strength(1)
-            .radius(state.handle.size))
+            .strength(0.8)
+            .radius(state.handle.size + 2))
             .stop()
 
-    for(let i = 0; i < 150; i++) simulation.tick()
+    for(let i = 0; i < 120; i++) simulation.tick()
+
+    d3_select.selectAll(".eventLines").selectAll("line")
+        .attr("x2", function (d) { 
+            const xCoord = simulation.nodes().find((nodes) => {
+                return nodes.id === d.id
+            })
+            if(xCoord === undefined) { this.remove(); return; }
+            return xCoord ? xCoord.x : state.width
+        })
+        console.log("!!!")
 
     eventSymbols.attr("transform", (d) => {
         return`translate(${d.x}, ${state.handle.offset})`;

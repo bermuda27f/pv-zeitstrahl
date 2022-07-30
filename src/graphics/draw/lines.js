@@ -32,9 +32,9 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                 tmpEnter.append("line")
                     .call(enter => enter.transition(state.transition)
                         .attr("opacity", 1))
-                    .attr("x1", (d) => {x_scale(new Date(d.datum))})
+                    .attr("x1", (d) => { return x_scale(new Date(d.datum)) })
                     .attr("y1", state.height)
-                    .attr("x2", d => x_scale(new Date(d.datum)))
+                    .attr("x2", (d) => { return x_scale(new Date(d.datum)) })
                     .attr("y2", state.height + state.handle.offset + (state.handle.size * 2))
                     .attr("stroke", d => highlight.highlight_main && same(d) ? state.highlightColor : state.handle.color)
                     .attr("stroke-width", d => highlight.highlight_main && same(d) ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal)
@@ -43,10 +43,7 @@ export function set(stateRefs, eventContainer, x_scale, visible){
             },
 
             update => update.selectAll("line")
-                .attr("x1", (d) => {x_scale(new Date(d.datum))})
-                .attr("y1", state.height)
-                .attr("x2", d => x_scale(new Date(d.datum)))
-                .attr("y2", state.height + state.handle.offset + (state.handle.size * 2)),
+                .attr("x1", d => x_scale(new Date(d.datum))),
             exit => exit
                 .transition()
                 .attr("opacity", 0)

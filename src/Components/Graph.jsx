@@ -14,6 +14,7 @@ import * as calc from  '../helper/calc_set.js';
 import * as check from  '../helper/check.js';
 
 import * as events from  '../graphics/draw/events.js';
+import * as lines from  '../graphics/draw/lines.js';
 
 import * as reducer from "../helper/reducer.js"
 import * as helper from "../helper/components/graph.js"
@@ -107,8 +108,11 @@ export default function Graph (props) {
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
             const { selections } = stateRefs.current.state
             const { zoomInfo, uiElements } = stateRefs.current
-            const visible = check.eventsVisible(stateRefs.current, zoomInfo.scaleX, uiElements.events ? true : false)
+            const visible = check.eventsVisible(stateRefs.current, zoomInfo.scaleX, uiElements.events ? true : false)       
+            lines.set(stateRefs.current, selections.eventLines, zoomInfo.scaleX, visible)
             events.set(stateRefs.current, selections.events, zoomInfo.scaleX, visible)
+            events.set(stateRefs.current, selections.events, zoomInfo.scaleX, visible)
+
         }
     }, [uiElements.events])
 
@@ -120,7 +124,6 @@ export default function Graph (props) {
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            console.log("wow")
             // zoom 
             // events
             // periods

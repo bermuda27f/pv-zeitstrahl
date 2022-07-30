@@ -82,9 +82,9 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     const zoomGroup = svg.append("g").attr("id", "zoomGroup")
         .attr("clip-path", "url(#clipPath_main)")
-    const eventGroup = svg.append("g").attr("id", "eventGroup")
-        .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
     const eventLines = svg.append("g").attr("id", "eventLines")
+        .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
+    const eventGroup = svg.append("g").attr("id", "eventGroup")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
     const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
@@ -108,9 +108,8 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     const barSelection = bars.draw(stateRefs, mainGraph)
     const visible = check.eventsVisible(stateRefs, stateRefs.state.x_scale, stateRefs.uiElements.events)
-
-    events.set(stateRefs, eventGroup, stateRefs.state.x_scale, visible)
     lines.set(stateRefs, eventLines, stateRefs.state.x_scale, visible)
+    events.set(stateRefs, eventGroup, stateRefs.state.x_scale, visible)
 
     misc.zero(stateRefs, mainGraph, false)
     misc.map(stateRefs, barSelection, map)
