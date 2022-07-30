@@ -99,7 +99,7 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .on("wheel.zoom", null)
         //.on("dblclick.zoom", null);
 
-    zoomHelper.initZoom(zoomGroup, zoomObjRefs.current.zoom, stateRefs)
+    zoomHelper.initZoom(stateRefs, zoomObjRefs.current.zoom, zoomGroup)
 
     misc.frame(mainGraph, stateRefs)
     misc.highlight(stateRefs, mainGraph)

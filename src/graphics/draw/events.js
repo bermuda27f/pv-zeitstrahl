@@ -2,6 +2,7 @@ import * as d3_select from 'd3-selection';
 import * as d3_force from 'd3-force';
 import * as call from  '../../helper/events/call.js';
 import * as check from  '../../helper/check.js';
+import * as simulation from  '../../helper/simulation.js';
 
 export function set(stateRefs, eventContainer, x_scale, visible){
 
@@ -47,38 +48,24 @@ export function set(stateRefs, eventContainer, x_scale, visible){
             exit => exit
                 .transition()
                 .attr("opacity", 0)
-                .attr("transform", d => `translate(${x_scale(new Date(d.datum))}, ${d.y})`)
+                .attr("transform", d => `translate(${x_scale(new Date(d.datum))}, ${state.handle.offset})`)
                 .remove()
         )
 
-    const simulation = d3_force.forceSimulation(visible)
-        .force("x", d3_force.forceX(function(d){
-            d.x = x_scale(new Date(d.datum))
-            return d.x
-            })
-        )
-        .force("y", d3_force.forceY(function(d){
-            d.y = state.handle.offset
-            return d.y
-        }))
-        .force("collision", d3_force.forceCollide()
-            .strength(0.8)
-            .radius(state.handle.size + 2))
-            .stop()
+    const sim = simulation.calcTicks(state, x_scale, visible)
 
-    for(let i = 0; i < 120; i++) simulation.tick()
+    const lineSel = state.selectionsSet ? 
+        state.selections.eventLines.selectAll("line") : 
+        d3_select.selectAll(".eventLines").selectAll("line")
 
-    d3_select.selectAll(".eventLines").selectAll("line")
+    lineSel
         .attr("x2", function (d) { 
-            const xCoord = simulation.nodes().find((nodes) => {
-                return nodes.id === d.id
-            })
-            if(xCoord === undefined) { this.remove(); return; }
+            const xCoord = sim.nodes().find((nodes) => { return nodes.id === d.id })
+            if(xCoord === undefined) { this.remove(); }
             return xCoord ? xCoord.x : state.width
         })
-        console.log("!!!")
-
-    eventSymbols.attr("transform", (d) => {
-        return`translate(${d.x}, ${state.handle.offset})`;
+        
+    eventSymbols.attr("transform", function (d) { 
+        return`translate(${d.x}, ${state.handle.offset})`; 
     })
 }

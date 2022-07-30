@@ -12,6 +12,7 @@ import * as toggle from  '../graphics/update/toggle.js';
 import * as d3Zoom from  '../helper/events/zoom.js';
 import * as calc from  '../helper/calc_set.js';
 import * as check from  '../helper/check.js';
+import * as zoomHelper from  '../helper/zoom.js';
 
 import * as events from  '../graphics/draw/events.js';
 import * as lines from  '../graphics/draw/lines.js';
@@ -101,18 +102,16 @@ export default function Graph (props) {
     }, [props.state.width])
 
     useEffect(()=>{ 
-        if(uiElements.zoom)helper.zoomIt(stateRefs.current) 
+        if(uiElements.zoom) helper.zoomIt(stateRefs.current) 
     }, [zoomState])
 
     useEffect(()=>{ 
         if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
-            const { selections } = stateRefs.current.state
-            const { zoomInfo, uiElements } = stateRefs.current
-            const visible = check.eventsVisible(stateRefs.current, zoomInfo.scaleX, uiElements.events ? true : false)       
+            const { zoomInfo, uiElements } = stateRefs.current;
+            const { selections } = stateRefs.current.state;
+            const visible = check.eventsVisible(stateRefs.current, zoomInfo.scaleX, uiElements.events)       
             lines.set(stateRefs.current, selections.eventLines, zoomInfo.scaleX, visible)
             events.set(stateRefs.current, selections.events, zoomInfo.scaleX, visible)
-            events.set(stateRefs.current, selections.events, zoomInfo.scaleX, visible)
-
         }
     }, [uiElements.events])
 

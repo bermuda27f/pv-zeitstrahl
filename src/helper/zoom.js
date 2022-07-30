@@ -57,9 +57,12 @@ export function zoomToElement (state, type, key, element){
                 .translate(-state.x_scale(time.start), 0));
 }
 
-export function initZoom(zoomGroup, zoom, { state, zoomInfo }){
+export function initZoom(stateRefs, zoom, zoomGroup){
+
+    const { state, zoomInfo } = stateRefs
 
     if(state.zoomObject){
+
         const start = zoomInfo._start_
         const end = zoomInfo._stop_
         const y_top = zoomInfo.y_top
@@ -68,7 +71,10 @@ export function initZoom(zoomGroup, zoom, { state, zoomInfo }){
             .call(zoom.transform, d3_zoom.zoomIdentity
                 .scale((state.width / (state.x_scale(end) - state.x_scale(start))))
                 .translate(-state.x_scale(start), -state.y_scale(y_top)));
-
+        zoomGroup
+            .call(zoom.transform, d3_zoom.zoomIdentity
+                .scale((state.width / (state.x_scale(end) - state.x_scale(start))))
+                .translate(-state.x_scale(start), -state.y_scale(y_top)));
     }
     else{
         zoomGroup
