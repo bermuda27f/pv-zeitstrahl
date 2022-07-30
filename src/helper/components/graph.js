@@ -10,6 +10,7 @@ import * as svgDef from '../../graphics/draw/defs.js';
 import * as misc from  '../../graphics/draw/misc.js';
 import * as bars from  '../../graphics/draw/bars.js';
 import * as events from  '../../graphics/draw/events.js';
+import * as lines from '../../graphics/draw/lines.js';
 import * as axis from  '../../graphics/draw/axis.js';
 
 import * as label from  '../../graphics/draw/label.js';
@@ -51,6 +52,7 @@ export function setSelections(stateRefs, zoomObjRefs, svg_ref){
             mainGraph : d3_select.select("#mainGraph"),
             bars : d3_select.select("#kaiserBars"),
             events : d3_select.select("#eventGroup"),
+            eventLines : d3_select.select("#eventLines"),
             zero : d3_select.select("#zero"),
             focus : d3_select.select("#_focus"),
             map : d3_select.select("#mapGroup"),
@@ -82,6 +84,8 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
         .attr("clip-path", "url(#clipPath_main)")
     const eventGroup = svg.append("g").attr("id", "eventGroup")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
+    const eventLines = svg.append("g").attr("id", "eventLines")
+        .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
     const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", 1);
@@ -106,6 +110,8 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     const visible = check.eventsVisible(stateRefs, stateRefs.state.x_scale, stateRefs.uiElements.events)
 
     events.set(stateRefs, eventGroup, stateRefs.state.x_scale, visible)
+    lines.set(stateRefs, eventLines, stateRefs.state.x_scale, visible)
+
     misc.zero(stateRefs, mainGraph, false)
     misc.map(stateRefs, barSelection, map)
 

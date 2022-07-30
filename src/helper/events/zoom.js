@@ -1,6 +1,8 @@
 import * as d3_zoom from 'd3-zoom';
 
-export function zoom ({ state, setState }, setZoom, setZOOMINFO) {
+export function zoom (stateRefs, setZoom, setZOOMINFO) {
+
+    const { state, setState, uiElements} = stateRefs
 
     const zoomed = (e) => {
 
@@ -46,5 +48,5 @@ export function zoom ({ state, setState }, setZoom, setZOOMINFO) {
         .extent([[0, 0], [state.width, state.graph.height]])
         .translateExtent([[0, 0], [state.width, state.graph.height]])
         .on("zoom", zoomed)
-        //.on("end", zoomed)
+        //.on("end", end)
 }

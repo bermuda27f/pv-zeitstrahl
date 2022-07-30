@@ -1,4 +1,6 @@
 import * as events from "../draw/events.js"
+import * as lines from "../draw/lines.js"
+
 import * as check from "../../helper/check.js"
 
 export function graph(stateRefs) {
@@ -10,6 +12,7 @@ export function graph(stateRefs) {
     const visible = check.eventsVisible(stateRefs, zoomInfo.scaleX, uiElements.events)
 
     events.set(stateRefs, state.selections.events, stateRefs.zoomInfo.scaleX, visible)
+    lines.set(stateRefs, state.selections.eventLines, stateRefs.zoomInfo.scaleX, visible)
 
     state.selections.bars.selectAll(".kaiser_lines").attr('stroke-width', state.lineWidth * (1/zoomState.k));
     state.selections.personHL.attr("transform", zoomState);

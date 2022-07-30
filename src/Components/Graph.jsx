@@ -53,7 +53,7 @@ export default function Graph (props) {
 
     const svg_ref = useRef()
     const zoomObjRefs = useRef({
-        zoom : d3Zoom.zoom(props, setZoomState, setZOOMINFO),
+        zoom : d3Zoom.zoom({...props, uiElements : uiElements}, setZoomState, setZOOMINFO),
     })
     const stateRefs = useRef({
         ...props, 

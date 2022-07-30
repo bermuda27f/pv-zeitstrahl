@@ -22,9 +22,9 @@ export function eventsVisible(stateRefs, x_scale, on){
         calc_events = state.data.events.map((event, i) => { 
             return {
                 ...event, 
-                x : x_scale(new Date(event.datum))
+                xCheck : x_scale(new Date(event.datum))
             } 
-        }).filter((event) => { return !(event.x <= 0 || event.x >= state.width)})
+        }).filter((event) => { return !(event.xCheck <= 0 || event.xCheck >= state.width)})
     }
 
     return calc_events

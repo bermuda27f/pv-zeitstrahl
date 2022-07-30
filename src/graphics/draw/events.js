@@ -2,7 +2,6 @@ import * as d3_select from 'd3-selection';
 import * as d3_force from 'd3-force';
 import * as call from  '../../helper/events/call.js';
 import * as check from  '../../helper/check.js';
-import { x } from './axis.js';
 
 export function set(stateRefs, eventContainer, x_scale, visible){
 
@@ -52,19 +51,19 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                 //     .attr("opacity", state.handle.opacity)
                 //     .attr("class", "eventLine");
 
-                tmpEnter.append("line")
-                    .call(enter => enter.transition(state.transition)
-                        .attr("opacity", 1))
-                    .attr("x1", d => x_scale(new Date(d.datum)))
-                    .attr("y1", state.height)
-                    .attr("x2", d => d.x)
-                    .attr("y2", state.height + state.handle.offset + (state.handle.size * 2))
-                    .attr("stroke", d => highlight.highlight_main && same(d) ? state.highlightColor : state.handle.color)
-                    .attr("stroke-width", d => highlight.highlight_main && same(d) ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal)
-                    .attr("opacity", state.handle.opacity)
-                    .attr("class", "eventLineExtra");
+                // tmpEnter.append("line")
+                //     .call(enter => enter.transition(state.transition)
+                //         .attr("opacity", 1))
+                //     .attr("x1", d => x_scale(new Date(d.datum)))
+                //     .attr("y1", state.height)
+                //     .attr("x2", d => d.x)
+                //     .attr("y2", state.height + state.handle.offset + (state.handle.size * 2))
+                //     .attr("stroke", d => highlight.highlight_main && same(d) ? state.highlightColor : state.handle.color)
+                //     .attr("stroke-width", d => highlight.highlight_main && same(d) ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal)
+                //     .attr("opacity", state.handle.opacity)
+                //     .attr("class", "eventLineExtra");
             },
-            update => update.attr("transform", d => `translate(${x_scale(new Date(d.x))}, ${state.handle.offset})`),
+            update => update.attr("transform", d => `translate(${x_scale(new Date(d.datum))}, ${state.handle.offset})`),
             exit => exit
                 .transition()
                 .attr("opacity", 0)
@@ -72,32 +71,24 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                 .remove()
         )
 
-        d3_force.forceSimulation(visible)
-            .force("x", d3_force.forceX(function(d){
-                d.x = x_scale(new Date(d.datum))
-                return d.x
-                }).strength(0.4)
-            )
-            .force("y", d3_force.forceY(function(d){
-                d.y = state.handle.offset
-                return d.y
-            }).strength(0.4))
-            .force("collision", d3_force.forceCollide()
-                .strength(0.9)
-                .radius(state.handle.size))
-                    .alphaDecay(0.2)
-                    .velocityDecay(0.96)
-                    .on("tick", tick)
-
-        function tick (){
-            d3_select.selectAll("eventLineExtra")
-                .attr("x1", d => x_scale(new Date(d.datum)))
-                .attr("y1", state.height)
-                .attr("x2", d => d.x)
-                .attr("y2", state.height + state.handle.offset + (state.handle.size * 2))
-                
-            eventSymbols.attr("transform", (d) => {
-                return`translate(${d.x}, ${d.y})`;
+    const simulation = d3_force.forceSimulation(visible)
+        .force("x", d3_force.forceX(function(d){
+            d.x = x_scale(new Date(d.datum))
+            return d.x
             })
-        }
+        )
+        .force("y", d3_force.forceY(function(d){
+            d.y = state.handle.offset
+            return d.y
+        }))
+        .force("collision", d3_force.forceCollide()
+            .strength(1)
+            .radius(state.handle.size))
+            .stop()
+
+    for(let i = 0; i < 150; i++) simulation.tick()
+
+    eventSymbols.attr("transform", (d) => {
+        return`translate(${d.x}, ${state.handle.offset})`;
+    })
 }
