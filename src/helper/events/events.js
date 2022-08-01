@@ -75,13 +75,20 @@ function toggleEventElement({state}, key, on) {
 
     const el = state.selections.events.select("#img_node_" + key)
     const circle = el.select("circle");
-    const line = el.select("line");
+    const lineEl = state.selections.container.select("#eventLine_" + key);
+    const lineEl_lines = lineEl.selectAll("line");
+    const lineEl_circle = lineEl.select("circle");
+
 
     circle.attr("stroke", on ? state.highlightColor : state.standardColor)
         .attr("stroke-width", on ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal);
-    line.attr("stroke", on ? state.highlightColor : state.standardColor)
+    lineEl_lines.attr("stroke", on ? state.highlightColor : state.standardColor)
         .attr("opacity", on ? 1 : state.handle.opacity)
         .attr("stroke-width", on ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal);
+    lineEl_circle.attr("stroke", on ? state.highlightColor : state.standardColor)
+        .attr("opacity", on ? 1 : state.handle.opacity)
+        .attr("fill", on ? state.highlightColor : state.standardColor);
+
 }
 
 function togglePerson({state}, id, on) {

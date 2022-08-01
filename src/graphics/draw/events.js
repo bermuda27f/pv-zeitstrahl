@@ -55,8 +55,8 @@ export function set(stateRefs, eventContainer, x_scale, visible){
     const sim = simulation.calcTicks(state, x_scale, visible)
 
     const lineSel = state.selectionsSet ? 
-        state.selections.eventLines.selectAll("line") : 
-        d3_select.selectAll(".eventLines").selectAll("line")
+        state.selections.eventLines.selectAll(".eventLine_axis") : 
+        d3_select.selectAll(".eventLine_axis")
 
     lineSel
         .attr("x2", function (d) { 

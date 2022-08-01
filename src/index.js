@@ -90,6 +90,7 @@ function App (){
         },
 
         lineWidth : 0.25,
+        axisCircle : 2,
         textOffset : 5,
 
         selections : null,
