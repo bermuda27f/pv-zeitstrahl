@@ -82,6 +82,8 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
     const zoomGroup = svg.append("g").attr("id", "zoomGroup")
         .attr("clip-path", "url(#clipPath_main)")
+    const axisContainer = svg.append("g").attr("id", "axisGroup")
+        .attr("transform", `translate(${stateRefs.state.graph.x}, ${stateRefs.state.graph.y})`)
     const eventLines = svg.append("g").attr("id", "eventLines")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
     const eventGroup = svg.append("g").attr("id", "eventGroup")
@@ -89,8 +91,6 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
     const mainGraph = zoomGroup.append("g").attr("id", "mainGraph")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", 1);
-    const axisContainer = svg.append("g").attr("id", "axisGroup")
-        .attr("transform", `translate(${stateRefs.state.graph.x}, ${stateRefs.state.graph.y})`)
     const map = svg.append("g").attr("id", "mapGroup")
         .attr('transform', `translate(${ stateRefs.state.graph.x},${ stateRefs.state.graph.y})`)
         .attr("opacity", stateRefs.uiElements.map ? 1 : 0)
@@ -118,76 +118,73 @@ export function drawIt(svg_ref, stateRefs, zoomObjRefs){
 
 export function handleMouse(stateRefs){
 
-    if(stateRefs.firstSet && stateRefs.isDrawed){
+    const { mouseEvents : mouse, highlight } = stateRefs
 
-        const { mouseEvents : mouse, highlight } = stateRefs
+    const same = check.sameHighlight (stateRefs, mouse.type, mouse.key)
 
-        const same = check.sameHighlight (stateRefs, mouse.type, mouse.key)
+    if(mouse.mouseEvent === "enter") {
+        handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent); 
+        handleEvents.showTooltip(stateRefs)}
+    else if(mouse.mouseEvent === "leave") { 
+        if((!highlight.highlight_main && !same) || (!highlight.highlight_main && same)){
+            deleteTooltip(); 
+            handleEvents.toggle(stateRefs, false, "new", mouse.mouseEvent); 
+        }
+        else if(highlight.highlight_main && !same){
+            deleteTooltip(); 
+            handleEvents.toggle(stateRefs, false, "new", mouse.mouseEvent); 
+        }
+    }
 
-        if(mouse.mouseEvent === "enter") {
-            handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent); 
-            handleEvents.showTooltip(stateRefs)}
-        else if(mouse.mouseEvent === "leave") { 
-            if((!highlight.highlight_main && !same) || (!highlight.highlight_main && same)){
-                deleteTooltip(); 
-                handleEvents.toggle(stateRefs, false, "new", mouse.mouseEvent); 
+    else if(mouse.mouseEvent === "click") {
+        deleteTooltip();
+        // highlight switch
+        if (highlight.highlight_main && !same){
+            handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
+            handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
+            if(mouse.type === "events") {
+                calc.order(stateRefs, mouse.key)
+                toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
+                toggleFuncs.mapPersonHL(stateRefs, mouse.d, false)
+
             }
-            else if(highlight.highlight_main && !same){
-                deleteTooltip(); 
-                handleEvents.toggle(stateRefs, false, "new", mouse.mouseEvent); 
+            else{
+                toggleFuncs.mapEventHL(stateRefs, mouse.d, false)
+                toggleFuncs.mapPersonHL(stateRefs, mouse.d, true)
+            }
+        }
+        // highlight off
+        else if(highlight.highlight_main && same){
+            handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
+            if(mouse.type === "events"){
+                toggleFuncs.mapEventHL(stateRefs, mouse.d, false)
+            }
+            else{
+                toggleFuncs.mapPersonHL(stateRefs, mouse.d, false)
+            }
+        }
+        // highlight new
+        else if(!highlight.highlight_main){
+            handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
+            if(mouse.type === "events") {
+                calc.order(stateRefs, mouse.key)
+                toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
+            }
+            else{
+                toggleFuncs.mapPersonHL(stateRefs, mouse.d, true)
             }
         }
 
-        else if(mouse.mouseEvent === "click") {
-            deleteTooltip();
-            // highlight switch
-            if (highlight.highlight_main && !same){
-                handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
-                handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                if(mouse.type === "events") {
-                    calc.order(stateRefs, mouse.key)
-                    toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
-                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, false)
+        const setType = (highlight.highlight_main && same) ? 
+            "KILL_HIGHLIGHT_MAIN" : "HIGHLIGHT_MAIN";
 
-                }
-                else{
-                    toggleFuncs.mapEventHL(stateRefs, mouse.d, false)
-                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, true)
-                }
-            }
-            // highlight off
-            else if(highlight.highlight_main && same){
-                handleEvents.toggle(stateRefs, false, "switch", mouse.mouseEvent)
-                if(mouse.type === "events"){
-                    toggleFuncs.mapEventHL(stateRefs, mouse.d, false)
-                }
-                else{
-                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, false)
-                }
-            }
-            // highlight new
-            else if(!highlight.highlight_main){
-                handleEvents.toggle(stateRefs, true, "new", mouse.mouseEvent)
-                if(mouse.type === "events") {
-                    calc.order(stateRefs, mouse.key)
-                    toggleFuncs.mapEventHL(stateRefs, mouse.d, true)
-                }
-                else{
-                    toggleFuncs.mapPersonHL(stateRefs, mouse.d, true)
-                }
-            }
+        stateRefs.setHIGHLIGHT({
+            type : setType,
+            infos :  stateRefs.state.data[mouse.dataSet],
+            key : mouse.key,
+            ident : mouse.type,
+            element : calc.getElement(stateRefs.state.data[mouse.dataSet], "id", mouse.key)
+        })
 
-            const setType = (highlight.highlight_main && same) ? 
-                "KILL_HIGHLIGHT_MAIN" : "HIGHLIGHT_MAIN";
-
-            stateRefs.setHIGHLIGHT({
-                type : setType,
-                infos :  stateRefs.state.data[mouse.dataSet],
-                key : mouse.key,
-                ident : mouse.type,
-                element : calc.getElement(stateRefs.state.data[mouse.dataSet], "id", mouse.key)
-            })
-
-        }
-    }   
-};
+    }
+}

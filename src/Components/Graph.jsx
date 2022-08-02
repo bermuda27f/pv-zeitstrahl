@@ -7,12 +7,10 @@ import '../styles.css'
 
 import { useKeyPress } from "../helper/hooks.js";
 
-import * as zoomGraph from  '../graphics/update/zoom.js';
 import * as toggle from  '../graphics/update/toggle.js';
 import * as d3Zoom from  '../helper/events/zoom.js';
 import * as calc from  '../helper/calc_set.js';
 import * as check from  '../helper/check.js';
-import * as zoomHelper from  '../helper/zoom.js';
 
 import * as events from  '../graphics/draw/events.js';
 import * as lines from  '../graphics/draw/lines.js';
@@ -83,7 +81,7 @@ export default function Graph (props) {
             helper.drawIt(svg_ref, stateRefs.current, zoomObjRefs)
             helper.setSelections(stateRefs.current, zoomObjRefs, svg_ref)
             drawed(true)
-        }; 
+        }
     }, [])
 
     // RESIZE:
@@ -102,7 +100,7 @@ export default function Graph (props) {
     }, [props.state.width])
 
     useEffect(()=>{ 
-        if(uiElements.zoom) helper.zoomIt(stateRefs.current) 
+        if(stateRefs.current.uiElements.zoom) helper.zoomIt(stateRefs.current) 
     }, [zoomState])
 
     useEffect(()=>{ 
@@ -138,7 +136,9 @@ export default function Graph (props) {
     }, [uiElements.map])
 
     useEffect(()=>{
-        helper.handleMouse(stateRefs.current)
+        if(stateRefs.current.firstSet && stateRefs.current.isDrawed){
+            helper.handleMouse(stateRefs.current)
+        }
     }, [mouseEvents.e])
 
     // ESCAPE:

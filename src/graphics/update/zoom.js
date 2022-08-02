@@ -5,7 +5,7 @@ import * as check from "../../helper/check.js"
 
 export function graph(stateRefs) {
 
-    const { state, setState, zoomInfo, zoomState, uiElements } = stateRefs
+    const { state, zoomInfo, zoomState, uiElements } = stateRefs
 
     state.selections.bars.attr("transform", zoomState);
 

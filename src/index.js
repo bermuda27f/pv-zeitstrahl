@@ -19,7 +19,7 @@ import * as d3_array from 'd3-array';
 import data_persons from "./data/persons.json";
 import data_events from "./data/events.json";
 
-const standardColor = "#141452";
+const standardColor = "orange";
 const highlightColor = "magenta";
 const margin = { top: 25, right: 40, bottom: 5, left: 30 };
 const padding = 15;
@@ -85,12 +85,12 @@ function App (){
             color : standardColor,
             lineWidth : {
                 normal : .2,
-                highlight : 1.5
+                highlight : .7
             },
         },
 
-        lineWidth : 0.25,
-        axisCircle : 2,
+        lineWidth : .25,
+        axisCircle : 3,
         textOffset : 5,
 
         selections : null,

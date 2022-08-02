@@ -6,7 +6,7 @@ import * as simulation from  '../../helper/simulation.js';
 
 export function set(stateRefs, eventContainer, x_scale, visible){
 
-    const { state, setState, zoomInfo, uiElements, highlight } = stateRefs
+    const { state, zoomInfo, uiElements, highlight } = stateRefs
 
     const events = call.events("events", "id", stateRefs)
     const behaviour = call.behaviour(uiElements.events)
@@ -64,7 +64,7 @@ export function set(stateRefs, eventContainer, x_scale, visible){
             if(xCoord === undefined) { this.remove(); }
             return xCoord ? xCoord.x : state.width
         })
-        
+
     eventSymbols.attr("transform", function (d) { 
         return`translate(${d.x}, ${state.handle.offset})`; 
     })

@@ -2,7 +2,7 @@ import * as d3_zoom from 'd3-zoom';
 
 export function zoom (stateRefs, setZoom, setZOOMINFO) {
 
-    const { state, setState, uiElements} = stateRefs
+    const { state, uiElements} = stateRefs
 
     const zoomed = (e) => {
 
