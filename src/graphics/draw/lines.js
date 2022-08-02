@@ -19,7 +19,6 @@ export function set(stateRefs, eventContainer, x_scale, visible){
                     .attr("id", d => "eventLine_" + d.id)
                     .call(enter => enter.transition(state.transition)
                         .attr("opacity", 1))
-                    //.attr("transform", d => { return `translate(${x_scale(new Date(d.datum))}, ${state.handle.offset})`});
 
                 tmpEnter.append("line")
                     .call(enter => enter.transition(state.transition)

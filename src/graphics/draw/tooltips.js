@@ -1,6 +1,6 @@
 import * as d3_select from 'd3-selection';
 
-export function buildToolTip ({ state }, event, d, type) {  
+export function build ({ state }, event, d, type) {  
 
     const padding = 9
     let _text = d.name; 
@@ -67,9 +67,5 @@ export function buildToolTip ({ state }, event, d, type) {
 
 export function deleteTooltip(){
 
-    d3_select.selectAll(".tooltip_container")
-        .transition()		
-            .duration(20)		
-            .style("opacity", 0)
-                .remove();
+
 }

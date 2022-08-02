@@ -1,44 +1,6 @@
-import { buildToolTip } from '../../graphics/draw/tooltips.js';
-import * as toggleFuncs from  '../../graphics/update/toggle.js';
-import * as d3_select from 'd3-selection';
+import * as toggle from  '../../graphics/update/toggle.js';
 
-export function mouse(eType, type, key, props, e, d) {
-
-    // eType = click, mouseleave etc.
-    // type = bars or event-handles?
-    // key = item name
-    // dataset = events or persons
-
-    props.setMOUSE({
-        type : "MULTIPLE", 
-        value : { 
-            mouseEvent : eType,
-            type : type,
-            key : d.id,
-            dataSet : type,
-            e : e,
-            d : d
-        }
-    })
-}
-
-export function showTooltip(props){
-
-    const {
-        type,
-        key,
-        e,
-        d,
-    } = props.mouseEvents
-
-    if(!props.highlight.highlight_main || key !== props.highlight.key){
-        if(e && e.type !== "click" && !props.state.isTouch) {
-            buildToolTip(props, e, d, "name");
-        }
-    }
-}
-
-export function toggle(props, mode, switchMode, eventType) {
+export function fire(props, mode, switchMode, eventType) {
 
     let _type, _key, _d
     const t = props.state.transition
@@ -60,42 +22,13 @@ export function toggle(props, mode, switchMode, eventType) {
    
     switch(_type){
         case "events" :
-            toggleEventElement(props, _key, mode);
+            toggle.eventElement(props, _key, mode);
             break;
         case "persons" :
-            if(eventType === "click") togglePerson(props, _key, mode)
+            if(eventType === "click") toggle.person(props, _key, mode)
             break;
         default:
             break;
     }
 
-}
-
-function toggleEventElement({state}, key, on) {
-
-    const el = state.selections.events.select("#img_node_" + key)
-    const circle = el.select("circle");
-    const lineEl = state.selections.container.select("#eventLine_" + key);
-    const lineEl_lines = lineEl.selectAll("line");
-    const lineEl_circle = lineEl.select("circle");
-
-
-    circle.attr("stroke", on ? state.highlightColor : state.standardColor)
-        .attr("stroke-width", on ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal);
-    lineEl_lines.attr("stroke", on ? state.highlightColor : state.standardColor)
-        .attr("opacity", on ? 1 : state.handle.opacity)
-        .attr("stroke-width", on ? state.handle.lineWidth.highlight : state.handle.lineWidth.normal);
-    lineEl_circle.attr("stroke", on ? state.highlightColor : state.standardColor)
-        .attr("opacity", on ? 1 : state.handle.opacity)
-        .attr("fill", on ? state.highlightColor : state.standardColor);
-
-}
-
-function togglePerson({state}, id, on) {
-
-    const el = state.selections.personHL.select("rect")
-
-    el.transition(state.transition)
-        .attr("y", state.y_scale(id))
-        .attr("opacity", on ? 1 : 0)
 }

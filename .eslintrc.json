@@ -22,6 +22,7 @@
         "react-hooks/exhaustive-deps": "warn",
         "no-unused-vars": "warn",
         "no-extra-semi" : "warn",
+        "no-case-declarations" : "warn",
         "react/prop-types": 0
     }
     
